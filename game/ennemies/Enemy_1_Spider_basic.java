@@ -7,6 +7,7 @@ import game.sound.MusicManager;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.math.Vector2;
@@ -31,8 +32,7 @@ public class Enemy_1_Spider_basic extends Enemies
 
 	public Enemy_1_Spider_basic(Player player, float enemyCoef)
 	{
-		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH,
-				R.c().enemy_spider_walk);
+		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH, R.c().enemy_spider_walk);
 
 		this.enemyCoef = enemyCoef;
 
@@ -61,7 +61,7 @@ public class Enemy_1_Spider_basic extends Enemies
 		super.act(delta);
 		if (timer.doAction(delta))
 		{
-			R.c().soundEffect_enemies_whiteSlowEnemy.play(MusicManager.sfxVolume);
+			S.c().soundEffect_enemies_whiteSlowEnemy.play(MusicManager.sfxVolume);
 		}
 
 		EnemyComportements.followPlayerAndPatrolOnGround(this, player);

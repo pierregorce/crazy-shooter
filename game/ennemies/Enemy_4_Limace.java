@@ -9,6 +9,7 @@ import game.sound.MusicManager;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -153,7 +154,7 @@ public class Enemy_4_Limace extends Enemies
 
 			if (spitSound)
 			{
-				R.c().soundEffect_enemies_greenEnemyBurp[new Random().nextInt(R.c().soundEffect_enemies_greenEnemyBurp.length)].play(MusicManager.sfxVolume);
+				S.c().soundEffect_enemies_greenEnemyBurp[new Random().nextInt(S.c().soundEffect_enemies_greenEnemyBurp.length)].play(MusicManager.sfxVolume);
 				spitSound = false;
 			}
 			// GameStage.cameraShake(7);

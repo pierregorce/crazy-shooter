@@ -11,6 +11,7 @@ import java.util.Random;
 import ressources.DrawableAnimation;
 import ressources.R;
 import ressources.Ressource;
+import ressources.S;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -42,8 +43,7 @@ public class Enemy_6_Wizard extends Enemies
 
 	public Enemy_6_Wizard(Player player, float enemyCoef)
 	{
-		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH,
-				R.c().enemy_wizard_walk);
+		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH, R.c().enemy_wizard_walk);
 
 		this.player = player;
 		this.enemyCoef = enemyCoef;
@@ -111,7 +111,7 @@ public class Enemy_6_Wizard extends Enemies
 		super.act(delta);
 		if (laughingSound.doAction(delta))
 		{
-			R.c().soundEffect_enemies_witchLauging.play(MusicManager.sfxVolume);
+			S.c().soundEffect_enemies_witchLauging.play(MusicManager.sfxVolume);
 		}
 	}
 
@@ -123,7 +123,7 @@ public class Enemy_6_Wizard extends Enemies
 		GlobalController.bulletControllerEnemy.addActor(p);
 
 		// SFX
-		R.c().soundEffect_enemies_witchShoot[new Random().nextInt(R.c().soundEffect_enemies_witchShoot.length)].play(MusicManager.sfxVolume);
+		S.c().soundEffect_enemies_witchShoot[new Random().nextInt(S.c().soundEffect_enemies_witchShoot.length)].play(MusicManager.sfxVolume);
 
 		// ADD HALO EFFECT
 		float haloHeight = 20;
@@ -132,12 +132,10 @@ public class Enemy_6_Wizard extends Enemies
 
 		if (direction == Direction.RIGHT_DIRECTION)
 		{
-			assets = new Ressource(drawableAnimation, getCenterX(), getCenterY() - haloHeight / 2, haloHeight, new SequenceAction(Actions.delay(0.05f),
-					Actions.removeActor())); // FIXME
+			assets = new Ressource(drawableAnimation, getCenterX(), getCenterY() - haloHeight / 2, haloHeight, new SequenceAction(Actions.delay(0.05f), Actions.removeActor())); // FIXME
 		} else
 		{
-			assets = new Ressource(drawableAnimation, getX(), getCenterY() - haloHeight / 2 + 5, haloHeight, new SequenceAction(Actions.delay(0.05f),
-					Actions.removeActor())); // FIXME
+			assets = new Ressource(drawableAnimation, getX(), getCenterY() - haloHeight / 2 + 5, haloHeight, new SequenceAction(Actions.delay(0.05f), Actions.removeActor())); // FIXME
 		}
 		GlobalController.fxController.addActor(assets);
 

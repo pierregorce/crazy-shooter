@@ -1,17 +1,29 @@
 package screen;
 
-import screen.start.LoadingGameStage;
+import ressources.R;
+import ressources.S;
 import utilities.enumerations.ScreenEnum;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class LoadingGameScreen implements MovableScreen
 {
-	private LoadingGameStage loadingStage = new LoadingGameStage();
-	private boolean done = false;
+	private Stage	loadingStage	= new Stage();
+	private boolean	done			= false;
+
+	private Group	group			= new Group();
+	private Label	loadingLabel;
+	private Image	backgroundImage;
 
 	@Override
 	public void render(float delta)
@@ -20,13 +32,21 @@ public class LoadingGameScreen implements MovableScreen
 		loadingStage.act(delta);
 		loadingStage.draw();
 
+		loadingLabel.setPosition(500, 500);
+		loadingLabel.setText("Loading : " + S.c().soundManager.getProgress() + "");
+		S.c().soundManager.finishLoading();
+
 		if (loadingStage.getRoot().getActions().size == 0 && !done)
 		{
-			done = true;
 			System.out.println("Chargement du game en cours");
-
-			ScreenManager.getInstance().show(ScreenEnum.GAME); // TODO ERREUR...car ça switch le premier puis lancer l'autre
+			if (S.c().soundManager.update())
+			{
+				S.c().generateSound();
+				ScreenManager.getInstance().show(ScreenEnum.GAME);
+				done = true;
+			}
 		}
+
 	}
 
 	@Override
@@ -44,7 +64,18 @@ public class LoadingGameScreen implements MovableScreen
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(loadingStage);
 		Gdx.input.setInputProcessor(multiplexer);
-		// Add Action
+
+		loadingStage.addActor(group);
+		loadingStage.setViewport(new ExtendViewport(MyGdxGame.VIRTUAL_WIDTH, MyGdxGame.VIRTUAL_HEIGHT));
+
+		float factor = 2.66f;
+		backgroundImage = new Image(R.c().upgrade_background);
+		backgroundImage.setSize(backgroundImage.getWidth() * factor, backgroundImage.getHeight() * factor);
+		group.addActor(backgroundImage);
+
+		BitmapFont b = R.c().getEarlyGameBoyFont(30);
+		loadingLabel = new Label("", new LabelStyle(b, Color.WHITE));
+		group.addActor(loadingLabel);
 
 	}
 

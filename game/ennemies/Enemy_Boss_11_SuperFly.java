@@ -12,6 +12,7 @@ import globals.Projectiles;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
 import screen.MyGdxGame;
 import utilities.enumerations.Direction;
 
@@ -38,8 +39,7 @@ public class Enemy_Boss_11_SuperFly extends Enemies
 
 	public Enemy_Boss_11_SuperFly(Player player, float enemyCoef)
 	{
-		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH,
-				R.c().enemy_wasp_boss_walk);
+		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH, R.c().enemy_wasp_boss_walk);
 
 		Vector2 position = EnemyPopConstants.getInstance().getFlyPosition();
 		setPosition(position.x, position.y);
@@ -112,7 +112,7 @@ public class Enemy_Boss_11_SuperFly extends Enemies
 			timer = new Timer(m_bossPhase.phaseDuration);
 			System.out.println("BOSS #2 : Je change de phase ! " + m_bossPhase.name());
 			GlobalController.fxController.addActor(new PopMessage(this, MessageType.BOSS_CRY_2));
-			R.c().soundEffect_boss2_pulse[new Random().nextInt(R.c().soundEffect_boss2_pulse.length)].play(MusicManager.sfxVolume);
+			S.c().soundEffect_boss2_pulse[new Random().nextInt(S.c().soundEffect_boss2_pulse.length)].play(MusicManager.sfxVolume);
 		}
 
 	}
@@ -162,7 +162,7 @@ public class Enemy_Boss_11_SuperFly extends Enemies
 		Projectile p = new Projectile(Projectiles.ENEMY_BOSS_2);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
-		R.c().soundEffect_boss2_shoot[new Random().nextInt(R.c().soundEffect_boss2_shoot.length)].play(MusicManager.sfxVolume);
+		S.c().soundEffect_boss2_shoot[new Random().nextInt(S.c().soundEffect_boss2_shoot.length)].play(MusicManager.sfxVolume);
 	}
 
 	@Override

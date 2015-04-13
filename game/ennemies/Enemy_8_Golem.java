@@ -7,6 +7,7 @@ import game.sound.MusicManager;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.audio.Sound;
@@ -29,14 +30,13 @@ public class Enemy_8_Golem extends Enemies
 	private final static int	WIDTH			= 150;
 
 	private Player				player;
-	private Sound				soundSlash		= R.c().soundEffect_enemies_umbrellaSlash;
+	private Sound				soundSlash		= S.c().soundEffect_enemies_umbrellaSlash;
 	private boolean				soundPlaying	= false;
 	private float				enemyCoef;
 
 	public Enemy_8_Golem(Player player, float enemyCoef)
 	{
-		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH,
-				R.c().enemy_golem_walk);
+		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH, R.c().enemy_golem_walk);
 
 		this.player = player;
 		this.enemyCoef = enemyCoef;

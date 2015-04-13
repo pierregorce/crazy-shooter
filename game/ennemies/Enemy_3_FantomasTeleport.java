@@ -9,6 +9,7 @@ import globals.Projectiles;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -39,8 +40,7 @@ public class Enemy_3_FantomasTeleport extends Enemies
 
 	public Enemy_3_FantomasTeleport(Player player, float enemyCoef)
 	{
-		super(player, LIFE_MAX, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH,
-				R.c().enemy_fantomas_walk);
+		super(player, LIFE_MAX, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH, R.c().enemy_fantomas_walk);
 		this.enemyCoef = enemyCoef;
 
 		Vector2 position = EnemyPopConstants.getInstance().getSmallBlocksPosition();
@@ -155,8 +155,7 @@ public class Enemy_3_FantomasTeleport extends Enemies
 			Projectile p = new Projectile(Projectiles.ENEMY_FANTOMAS);
 			p.init(this);
 			GlobalController.bulletControllerEnemy.addActor(p);
-			R.c().soundEffect_enemies_wizardFireball[new Random().nextInt(R.c().soundEffect_enemies_wizardFireball.length)]
-					.play(MusicManager.sfxVolume);
+			S.c().soundEffect_enemies_wizardFireball[new Random().nextInt(S.c().soundEffect_enemies_wizardFireball.length)].play(MusicManager.sfxVolume);
 		}
 	}
 
@@ -213,7 +212,7 @@ public class Enemy_3_FantomasTeleport extends Enemies
 		teleportApparitionAnimation = true;
 		animationStateTime = 0;
 		// SFX
-		R.c().soundEffect_enemies_wizardSpawn[new Random().nextInt(R.c().soundEffect_enemies_wizardSpawn.length)].play(MusicManager.sfxVolume);
+		S.c().soundEffect_enemies_wizardSpawn[new Random().nextInt(S.c().soundEffect_enemies_wizardSpawn.length)].play(MusicManager.sfxVolume);
 	}
 
 	public void setTeleportDisparitionTrue()
@@ -221,7 +220,7 @@ public class Enemy_3_FantomasTeleport extends Enemies
 		teleportVanishAnimation = true;
 		animationStateTime = 0;
 		// SFX
-		R.c().soundEffect_enemies_wizardTeleport[new Random().nextInt(R.c().soundEffect_enemies_wizardTeleport.length)].play(MusicManager.sfxVolume);
+		S.c().soundEffect_enemies_wizardTeleport[new Random().nextInt(S.c().soundEffect_enemies_wizardTeleport.length)].play(MusicManager.sfxVolume);
 	}
 
 	public void setAnimationTeleportFalse()

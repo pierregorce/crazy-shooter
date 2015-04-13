@@ -24,6 +24,7 @@ import java.util.Random;
 import ressources.DrawableSprite;
 import ressources.R;
 import ressources.Ressource;
+import ressources.S;
 import screen.ScreenManager;
 import screen.level.LevelGroup;
 import screen.level.Levels;
@@ -366,7 +367,7 @@ public class GlobalController
 				// Suppression de l'objet
 				coin.remove();
 				// Sfx
-				R.c().soundEffect_player_coinPickup[new Random().nextInt(R.c().soundEffect_player_coinPickup.length)].play(MusicManager.sfxVolume_Player);
+				S.c().soundEffect_player_coinPickup[new Random().nextInt(S.c().soundEffect_player_coinPickup.length)].play(MusicManager.sfxVolume_Player);
 				// Affichage de particle
 
 				Vector2 initialPosition = new Vector2(coin.getX(), coin.getY());
@@ -398,7 +399,7 @@ public class GlobalController
 				// Suppression de l'objet
 				lifeBox.remove();
 				// Sfx
-				R.c().soundEffect_player_healthPackPickup.play(MusicManager.sfxVolume_Player);
+				S.c().soundEffect_player_healthPackPickup.play(MusicManager.sfxVolume_Player);
 			}
 		}
 

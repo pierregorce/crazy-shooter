@@ -1,7 +1,7 @@
 package game.panels;
 
 import game.sound.MusicManager;
-import ressources.R;
+import ressources.S;
 import screen.MyGdxGame;
 import screen.ScreenManager;
 import screen.level.LevelGroup;
@@ -14,9 +14,9 @@ import com.oasix.crazyshooter.GameStage;
 
 public class GameMenu extends Stage
 {
-	private GameBreakMenu gameBreakMenu = null;
-	private GameStage gameStage;
-	private boolean shown = false;
+	private GameBreakMenu	gameBreakMenu	= null;
+	private GameStage		gameStage;
+	private boolean			shown			= false;
 
 	public GameMenu(GameStage gameStage)
 	{
@@ -45,7 +45,7 @@ public class GameMenu extends Stage
 					shown = true;
 					gameBreakMenu = new GameBreakMenu(gameStage, GameStatesEnum.GAME_WIN);
 					addActor(gameBreakMenu);
-					R.c().soundEffect_player_win.play(MusicManager.sfxVolume_Player);
+					S.c().soundEffect_player_win.play(MusicManager.sfxVolume_Player);
 				} else
 				{
 					ScreenManager.getInstance().show(ScreenEnum.ENDING);
@@ -56,7 +56,7 @@ public class GameMenu extends Stage
 				shown = true;
 				gameBreakMenu = new GameBreakMenu(gameStage, GameStatesEnum.GAME_LOOSE);
 				addActor(gameBreakMenu);
-				R.c().soundEffect_player_loose.play(MusicManager.sfxVolume_Player);
+				S.c().soundEffect_player_loose.play(MusicManager.sfxVolume_Player);
 			}
 		}
 		if (getActors().size == 0)

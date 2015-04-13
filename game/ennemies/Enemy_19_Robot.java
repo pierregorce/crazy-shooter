@@ -13,6 +13,7 @@ import globals.Projectiles;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
 import screen.MyGdxGame;
 import utilities.enumerations.Direction;
 
@@ -132,7 +133,7 @@ public class Enemy_19_Robot extends Enemies
 
 		if (timer.doAction(delta))
 		{
-			R.c().soundEffect_enemies_whiteSlowEnemy.play(MusicManager.sfxVolume);
+			S.c().soundEffect_enemies_whiteSlowEnemy.play(MusicManager.sfxVolume);
 		}
 
 		EnemyComportements.followPlayerAndPatrolOnGround(this, player);

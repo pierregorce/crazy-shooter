@@ -9,6 +9,7 @@ import game.sound.MusicManager;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.math.Vector2;
@@ -33,8 +34,7 @@ public class Enemy_5_FantomeRunner extends Enemies
 
 	public Enemy_5_FantomeRunner(Player player, float enemyCoef)
 	{
-		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH,
-				R.c().enemy_fantome_walk);
+		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH, R.c().enemy_fantome_walk);
 
 		this.enemyCoef = enemyCoef;
 
@@ -92,10 +92,10 @@ public class Enemy_5_FantomeRunner extends Enemies
 			}
 			if (maxVelocityX == m_initialVelocity)
 			{
-				R.c().soundEffect_enemies_bumpyEnemyJump.play(MusicManager.sfxVolume);
+				S.c().soundEffect_enemies_bumpyEnemyJump.play(MusicManager.sfxVolume);
 			} else
 			{
-				R.c().soundEffect_enemies_bumpyEnemyCharge.play(MusicManager.sfxVolume);
+				S.c().soundEffect_enemies_bumpyEnemyCharge.play(MusicManager.sfxVolume);
 			}
 		}
 	}

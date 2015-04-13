@@ -10,6 +10,7 @@ import globals.Projectiles;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
 import screen.MyGdxGame;
 import utilities.enumerations.Direction;
 
@@ -100,7 +101,7 @@ public class Enemy_NapalmBarrel extends Enemies
 		// super.popDamageOnLosingLife(bulletDamage, crit);
 
 		GlobalController.fxController.addActor(new PopMessage(this, MessageType.EXPLOSION));
-		R.c().soundEffect_player_barrelExplosion.play(MusicManager.sfxVolume_Player);
+		S.c().soundEffect_player_barrelExplosion.play(MusicManager.sfxVolume_Player);
 
 	}
 

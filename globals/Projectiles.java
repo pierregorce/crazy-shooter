@@ -24,7 +24,7 @@ public enum Projectiles
 	PLAYER_GRENADE_EXPLOSION(7, 2, 20, 4, new Vector2(0, 0), 99999, 20, true, new ProjectileComportements().new Explosion(60, 60), true, R.c().fx_pop),
 	PLAYER_RAILGUN(12, 2, 25, 1, new Vector2(41 * Player.heightCoef, 17 * 4 * Player.heightCoef), 1000, 5, false, new ProjectileComportements().new Straight(), false, R.c().weapons_w9_projectile),
 	PLAYER_ROCKET_LUNCHER(12, 2, 20, 1, new Vector2(37 * Player.heightCoef, 15 * 4 * Player.heightCoef), 1000, 5, true, new ProjectileComportements().new Straight(), false, R.c().weapons_w10_projectile),
-	PLAYER_LIGHTING_GUN(12, 2, 20, 1, new Vector2(41 * Player.heightCoef, 15 * 4 * Player.heightCoef), 1000, 5, true, new ProjectileComportements().new Straight(), false, R.c().weapons_w0_projectile),
+	PLAYER_LIGHTING_GUN(12, 2, 20, 1, new Vector2(41 * Player.heightCoef, 15 * 4 * Player.heightCoef), 700, 5, true, new ProjectileComportements().new Straight(), false, R.c().weapons_w0_projectile),
 	ENEMY_WIZARD(10, 2, 20, 1, new Vector2(2, 2), 1000, 50, true, new ProjectileComportements().new Straight(), false, R.c().enemy_wizard_bullet),
 	ENEMY_LIMON(12, 2, 20, 3, new Vector2(2, 2), 1000, 50, true, new ProjectileComportements().new Straight(), false, R.c().enemy_limon_bullet),
 	ENEMY_FANTOMAS(15, 2, 20, 1, new Vector2(2, 2), 1000, 50, true, new ProjectileComportements().new Target_Player_Action(), false, R.c().enemy_fantomas_bullet),

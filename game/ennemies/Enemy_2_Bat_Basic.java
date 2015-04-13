@@ -7,6 +7,7 @@ import game.sound.MusicManager;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.math.Vector2;
@@ -79,8 +80,7 @@ public class Enemy_2_Bat_Basic extends Enemies
 
 		// player perd de la vie
 
-		if (getRight() > player.getBouncingBox().getX() - 20 && getX() < player.getBouncingBox().getX() + player.getBouncingBox().getWidth() + 20
-				&& player.getImmuneTime() == 0 && player.getY() < getY())
+		if (getRight() > player.getBouncingBox().getX() - 20 && getX() < player.getBouncingBox().getX() + player.getBouncingBox().getWidth() + 20 && player.getImmuneTime() == 0 && player.getY() < getY())
 		{
 			canPick = true;
 		} else
@@ -119,7 +119,7 @@ public class Enemy_2_Bat_Basic extends Enemies
 				public void run()
 				{
 					GameStage.cameraShake(15);
-					R.c().soundEffect_enemies_batAttack.play(MusicManager.sfxVolume);
+					S.c().soundEffect_enemies_batAttack.play(MusicManager.sfxVolume);
 					// player.setWalk(false);
 
 					// Fait perdre de la vie au player

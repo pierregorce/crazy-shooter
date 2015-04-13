@@ -7,6 +7,7 @@ import ressources.DrawableSprite;
 import ressources.R;
 import ressources.Ressource;
 import ressources.Ressource.Dimension;
+import ressources.S;
 import screen.MyGdxGame;
 import screen.ScreenManager;
 import utilities.Methods;
@@ -502,7 +503,7 @@ public class LevelGroup extends Group
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button)
 		{
-			R.c().soundEffect_menu_clickOnLevel.play(MusicManager.sfxVolume);
+			S.basicButtonClickSound.play(MusicManager.sfxVolume);
 			// Recupere le level data contenu dans le buttonLevel
 			ButtonLevel buttonLevel = (ButtonLevel) event.getTarget();
 			// Change les labels de niveau sur l'écran
@@ -536,7 +537,7 @@ public class LevelGroup extends Group
 			{
 				System.out.println("clikk start");
 				ScreenManager.getInstance().show(ScreenEnum.GAMELOADING);
-				R.c().soundEffect_player_barrelExplosion.play(MusicManager.sfxVolume);
+				// R.c().soundEffect_player_barrelExplosion.play(MusicManager.sfxVolume);
 			}
 		}
 	}
@@ -643,8 +644,7 @@ public class LevelGroup extends Group
 		action4.setDuration(0.45f);
 		action4.setInterpolation(Interpolation.swingOut);
 		action4.setPosition(MyGdxGame.VIRTUAL_WIDTH / 2 - width / 2, -100); // se place à sa position finale
-		Ressource ressource1 = new Ressource(drawableSpriteTitle, MyGdxGame.VIRTUAL_WIDTH / 2 - width / 2, 100 + yRetreatBottom, width, new SequenceAction(action4),
-				Dimension.WIDTH);
+		Ressource ressource1 = new Ressource(drawableSpriteTitle, MyGdxGame.VIRTUAL_WIDTH / 2 - width / 2, 100 + yRetreatBottom, width, new SequenceAction(action4), Dimension.WIDTH);
 		addActor(ressource1);
 
 		// -------------------------------------FONT

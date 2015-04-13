@@ -9,6 +9,7 @@ import globals.Projectiles;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
 import screen.MyGdxGame;
 import utilities.enumerations.Direction;
 
@@ -37,8 +38,7 @@ public class Enemy_9_Wasp extends Enemies
 
 	public Enemy_9_Wasp(Player player, float enemyCoef)
 	{
-		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH,
-				R.c().enemy_wasp_walk);
+		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH, R.c().enemy_wasp_walk);
 
 		this.enemyCoef = enemyCoef;
 
@@ -161,7 +161,7 @@ public class Enemy_9_Wasp extends Enemies
 		Projectile p = new Projectile(Projectiles.ENEMY_WASP);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
-		R.c().soundEffect_enemies_beeShoot[new Random().nextInt(R.c().soundEffect_enemies_beeShoot.length)].play(MusicManager.sfxVolume);
+		S.c().soundEffect_enemies_beeShoot[new Random().nextInt(S.c().soundEffect_enemies_beeShoot.length)].play(MusicManager.sfxVolume);
 	}
 
 	@Override

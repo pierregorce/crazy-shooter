@@ -9,6 +9,7 @@ import globals.Projectiles;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -37,8 +38,7 @@ public class Enemy_7_Limon extends Enemies
 
 	public Enemy_7_Limon(Player player, float enemyCoef)
 	{
-		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH,
-				R.c().enemy_limon_walk);
+		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH, R.c().enemy_limon_walk);
 
 		this.player = player;
 		this.enemyCoef = enemyCoef;
@@ -106,7 +106,7 @@ public class Enemy_7_Limon extends Enemies
 			GlobalController.bulletControllerEnemy.addActor(p);
 		}
 
-		R.c().soundEffect_enemies_laserEnemy[new Random().nextInt(R.c().soundEffect_enemies_laserEnemy.length)].play(MusicManager.sfxVolume);
+		S.c().soundEffect_enemies_laserEnemy[new Random().nextInt(S.c().soundEffect_enemies_laserEnemy.length)].play(MusicManager.sfxVolume);
 
 	}
 

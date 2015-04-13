@@ -10,11 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class ButtonScreen extends Button
+public class ButtonScreen extends ButtonUtilities
 {
 	private float	height	= 100;
 
@@ -69,6 +68,7 @@ public class ButtonScreen extends Button
 	{
 		// super.setPosition(x, y);
 		super.setPosition(x - getWidth() / 2, y - getWidth() / 2);
+		currentY = getY();
 	}
 }
 

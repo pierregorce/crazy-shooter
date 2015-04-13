@@ -21,6 +21,7 @@ import java.util.Random;
 import ressources.DrawableAnimation;
 import ressources.R;
 import ressources.Ressource;
+import ressources.S;
 import screen.MyGdxGame;
 import utilities.Methods;
 import utilities.enumerations.Direction;
@@ -50,7 +51,6 @@ public class Player extends Character
 	private int							loosingLiveValueEvent	= 0;
 
 	// CONSTANT CREATION
-
 	private final static TextureRegion	m_region				= R.c().player_walk[0];
 	private final static int			HEIGHT					= 100;
 
@@ -148,7 +148,7 @@ public class Player extends Character
 			GameStage.cameraShake(30);
 			setLife(PlayerStats.getMaxLife());
 
-			R.c().soundEffect_player_levelUp.play(MusicManager.sfxVolume_Player);
+			S.c().soundEffect_player_levelUp.play(MusicManager.sfxVolume_Player);
 		}
 	}
 
@@ -336,19 +336,31 @@ public class Player extends Character
 		Projectiles projectiles = weapons.projectileType;
 
 		// Création du projectile
-		for (int i = 0; i < projectiles.quantityPerShoot; i++)
+		if (PlayerStats.weaponsType != 11)
 		{
+			for (int i = 0; i < projectiles.quantityPerShoot; i++)
+			{
+				Projectile projectile = new Projectile(projectiles);
+				projectile.init(this);
+				if (PlayerStats.weaponsType == 6)
+				{
+					projectile.setTarget(this, new Vector2(getFirstEnemyInDirection(), getY()));
+				}
+				GlobalController.bulletControllerFriendly.addActor(projectile);
+			}
+		} else
+		{
+			// Envoie 3 projectile mais à des endroits différents
+			float enemyCount = getClosestEnemyCount();
+			System.out.println("Tir de lighting gun sur : " + enemyCount + " enemies");
 			Projectile projectile = new Projectile(projectiles);
 			projectile.init(this);
-			if (PlayerStats.weaponsType == 6)
-			{
-				projectile.setTarget(this, new Vector2(getFirstEnemyInDirection(), getY()));
-			}
+			// projectile.setTarget(this, new Vector2(getFirstEnemyInDirection(), getY()));
 			GlobalController.bulletControllerFriendly.addActor(projectile);
 		}
 		weaponsBumpBack(weapons.recoilStrenght);
 
-		// ------------------Add ammmo
+		// Add ammmo --------------------------------------------------------
 		if (weapons.ammo)
 		{
 			Ammos ammos = GlobalController.ammosPool.obtain();
@@ -356,7 +368,7 @@ public class Player extends Character
 			GlobalController.ammosController.addActor(ammos);
 		}
 
-		// Cas particulier du laser -- TODO Change projectile
+		// Cas particulier du laser -----------------------------------------
 		if (PlayerStats.weaponsType == 6)
 		{
 			float dist = getFirstEnemyInDirection();
@@ -374,217 +386,42 @@ public class Player extends Character
 			}
 		}
 
-		// Cas particulier du lighting gun
+		// Cas particulier du lighting gun ----------------------------------
 		if (PlayerStats.weaponsType == 11)
 		{
-			if (bolt == null)
+
+			if (bolt_1 == null)
 			{
-				bolt = new Bolt(this);
-				bolt.setVisible(true);
-				GlobalController.fxController.addActor(bolt);
+				bolt_1 = new Bolt(this);
+				bolt_1.setVisible(true);
+				GlobalController.fxController.addActor(bolt_1);
 			} else
 			{
-				bolt.setVisible(true);
+				bolt_1.setVisible(true);
 			}
+
 		}
 
-		// Animation de tir
-		// addWeaponsAnimation(RessoucesController.getInstance().weapons_w1_shootFx, 20, projectiles.characterAnchor, projectiles.characterAnchor, 0.05f);
-		// a stocker dans l'enum weaponsprojectile
-		// Sound HOW TO
-		// RessoucesController.getInstance().soundEffect_weapons_pistol[new Random().nextInt(RessoucesController.getInstance().soundEffect_weapons_pistol.length)]
-		// .play(MusicManager.sfxVolume_Weapons);
-		// a stocker dans projectile
-		// -------------------------------------------
-		// -------------------------------------------
-		// -------------------------------------------
-		// -------------------------------------------
-		// -------------------------------------------
-		// -------------------------------------------
-
-		// int yOffsetCanon = 40;
-		// Projectile bullet = null; // Projectile throws
-		// Vector2 vector = null; // Stock la position d'apparition de la bullet (diffère selon l'arme)
-		// boolean ammo = true;
-		// // Fx shoot
+		// S.c().soundEffect_weapons_pistol[new Random().nextInt(S.c().soundEffect_weapons_pistol.length)].play(MusicManager.sfxVolume_Weapons);
+		// S.c().soundEffect_weapons_shotGun[new Random().nextInt(S.c().soundEffect_weapons_shotGun.length)].play(MusicManager.sfxVolume_Weapons);
+		// S.c().soundEffect_weapons_bazookaFire[new Random().nextInt(S.c().soundEffect_weapons_bazookaFire.length)].play(MusicManager.sfxVolume_Weapons);
+		// S.c().soundEffect_weapons_machineGun[new Random().nextInt(S.c().soundEffect_weapons_machineGun.length)].play(MusicManager.sfxVolume_Weapons);
 		//
-		// switch (weaponsType) {
-		// case 0:
+		// // Weapon animation ?
+		// // GameStage.cameraShake(10);
 		//
-		// vector = new Vector2(getRight() - 20, getCenterY() - 15);
-		// bullet = ProjectilePoolFactory.getInstance().player_w1_projectilePool.obtain();
-		// bullet.init(this, vector);
-		// GlobalController.bulletControllerFriendly.addActor(bullet);
-		// // Animation
-		// addWeaponsAnimation(RessoucesController.getInstance().weapons_w1_shootFx, 20, vector.x - 3, vector.y - 6, 0.05f);
-		// // Music
-		// RessoucesController.getInstance().soundEffect_weapons_pistol[new Random().nextInt(RessoucesController.getInstance().soundEffect_weapons_pistol.length)]
-		// .play(MusicManager.sfxVolume_Weapons);
-		//
-		// break;
-		//
-		// case 1:
-		// // Lance une balle de type w1
-		// vector = new Vector2(getRight() - 20, getCenterY() - 15);
-		// bullet = ProjectilePoolFactory.getInstance().player_w1_projectilePool.obtain();
-		// bullet.init(this, vector);
-		// GlobalController.bulletControllerFriendly.addActor(bullet);
-		// // Animation
-		// addWeaponsAnimation(RessoucesController.getInstance().weapons_w2_shootFx, 20, vector.x - 3, vector.y - 6, 0.05f);
-		//
-		// // Lance une balle de type w2
-		// Vector2 vector_w2 = new Vector2(getX(), getCenterY() - 15);
-		// Projectile bullet_w2 = ProjectilePoolFactory.getInstance().player_w2_projectilePool.obtain();
-		// bullet_w2.init(this, vector_w2);
-		// GlobalController.bulletControllerFriendly.addActor(bullet_w2);
-		//
-		// // Animation
-		// TextureRegion[] text = RessoucesController.invertAnimation(RessoucesController.getInstance().weapons_w2_shootFx, 0.05f).getKeyFrames();
-		// addWeaponsAnimation(text, 20, getX() - 50 - 3, vector.y - 6, 0.05f);
-		// // Music
-		// RessoucesController.getInstance().soundEffect_weapons_pistol[new Random().nextInt(RessoucesController.getInstance().soundEffect_weapons_pistol.length)]
-		// .play(MusicManager.sfxVolume_Weapons);
-		// addAction(new SequenceAction(Actions.delay(0.05f), new RunnableAction()
-		// {
-		// @Override
-		// public void run()
-		// {
-		// RessoucesController.getInstance().soundEffect_weapons_pistol[new Random().nextInt(RessoucesController.getInstance().soundEffect_weapons_pistol.length)]
-		// .play(MusicManager.sfxVolume_Weapons);
-		// }
-		// }));
-		//
-		// break;
-		// case 2:
-		// // Lance une balle de type w3
-		// for (int i = 0; i < 4; i++)
-		// {
-		// int xRandomization = new Random().nextInt(100);
-		// int yRandomization = new Random().nextInt(20);
-		// vector = new Vector2(getRight() - 20 + xRandomization, getCenterY() - 15 + yRandomization);
-		// bullet = ProjectilePoolFactory.getInstance().player_w3_projectilePool.obtain();
-		// bullet.init(this, vector);
-		// GlobalController.bulletControllerFriendly.addActor(bullet);
-		//
-		// }
-		//
-		// // Animation
-		// addWeaponsAnimation(RessoucesController.getInstance().weapons_w3_shootFx, 20, getRight() - 20, getCenterY() - 15, 0.05f);
-		// weaponsBumpBack(25);
-		// GameStage.cameraShake(10);
-		//
-		// // Music
-		// RessoucesController.getInstance().soundEffect_weapons_shotGun[new Random().nextInt(RessoucesController.getInstance().soundEffect_weapons_shotGun.length)]
-		// .play(MusicManager.sfxVolume_Weapons);
-		//
-		// break;
-		// case 3:
-		// // Lance une balle de type w4
-		// vector = new Vector2(getRight() - 23, getY() - 8 + yOffsetCanon);
-		// bullet = ProjectilePoolFactory.getInstance().player_w4_projectilePool.obtain();
-		// bullet.init(this, vector);
-		// GlobalController.bulletControllerFriendly.addActor(bullet);
-		//
-		// // Animation
-		// addWeaponsAnimation(RessoucesController.getInstance().weapons_w4_shootFx, 70, vector.x - 15, vector.y - 20, 0.05f);
-		// weaponsBumpBack(10);
-		// // Music
-		// RessoucesController.getInstance().soundEffect_weapons_bazookaFire[new Random()
-		// .nextInt(RessoucesController.getInstance().soundEffect_weapons_bazookaFire.length)].play(MusicManager.sfxVolume_Weapons);
-		// break;
-		//
-		// case 4:
-		// // Lance une balle de type w5
-		// vector = new Vector2(getRight(), getY() + yOffsetCanon - 10);
-		// bullet = ProjectilePoolFactory.getInstance().player_w5_projectilePool.obtain();
-		// bullet.init(this, vector);
-		// GlobalController.bulletControllerFriendly.addActor(bullet);
-		//
-		// vector = new Vector2(getRight(), getY() + yOffsetCanon + 10);
-		// bullet = ProjectilePoolFactory.getInstance().player_w5_projectilePool.obtain();
-		// bullet.init(this, vector);
-		// GlobalController.bulletControllerFriendly.addActor(bullet);
-		// // Animation
-		// // addWeaponsAnimation(RessoucesController.getInstance().weapons_w5_shootFx, 70, vector.x - 15, vector.y - 20, 0.05f);
-		// // Music
-		// RessoucesController.getInstance().soundEffect_weapons_machineGun[new Random()
-		// .nextInt(RessoucesController.getInstance().soundEffect_weapons_machineGun.length)].play(MusicManager.sfxVolume_Weapons);
-		// break;
-		// case 5:
-		// // Lance une balle de type w6
-		// for (int i = 0; i < 4; i++)
-		// {
-		// vector = new Vector2(getRight(), getY() + yOffsetCanon);
-		// bullet = ProjectilePoolFactory.getInstance().player_w6_projectilePool.obtain();
-		// bullet.init(this, vector);
-		// GlobalController.bulletControllerFriendly.addActor(bullet);
-		// }
 		// // Music
 		// if (!soundPlaying)
 		// {
-		// weaponSound = RessoucesController.getInstance().soundEffect_weapons_flameThrower_Loop;
+		// weaponSound = S.c().soundEffect_weapons_flameThrower_Loop;
 		// weaponSound.loop(MusicManager.sfxVolume_Weapons);
 		// soundPlaying = true;
 		// }
 		//
-		// ammo = false;
-		//
-		// // Pas d'animation pour le lance flamme
-		// break;
-		// case 6:
-		// vector = new Vector2(getRight() - 23 + 15, getY() - 8 + yOffsetCanon + 1);
-		// float dist = getFirstEnemyInDirection();
-		// if (beam == null)
-		// {
-		// beam = new Beam();
-		// beam.init(vector, dist, this);
-		// beam.setVisible(true);
-		// GlobalController.fxController.addActor(beam);
-		// } else
-		// {
-		// beam.setVisible(true);
-		// }
-		// // Lance une bullet qui ressemble a une w1 mais invisible et avec des dmg differents.
-		// vector.set(vector.x + dist, vector.y);
-		// for (int i = 0; i < 3; i++)
-		// {
-		// bullet = ProjectilePoolFactory.getInstance().player_w7_projectilePool.obtain();
-		// bullet.init(this, vector);
-		// GlobalController.bulletControllerFriendly.addActor(bullet);
-		// }
-		//
 		// // Music
 		// if (!soundPlaying)
 		// {
-		// weaponSound = RessoucesController.getInstance().soundEffect_weapons_laserGun_Loop[new Random()
-		// .nextInt(RessoucesController.getInstance().soundEffect_weapons_laserGun_Loop.length)];
-		// weaponSound.loop(MusicManager.sfxVolume_Weapons);
-		// soundPlaying = true;
-		// }
-		//
-		// ammo = false;
-		// break;
-		//
-		// case 7:
-		//
-		// for (int i = 0; i < 1; i++)
-		// {
-		// vector = new Vector2(getRight() - 15, getY() + yOffsetCanon);
-		// bullet = new Player_w8_Projectile();
-		// bullet.init(this, vector);
-		// GlobalController.bulletControllerFriendly.addActor(bullet);
-		// }
-		//
-		// break;
-		// default:
-		// break;
-		// }
-
-		// // Music
-		// if (!soundPlaying)
-		// {
-		// weaponSound = RessoucesController.getInstance().soundEffect_weapons_laserGun_Loop[new Random()
-		// .nextInt(RessoucesController.getInstance().soundEffect_weapons_laserGun_Loop.length)];
+		// weaponSound = S.c().soundEffect_weapons_laserGun_Loop[new Random().nextInt(S.c().soundEffect_weapons_laserGun_Loop.length)];
 		// weaponSound.loop(MusicManager.sfxVolume_Weapons);
 		// soundPlaying = true;
 		// }
@@ -603,24 +440,61 @@ public class Player extends Character
 		}
 	}
 
-	private Bolt	bolt;	; // Lightning gun
+	private Bolt	bolt_1;	// 3 ligthing en même temps !
+	private Bolt	bolt_2;	// 3 ligthing en même temps !
+	private Bolt	bolt_3;	// 3 ligthing en même temps !
 
 	private void updateBolt()
 	{
-		if (bolt != null && bolt.isVisible())
+		System.out.println("On peut toucher : " + getClosestEnemyCount() + " enemies");
+		// Met à jour la position de chaque bolt ou le cache
+		Character character1 = getXClosestEnemyInDirection(1);
+		Character character2 = getXClosestEnemyInDirection(2);
+		Character character3 = getXClosestEnemyInDirection(3);
+
+		if (bolt_1 != null && bolt_1.isVisible())
 		{
-			Character c = getXClosestEnemyInDirection();
+			int count = getClosestEnemyCount();
+
+			Character c = getXClosestEnemyInDirection(1);
 			if (c == null)
 			{
-				bolt.setObjective(getRight() + 500, getTop());
+				bolt_1.setObjective(getRight() + 500, getTop());
 			} else
 			{
-				bolt.setObjective(c.getCenterX(), c.getCenterY());
+				bolt_1.setObjective(c.getCenterX(), c.getCenterY());
 			}
 		}
 	}
 
-	private Character getXClosestEnemyInDirection()
+	/**
+	 * Renvoie le nombre d'ennemies à porté du lighting gun Attention, ce doit être dans le même sens que le player....
+	 */
+	private int getClosestEnemyCount()
+	{
+		float distance = Projectiles.PLAYER_LIGHTING_GUN.lenghtAlive;
+		SnapshotArray<Actor> characters = GlobalController.enemyController.getChildren();
+		Vector2 v = new Vector2(getX(), getY());
+		int count = 0;
+
+		for (Actor character : characters)
+		{
+			if (v.dst(character.getX(), character.getY()) < distance)
+			{
+				count++;
+			}
+			if (count >= 3)
+			{
+				return 3;
+			}
+		}
+		return count;
+	}
+
+	/**
+	 * Retourne le n-ième enemy le plus prés 1 pour avoir l'enemy le plus prés (x et y) [Sert pour le lighting gun]
+	 */
+	private Character getXClosestEnemyInDirection(int n)
 	{
 		float distance = Projectiles.PLAYER_LASER.lenghtAlive; // Distance max w11
 		SnapshotArray<Actor> enemyArray = GlobalController.enemyController.getChildren();
@@ -653,7 +527,7 @@ public class Player extends Character
 	}
 
 	/**
-	 * Retourne la distance du premier enemy face au player et ayant le même x. La distance est positive.
+	 * Retourne la distance du premier enemy face au player et ayant le même y. La distance est positive. [Sert pour le laser]
 	 */
 	private float getFirstEnemyInDirection()
 	{
@@ -758,9 +632,10 @@ public class Player extends Character
 			{
 				beam.setVisible(false);
 			}
-			if (bolt != null)
+
+			if (bolt_1 != null)
 			{
-				bolt.setVisible(false);
+				bolt_1.setVisible(false);
 			}
 
 			if (weaponSound != null)
@@ -775,14 +650,14 @@ public class Player extends Character
 	public void setJump(boolean jump)
 	{
 		super.setJump(jump);
-		R.c().soundEffect_player_jump[new Random().nextInt(R.c().soundEffect_player_jump.length)].play(MusicManager.sfxVolume_Player);
+		S.c().soundEffect_player_jump[new Random().nextInt(S.c().soundEffect_player_jump.length)].play(MusicManager.sfxVolume_Player);
 	}
 
 	@Override
 	public void loseLife(int quantity)
 	{
 		super.loseLife(quantity);
-		R.c().soundEffect_player_gettingHit[new Random().nextInt(R.c().soundEffect_player_gettingHit.length)].play(MusicManager.sfxVolume_Player);
+		S.c().soundEffect_player_gettingHit[new Random().nextInt(S.c().soundEffect_player_gettingHit.length)].play(MusicManager.sfxVolume_Player);
 	}
 
 }

@@ -10,8 +10,6 @@ public class XXX
 	// Coder le knight e15
 	// level à coder
 	// Ajout du laser pour le robot e19 + bump !!
-	// supprimer les sons du loader initial (how to bruitage from menu ?)
-	// load les sons lors du 1er entrée dans un level
 	// reprendre position des projectiles lors du tirs des enemys (anchor)
 	// bump sur le boss 2 projectile !
 	// bullet start a modifier dans le cas d'une laser ou lighting gun

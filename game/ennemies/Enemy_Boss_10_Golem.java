@@ -15,6 +15,7 @@ import ressources.ActionFactory;
 import ressources.DrawableAnimation;
 import ressources.R;
 import ressources.Ressource;
+import ressources.S;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.audio.Sound;
@@ -48,12 +49,11 @@ public class Enemy_Boss_10_Golem extends Enemies
 	private boolean				soundSlashPlaying	= false;
 	private Timer				timerSpeak			= new Timer(5f);
 	private Timer				timerSpit			= new Timer(1f);
-	private Sound				soundSlash			= R.c().soundEffect_boss1_umbrellaSlash;
+	private Sound				soundSlash			= S.c().soundEffect_boss1_umbrellaSlash;
 
 	public Enemy_Boss_10_Golem(Player player, float enemyCoef)
 	{
-		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH,
-				R.c().enemy_golem_walk);
+		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH, R.c().enemy_golem_walk);
 
 		Vector2 position = EnemyPopConstants.getInstance().getGroundBlockPosition();
 		setPosition(position.x, position.y);
@@ -131,7 +131,7 @@ public class Enemy_Boss_10_Golem extends Enemies
 			SequenceAction action = new SequenceAction();
 			m_state = State.PREPARATION;
 
-			R.c().soundEffect_boss1_stomp[new Random().nextInt(R.c().soundEffect_boss1_stomp.length)].play(MusicManager.sfxVolume);
+			S.c().soundEffect_boss1_stomp[new Random().nextInt(S.c().soundEffect_boss1_stomp.length)].play(MusicManager.sfxVolume);
 
 			action.addAction(Actions.delay(0.7f));
 
@@ -141,7 +141,7 @@ public class Enemy_Boss_10_Golem extends Enemies
 				@Override
 				public void run()
 				{
-					R.c().soundEffect_boss1_dash.play(MusicManager.sfxVolume);
+					S.c().soundEffect_boss1_dash.play(MusicManager.sfxVolume);
 					m_state = State.TACKLE;
 					walk = false;
 				}
@@ -174,8 +174,7 @@ public class Enemy_Boss_10_Golem extends Enemies
 		if (getActions().size > 0 && m_state == State.TACKLE)
 		{
 			DrawableAnimation drawableAnimation = new DrawableAnimation(0.05f, R.c().jumpUpFxAnimation);
-			Ressource ressource = new Ressource(drawableAnimation, getCenterX(), getY(), 40,
-					ActionFactory.getRemoveAction(drawableAnimation.getAnimationDuration() - 0.05f));
+			Ressource ressource = new Ressource(drawableAnimation, getCenterX(), getY(), 40, ActionFactory.getRemoveAction(drawableAnimation.getAnimationDuration() - 0.05f));
 			GlobalController.fxController.addActor(ressource);
 		}
 
@@ -192,12 +191,12 @@ public class Enemy_Boss_10_Golem extends Enemies
 
 		if (timerSpeak.doAction(delta))
 		{
-			R.c().soundEffect_boss1_laugh[new Random().nextInt(R.c().soundEffect_boss1_laugh.length)].play(MusicManager.sfxVolume);
+			S.c().soundEffect_boss1_laugh[new Random().nextInt(S.c().soundEffect_boss1_laugh.length)].play(MusicManager.sfxVolume);
 		}
 
 		if (timerSpit.doAction(delta) && shoot)
 		{
-			R.c().soundEffect_boss1_burp[new Random().nextInt(R.c().soundEffect_boss1_burp.length)].play(MusicManager.sfxVolume);
+			S.c().soundEffect_boss1_burp[new Random().nextInt(S.c().soundEffect_boss1_burp.length)].play(MusicManager.sfxVolume);
 
 		}
 

@@ -46,6 +46,7 @@ public class LoadingScreen implements MovableScreen
 	private String				tips;
 
 	private String				version		= "version 1.2";
+	private long				time		= System.currentTimeMillis();
 
 	@Override
 	public void render(float delta)
@@ -56,13 +57,15 @@ public class LoadingScreen implements MovableScreen
 
 		// Tant que le load n'est pas fait alors alors on ne passe pas au changement de screen
 
+		R.c().assetManager.finishLoading();
+
 		if (R.c().assetManager.update(0) && !m_loading)
 		{
 			m_loading = true;
 			R.c().generateTextures();
 			// Generation des fonts
 			R.c().generateFonts();
-			R.c().generateSound();
+			// R.c().generateSound();
 
 			System.out.println("Initialisation des variables globales concernant le joueur...");
 			// Stock les données d'upgrades dans la classe Upgrades - FICHIER player-upgrade
@@ -75,7 +78,7 @@ public class LoadingScreen implements MovableScreen
 			// Initialisation des screens, ils peuvent utiliser les variables précedement chargées
 			System.out.println("Done.");
 			addButtons();
-			System.out.println("Temps de chargement : " + (System.currentTimeMillis()));
+			System.out.println("Temps de chargement : " + (System.currentTimeMillis() - time));
 		}
 
 		// System.out.println("Temps de chargement = " + (b));
@@ -106,7 +109,7 @@ public class LoadingScreen implements MovableScreen
 	private void addButtons()
 	{
 		float y = 340;
-		ButtonScreen b = new ButtonScreen(loadingGroup, ScreenEnum.GAME);
+		ButtonScreen b = new ButtonScreen(loadingGroup, ScreenEnum.GAMELOADING);
 		b.putStyle(new TextureRegion(new Texture(Gdx.files.internal("images/loading/loading-button-goToPlay.png"))));
 		b.setPosition(-MyGdxGame.VIRTUAL_WIDTH, 280 + y); // place a sa position final - yRetreat
 		b.addAction(Actions.moveTo(MyGdxGame.VIRTUAL_WIDTH / 2, 280 + y, 0.4f, Interpolation.sine));

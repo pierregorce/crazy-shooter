@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 
 import ressources.ButtonRessource;
 import ressources.R;
+import ressources.S;
 import screen.MyGdxGame;
 import utilities.ButtonScreen;
 import utilities.Methods;
@@ -477,7 +478,7 @@ public class UpgradeGroup extends Group
 			{
 				if (selectedWeapon.isBuy)
 				{
-					R.c().soundEffect_menu_selectWeapon.play(MusicManager.sfxVolume);
+					S.selectWeaponClickSound.play(MusicManager.sfxVolume);
 					equipedMessage();
 					// weaponsButton.setChecked(true);
 					PlayerStats.weaponsType = selectedWeapon.ordinal();
@@ -549,7 +550,7 @@ public class UpgradeGroup extends Group
 					super.touchUp(event, x, y, pointer, button);
 					System.out.println("click yes");
 
-					R.c().soundEffect_menu_buyWeapon.play(MusicManager.sfxVolume);
+					S.buyWeaponClickSound.play(MusicManager.sfxVolume);
 					// weaponsButton.setDisabled(false);
 					// weaponsButton.weapons.setBuy(true);
 					// weaponsButton.setChecked(true);
