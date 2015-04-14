@@ -1,6 +1,12 @@
 package game.entitiy;
 
+import game.projectiles.Projectile;
+
+import java.util.Random;
+
+import ressources.DrawableAnimation;
 import ressources.R;
+import ressources.Ressource;
 import screen.MyGdxGame;
 import utilities.Methods;
 import utilities.enumerations.Direction;
@@ -9,6 +15,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Timer;
 
 /**
@@ -21,6 +30,7 @@ public abstract class Character extends PhysicalEntity
 {
 	protected int			life;
 	protected int			maxLife;
+	public boolean			protection			= false;
 
 	// Animations list....................................................
 	private Animation		walkLeft;
@@ -298,5 +308,30 @@ public abstract class Character extends PhysicalEntity
 	public void setShoot(boolean shoot)
 	{
 		this.shoot = shoot;
+	}
+
+	public void explosionByBullet(Projectile p)
+	{
+
+		DrawableAnimation drawableAnimation;
+		Ressource fx = null;
+
+		drawableAnimation = new DrawableAnimation(0.1f, R.c().fx_pop);
+
+		float min = 60;
+		float max = 80;
+		float dimension = new Random().nextFloat() * (max - min) + min;
+
+		fx = new Ressource(drawableAnimation, p.getCenterX(), p.getCenterY(), dimension, new SequenceAction(Actions.delay(drawableAnimation.getAnimationDuration()), Actions.removeActor()));
+
+		if (protection)
+		{
+			fx.setColor(1, 1, 1, 0.45f);
+		} else
+		{
+			fx.setColor(1, 1, 1, 0.75f);
+		}
+
+		GlobalController.fxController.addActor(fx);
 	}
 }

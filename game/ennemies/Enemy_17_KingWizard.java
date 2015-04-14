@@ -57,7 +57,7 @@ public class Enemy_17_KingWizard extends Enemies
 	@Override
 	protected void enemies_initialisation()
 	{
-		shootCooldwon = 0.08f;
+		shootCooldwon = 0.25f;
 		m_shootPauseTime = 0f;
 		m_shootRunTime = 1f;
 		m_goldQuantity = 10;
@@ -85,10 +85,11 @@ public class Enemy_17_KingWizard extends Enemies
 	public void act(float delta)
 	{
 		super.act(delta);
+		shoot = false;
 
 		if (m_switchPlateformTimer.doAction(delta))
 		{
-			finalBlockObjective = GlobalController.blockController.getTopsBlocks();	// Block_5
+			finalBlockObjective = GlobalController.blockController.getTopsBlocks();
 		}
 
 		// Récupère des données relative au pathfinding
@@ -118,7 +119,8 @@ public class Enemy_17_KingWizard extends Enemies
 		{
 			if (target == null)
 			{
-				EnemyComportements.patrolOnBlock(this, player);
+				patrouille();
+				// EnemyComportements.patrolOnBlock(this, player);
 			} else
 			{
 				if (getCollisionBox().contains(target.getCenterX(), target.getCenterY()))
@@ -146,27 +148,6 @@ public class Enemy_17_KingWizard extends Enemies
 			}));
 		}
 
-		// if (getY() == GameStage.GROUND_HEIGHT)
-		// {
-		// System.out.println("Je suis tombé au sol, je vais devoir remonter");
-		// controlled = false;
-		// if (wizardStates != States.CLIMB)
-		// {
-		// wizardStates = States.CLIMB;
-		// }
-		// }
-
-		// if (wizardStates == States.CLIMB && m_wayPointObjective.getWayPointObjective() == null)
-		// {
-		// System.out.println("J'ai atteint mon objectif final.");
-		// wizardStates = States.PATROL;
-		// }
-		//
-		// if (wizardStates == States.CLIMB)
-		// {
-		// grimpe();
-		// }
-
 		if (wizardStates == States.PATROL)
 		{
 			if (m_switchPlateformTimer.doAction(delta))
@@ -177,7 +158,7 @@ public class Enemy_17_KingWizard extends Enemies
 			{
 				patrouille();
 				System.out.println("Je patrouille");
-				maxVelocityX = 3;
+				maxVelocityX = 2.5f;
 			}
 		} else
 		{
@@ -197,7 +178,7 @@ public class Enemy_17_KingWizard extends Enemies
 	{
 		// Patrouille si le player est loin
 		float distance = Math.abs(getX() - player.getX());
-		if (distance <= 200)
+		if (distance <= 250)
 		{
 			// Tir
 			walk = false;
@@ -227,21 +208,9 @@ public class Enemy_17_KingWizard extends Enemies
 	@Override
 	public void shootEngine()
 	{
-		// WizardProjectile bullet = ProjectilePoolFactory.getInstance().wizardBulletPool.obtain();
-		// bullet.init(this, new Vector2(getRight(), getCenterY()));
-		// GlobalController.bulletControllerEnemy.addActor(bullet);
-		for (int i = 0; i < 4; i++)
-		{
-
-			// Vector2 vector = new Vector2(getRight(), getY() + 30);
-			// Projectile bullet = ProjectilePoolFactory.getInstance().player_w6_projectilePool.obtain();
-			// bullet.init(this, vector);
-			// GlobalController.bulletControllerEnemy.addActor(bullet);
-		}
-
-		// BOSS_1_Projectile bullet = new BOSS_1_Projectile();
-		// bullet.init(this, new Vector2(getCenterX(), getTop()));
-		// GlobalController.bulletControllerEnemy.addActor(bullet);
+		// Projectile p = new Projectile(Projectiles.ENEMY_KING_WIZARD);
+		// p.init(this);
+		// GlobalController.bulletControllerEnemy.addActor(p);
 	}
 
 	@Override

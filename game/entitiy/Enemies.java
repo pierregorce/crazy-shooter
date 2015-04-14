@@ -22,7 +22,6 @@ public abstract class Enemies extends Character
 	public int			m_goldQuantity	= 1;
 	public int			m_goldValue		= 10;
 	protected boolean	bumpSensibility	= true;
-	public boolean		protection		= false;
 	protected Player	player;
 
 	public Enemies(Player player, int maxLife, float moveSpeed, int attackPower, int xpGainOnKill, float height, TextureRegion[] walkAnimationRight)

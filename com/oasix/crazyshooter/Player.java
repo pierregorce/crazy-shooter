@@ -16,6 +16,7 @@ import globals.PlayerStats;
 import globals.Projectiles;
 import globals.Weapons;
 
+import java.util.Comparator;
 import java.util.Random;
 
 import ressources.DrawableAnimation;
@@ -37,6 +38,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.badlogic.gdx.utils.Sort;
 
 public class Player extends Character
 {
@@ -350,12 +352,10 @@ public class Player extends Character
 			}
 		} else
 		{
-			// Envoie 3 projectile mais à des endroits différents
-			float enemyCount = getClosestEnemyCount();
-			System.out.println("Tir de lighting gun sur : " + enemyCount + " enemies");
+			// Envoie 3 projectile mais à des Y et X endroits différents
 			Projectile projectile = new Projectile(projectiles);
 			projectile.init(this);
-			// projectile.setTarget(this, new Vector2(getFirstEnemyInDirection(), getY()));
+			// projectile.setTarget(this, new Vector2(c.getCenterX(), c.getCenterY()));
 			GlobalController.bulletControllerFriendly.addActor(projectile);
 		}
 		weaponsBumpBack(weapons.recoilStrenght);
@@ -389,7 +389,6 @@ public class Player extends Character
 		// Cas particulier du lighting gun ----------------------------------
 		if (PlayerStats.weaponsType == 11)
 		{
-
 			if (bolt_1 == null)
 			{
 				bolt_1 = new Bolt(this);
@@ -399,7 +398,24 @@ public class Player extends Character
 			{
 				bolt_1.setVisible(true);
 			}
-
+			if (bolt_2 == null)
+			{
+				bolt_2 = new Bolt(this);
+				bolt_2.setVisible(true);
+				GlobalController.fxController.addActor(bolt_2);
+			} else
+			{
+				bolt_2.setVisible(true);
+			}
+			if (bolt_3 == null)
+			{
+				bolt_3 = new Bolt(this);
+				bolt_3.setVisible(true);
+				GlobalController.fxController.addActor(bolt_3);
+			} else
+			{
+				bolt_3.setVisible(true);
+			}
 		}
 
 		// S.c().soundEffect_weapons_pistol[new Random().nextInt(S.c().soundEffect_weapons_pistol.length)].play(MusicManager.sfxVolume_Weapons);
@@ -446,84 +462,87 @@ public class Player extends Character
 
 	private void updateBolt()
 	{
-		System.out.println("On peut toucher : " + getClosestEnemyCount() + " enemies");
-		// Met à jour la position de chaque bolt ou le cache
-		Character character1 = getXClosestEnemyInDirection(1);
-		Character character2 = getXClosestEnemyInDirection(2);
-		Character character3 = getXClosestEnemyInDirection(3);
-
 		if (bolt_1 != null && bolt_1.isVisible())
 		{
-			int count = getClosestEnemyCount();
-
-			Character c = getXClosestEnemyInDirection(1);
+			Character c = getClosestEnemyInAllDirection(0);
 			if (c == null)
 			{
-				bolt_1.setObjective(getRight() + 500, getTop());
+				bolt_1.setObjective(getCorretedX(290), getCenterY());
 			} else
 			{
 				bolt_1.setObjective(c.getCenterX(), c.getCenterY());
 			}
 		}
-	}
-
-	/**
-	 * Renvoie le nombre d'ennemies à porté du lighting gun Attention, ce doit être dans le même sens que le player....
-	 */
-	private int getClosestEnemyCount()
-	{
-		float distance = Projectiles.PLAYER_LIGHTING_GUN.lenghtAlive;
-		SnapshotArray<Actor> characters = GlobalController.enemyController.getChildren();
-		Vector2 v = new Vector2(getX(), getY());
-		int count = 0;
-
-		for (Actor character : characters)
+		if (bolt_2 != null && bolt_2.isVisible())
 		{
-			if (v.dst(character.getX(), character.getY()) < distance)
+			Character c = getClosestEnemyInAllDirection(1);
+			if (c == null)
 			{
-				count++;
-			}
-			if (count >= 3)
+				bolt_2.setObjective(getCorretedX(250), getCenterY() + 30);
+			} else
 			{
-				return 3;
+				bolt_2.setObjective(c.getCenterX(), c.getCenterY());
 			}
 		}
-		return count;
+		if (bolt_3 != null && bolt_3.isVisible())
+		{
+			Character c = getClosestEnemyInAllDirection(2);
+			if (c == null)
+			{
+				bolt_3.setObjective(getCorretedX(250), getCenterY() - 30);
+			} else
+			{
+				bolt_3.setObjective(c.getCenterX(), c.getCenterY());
+			}
+		}
+
 	}
 
 	/**
-	 * Retourne le n-ième enemy le plus prés 1 pour avoir l'enemy le plus prés (x et y) [Sert pour le lighting gun]
+	 * Retourne le n-ième enemy le plus prés 1 pour avoir l'enemy le plus prés (x et y) [Sert pour le lighting gun] Attention, ce doit être dans le même sens que le
+	 * player.... n démmarre à 0
 	 */
-	private Character getXClosestEnemyInDirection(int n)
+	private Character getClosestEnemyInAllDirection(int n)
 	{
-		float distance = Projectiles.PLAYER_LASER.lenghtAlive; // Distance max w11
+		float distance = Projectiles.PLAYER_LASER.lenghtAlive;
 		SnapshotArray<Actor> enemyArray = GlobalController.enemyController.getChildren();
+		final Vector2 v = new Vector2(getX(), getY());
 
-		for (Actor actor : enemyArray)
+		Comparator<Actor> c = new Comparator<Actor>()
 		{
-			Enemies enemy = (Enemies) actor;
-			// Caclul de la distance avec l'enemy,
-			float tempDistance = enemy.getCenterX() - getCenterX();
-			// positif si l'enemy est a gauche du player
-			// négatif si l'enemy est a droite du player
-			if (direction == Direction.LEFT_DIRECTION && tempDistance < 0)
+			@Override
+			public int compare(Actor o1, Actor o2)
 			{
-				if (Math.abs(tempDistance) < distance)
+
+				if (v.dst(o1.getX(), o1.getY()) > v.dst(o2.getX(), o2.getY()))
 				{
-					distance = Math.abs(tempDistance);
+					return 1;
+				} else
+				{
+					return -1;
 				}
-				return enemy;
 			}
-			if (direction == Direction.RIGHT_DIRECTION && tempDistance > 0)
+		};
+
+		Sort.instance().sort(enemyArray, c);
+
+		try
+		{
+			Character character = (Character) enemyArray.get(n);
+
+			if (v.dst(character.getCenterX(), character.getCenterY()) > distance)
 			{
-				if (tempDistance < distance)
-				{
-					distance = tempDistance;
-				}
-				return enemy;
+				return null;
+			} else
+			{
+				return character;
 			}
+
+		} catch (Exception e)
+		{
+			return null;
 		}
-		return null;
+
 	}
 
 	/**
@@ -533,7 +552,7 @@ public class Player extends Character
 	{
 
 		SnapshotArray<Actor> enemyArray = GlobalController.enemyController.getChildren();
-		float distance = 600; // Distance max w7
+		float distance = Projectiles.PLAYER_LASER.lenghtAlive;
 
 		// Si la distance à l'enemy est inférieure à la variable distance alors stocke la distance.
 
@@ -637,6 +656,14 @@ public class Player extends Character
 			{
 				bolt_1.setVisible(false);
 			}
+			if (bolt_2 != null)
+			{
+				bolt_2.setVisible(false);
+			}
+			if (bolt_3 != null)
+			{
+				bolt_3.setVisible(false);
+			}
 
 			if (weaponSound != null)
 			{
@@ -660,4 +687,19 @@ public class Player extends Character
 		S.c().soundEffect_player_gettingHit[new Random().nextInt(S.c().soundEffect_player_gettingHit.length)].play(MusicManager.sfxVolume_Player);
 	}
 
+	/**
+	 * Retourne pour une position X du bon coté du player
+	 * 
+	 * @rightAnchor position a droite
+	 */
+	public float getCorretedX(float rightAnchor)
+	{
+		if (direction == Direction.RIGHT_DIRECTION)
+		{
+			return getX() + rightAnchor;
+		} else
+		{
+			return getRight() - rightAnchor;
+		}
+	}
 }

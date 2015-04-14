@@ -136,29 +136,11 @@ public class Projectile extends PhysicalEntity
 		return projectilesType.damage + modulation;
 	}
 
-	public void doEnddingEffect(Character characterReceiving, float alpha)
+	public void doEnddingEffect(Character characterReceiving)
 	{
-		// TODO
-		// DrawableAnimation drawableAnimation;
-		// Ressource fx = null;
-		//
-		// drawableAnimation = new DrawableAnimation(0.1f, R.getInstance().popFxAnimation);
-		//
-		// float min = 45;
-		// float max = 75;
-		// float dimension = new Random().nextFloat() * (max - min) + min;
-		//
-		// fx = new Ressource(drawableAnimation, getX() - 25, getY() - 25, dimension, new SequenceAction(Actions.delay(drawableAnimation.getAnimationDuration()),
-		// Actions.removeActor()));
-		//
-		// fx.setColor(1, 1, 1, alpha);
-		//
-		// GlobalController.fxController.addActor(fx);
-
-		// TODO direction errror
-
 		getActions().clear(); // Enleve au cas ou les actions en cours
 		enemyBumping(characterReceiving, direction);
+		characterReceiving.explosionByBullet(this);
 		projectilesType.projectileComportement.comportement_endingEffect(this, characterReceiving);
 	}
 

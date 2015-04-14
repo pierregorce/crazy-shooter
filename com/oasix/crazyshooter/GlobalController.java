@@ -255,9 +255,7 @@ public class GlobalController
 				player.setLoosingLiveValueEvent(bullet.getPower());
 
 				// Delete Bullet
-				float min = 0.5f;
-				float max = 0.9f;
-				bullet.doEnddingEffect(player, new Random().nextFloat() * (max - min) + min);
+				bullet.doEnddingEffect(player);
 				if (bullet.projectilesType.removeOnCollision)
 				{
 					bullet.active = false;
@@ -295,26 +293,12 @@ public class GlobalController
 						crit = true;
 					}
 
-					if (enemy.protection == false)
-					{
-						// ------------------------- Lose life & Add explosion
-						enemy.loseLife(bulletDamage);
-						// -------------------------- Pop Damage
-						enemy.popDamageOnLosingLife(bulletDamage, crit);
-					}
-
+					// ------------------------- Lose life & Add explosion
+					enemy.loseLife(bulletDamage);
+					// -------------------------- Pop Damage
+					enemy.popDamageOnLosingLife(bulletDamage, crit);
 					// ---------------------------Add weapons effect
-					if (enemy.protection)
-					{
-						float min = 0.3f;
-						float max = 0.7f;
-						bullet.doEnddingEffect(enemy, new Random().nextFloat() * (max - min) + min);
-					} else
-					{
-						float min = 0.5f;
-						float max = 0.9f;
-						bullet.doEnddingEffect(enemy, new Random().nextFloat() * (max - min) + min);
-					}
+					bullet.doEnddingEffect(enemy);
 
 					// -------------------------- Delete enemy if dead
 					if (enemy.getLife() <= 0)

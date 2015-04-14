@@ -25,7 +25,8 @@ public class PopMessage extends Group
 	private static String[]	messagesBoss2		= { "BZZ BZZ", "ZZZBBB !", "?&%!" };
 	private static String[]	messagesBoss3		= { "TAA DAA", "WISH!" };
 	private static String[]	messagesBoss3_phase	= { "ZOU" };
-	private static String[]	messageKnight		= { "KRIGT", "KRAK" };
+	private static String[]	messagesBoss4		= { "KRIGT", "KRAK" };
+	private static String[]	messageKnight		= { "BLOCK", "PROTECT" };
 	private static String[]	messageLoseLife		= { "-" };
 	private static String[]	messageHeal			= { "+" };
 
@@ -43,8 +44,9 @@ public class PopMessage extends Group
 		HEAL(messageHeal, 4, 0.7f, Color.GREEN),
 		BOSS_CRY_2(messagesBoss2, 5, 0.7f, Color.ORANGE),
 		BOSS_CRY_3(messagesBoss3, 4, 0.7f, Color.PINK),
+		BOSS_CRY_4(messagesBoss4, 4, 0.7f, Color.MAROON),
 		BOSS_PHASE_3(messagesBoss3_phase, 4, 0.7f, Color.PINK),
-		KNIGHT(messageKnight, 3, 0.8f, Color.DARK_GRAY);
+		KNIGHT(messageKnight, 4, 1.2f, Color.ORANGE);
 
 		private String[]	messages;
 		private int			scale;

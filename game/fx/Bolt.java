@@ -32,9 +32,9 @@ public class Bolt extends Actor
 	public void act(float delta)
 	{
 		super.act(delta);
-		if (timerBoltChange.doAction(delta))
+		if (timerBoltChange.doAction(delta) || true)
 		{
-			Vector2 v = new Vector2(player.getX() + Projectiles.PLAYER_LIGHTING_GUN.characterAnchor.x, player.getY() + Projectiles.PLAYER_LIGHTING_GUN.characterAnchor.y);
+			Vector2 v = new Vector2(player.getCorretedX(Projectiles.PLAYER_LIGHTING_GUN.characterAnchor.x), player.getY() + Projectiles.PLAYER_LIGHTING_GUN.characterAnchor.y);
 			lineArray3 = createBolt(v.cpy(), objective.cpy(), 7);
 			lineArray = createBolt(v.cpy(), objective.cpy(), 15);
 			lineArray2 = createBolt(v.cpy(), objective.cpy(), 10);

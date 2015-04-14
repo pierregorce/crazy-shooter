@@ -58,8 +58,7 @@ public class GameStage extends Stage
 		System.out.println("Pour gagner les 45 points de talents, il faut 45 niveau soit " + PlayerStats.getSumXpForLevel(45) + " xp.");
 		System.out.println("Pour acheter les 6 armes il faut :" + (200 + 500 + 1500 + 3500 + 6500 * 2) + " golds");
 
-		GameStage.hudMessages.add(new HudMessages("Level :" + ScreenManager.getInstance().getLevelSelected().levelIndex, ""
-				+ ScreenManager.getInstance().getLevelSelected().levelName));
+		GameStage.hudMessages.add(new HudMessages("Level :" + ScreenManager.getInstance().getLevelSelected().levelIndex, "" + ScreenManager.getInstance().getLevelSelected().levelName));
 
 		setViewport(new ExtendViewport(MyGdxGame.VIRTUAL_WIDTH, MyGdxGame.VIRTUAL_HEIGHT));
 		// setViewport(new FitViewport(MyGdxGame.VIRTUAL_WIDTH, MyGdxGame.VIRTUAL_HEIGHT));
@@ -94,8 +93,7 @@ public class GameStage extends Stage
 		globalController.control(delta);
 
 		// Controle de si il faut deplacer la camera et donc le background-------------------------------------------------------------------------------------
-		if (globalController.getPlayer().getX() > MyGdxGame.VIRTUAL_WIDTH / 2
-				&& globalController.getPlayer().getX() < MyGdxGame.VIRTUAL_WIDTH + MyGdxGame.VIRTUAL_WIDTH / 2)
+		if (globalController.getPlayer().getX() > MyGdxGame.VIRTUAL_WIDTH / 2 && globalController.getPlayer().getX() < MyGdxGame.VIRTUAL_WIDTH + MyGdxGame.VIRTUAL_WIDTH / 2)
 		{
 			cameraMovingX = true;
 		} else

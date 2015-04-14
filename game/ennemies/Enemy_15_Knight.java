@@ -4,6 +4,8 @@ import game.entitiy.Enemies;
 import game.entitiy.EnemyPopConstants;
 import game.pop.PopMessage;
 import game.pop.PopMessage.MessageType;
+import game.projectiles.Projectile;
+import globals.Projectiles;
 
 import java.util.Random;
 
@@ -17,13 +19,18 @@ import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
 import com.oasix.crazyshooter.Timer;
 
+/**
+ * Le knight follow simplement le player. Lorsque le player est sur le même block, se protège 2s - est vulnérable 3s Lorsque le player n'est plus sur le même block alors
+ * patrol a nouveau
+ *
+ */
 public class Enemy_15_Knight extends Enemies
 {
 	private final static int				MAX_LIFE		= 500;
 	private final static int				XP_GAIN_ON_KILL	= 70;
 	private final static int				ATTACK_POWER	= 20;
-	private final static float				MOVE_SPEED_MIN	= 1;
-	private final static float				MOVE_SPEED_MAX	= 2;
+	private final static float				MOVE_SPEED_MIN	= 1.8f;
+	private final static float				MOVE_SPEED_MAX	= 2.1f;
 
 	private final static TextureRegion[]	walk_frames		= R.c().enemy_knight_walk;
 	private final static int				PIXEL_SIZE		= 5;
@@ -60,10 +67,10 @@ public class Enemy_15_Knight extends Enemies
 
 	private enum KnightStates
 	{
-		BLOCK(2.5f),
-		SHOOT(2.5f),
+		BLOCK(2f),
+		SHOOT(1f),
+		GO_STRAIGHT_WALK(1f),
 		WALK(9999);
-
 		public float	phaseDuration;
 
 		private KnightStates(float phaseDuration)
@@ -73,7 +80,7 @@ public class Enemy_15_Knight extends Enemies
 	}
 
 	private KnightStates	m_knightStates	= KnightStates.WALK;
-	private Timer			timer;									// Timer qui devient vrai lorqu'il faut changer de phase;
+	private Timer			timer			= new Timer(m_knightStates.phaseDuration);	// Timer qui devient vrai lorqu'il faut changer de phase;
 
 	private void swichBetweenBossStates(float delta)
 	{
@@ -83,11 +90,13 @@ public class Enemy_15_Knight extends Enemies
 			switch (m_knightStates) {
 			case BLOCK:
 				m_knightStates = KnightStates.SHOOT;
-				System.out.println("Je blockais, je tir");
 				break;
 			case SHOOT:
+				m_knightStates = KnightStates.GO_STRAIGHT_WALK;
+				break;
+			case GO_STRAIGHT_WALK:
 				m_knightStates = KnightStates.BLOCK;
-				System.out.println("Je tirai, je block");
+				GlobalController.fxController.addActor(new PopMessage(this, MessageType.KNIGHT));
 				break;
 
 			default:
@@ -95,60 +104,52 @@ public class Enemy_15_Knight extends Enemies
 			}
 			// Repercution sur le timer
 			timer = new Timer(m_knightStates.phaseDuration);
-			System.out.println("Knight : Je change de phase !");
-			GlobalController.fxController.addActor(new PopMessage(this, MessageType.KNIGHT));
 		}
 
 	}
-
-	// Si le player est en l'air, WALK jusqu'a 200px de lui puis BLOCK. Si il est plus loin que 200px lorsque le player est en l'air, s'approche à 600px puis BLOCK
-	// Lorsque le player redescent : Si pas en l'air
-	// Alternance de BLOCK ET DE SHOOT selon les timers
 
 	@Override
 	public void act(float delta)
 	{
 		super.act(delta);
 
-		// Gestion des phases
-		float distance = Math.abs(getX() - player.getX());
-
-		if (player.getCollisionBlock() != null || player.isInAir() || distance > 1200) // Player n'est plus au sol
-		{
-			if (m_knightStates != KnightStates.WALK)
-			{
-				m_knightStates = KnightStates.WALK;
-				GlobalController.fxController.addActor(new PopMessage(this, MessageType.KNIGHT));
-			}
-		} else
+		if (EnemyComportements.isOnSameBlock(this, player))
 		{
 			if (m_knightStates == KnightStates.WALK)
 			{
-				System.out.println("Je block");
+				m_knightStates = KnightStates.BLOCK;
 				GlobalController.fxController.addActor(new PopMessage(this, MessageType.KNIGHT));
-				m_knightStates = KnightStates.BLOCK; // Passage en mode blocage directement après que le player arrive au sol
 				timer = new Timer(m_knightStates.phaseDuration);
 			}
-			swichBetweenBossStates(delta); // Puis switch de phase tranquillou
+		} else
+		{
+			m_knightStates = KnightStates.WALK;
 		}
 
-		// Gestion des actions durant les phases
+		swichBetweenBossStates(delta);
+
+		EnemyComportements.physicalAttack(this, player);
 		walk = false;
 		shoot = false;
 		protection = false;
-		faireFaceTo(player);
 
 		switch (m_knightStates) {
 		case WALK:
 			knightWalkAction(delta);
+			EnemyComportements.followPlayerAndPatrol(this, player);
 			break;
 		case SHOOT:
 			knightShootAction(delta);
+			faireFaceTo(player);
+			break;
+		case GO_STRAIGHT_WALK:
+			knightStraightWalkAction(delta);
+			EnemyComportements.followPlayerAndPatrol(this, player);
 			break;
 		case BLOCK:
 			knightBlockAction(delta);
+			faireFaceTo(player);
 			break;
-
 		default:
 			break;
 		}
@@ -178,38 +179,22 @@ public class Enemy_15_Knight extends Enemies
 		shoot = false;
 		protection = false;
 		walk = true;
+	}
 
-		// Si le player est en l'air, WALK jusqu'a 200px de lui puis BLOCK. Si il est plus loin que 200px lorsque le player est en l'air, s'approche à 600px puis BLOCK
-		float distance = Math.abs(getX() - player.getX());
-
-		if (distance >= 600)
-		{
-			// Avance
-			walk = true;
-			faireFaceTo(player);
-		}
-
-		if (distance <= 200)
-		{
-			// Recule
-			walk = true;
-			tournerLeDosAuPlayer(player);
-		}
+	private void knightStraightWalkAction(float delta)
+	{
+		blockAnimation = false;
+		shoot = false;
+		protection = false;
+		walk = true;
 	}
 
 	@Override
 	public void shootEngine()
 	{
-		// WizardProjectile bullet = ProjectilePoolFactory.getInstance().wizardBulletPool.obtain();
-		// bullet.init(this, new Vector2(getRight(), getCenterY()));
-		// GlobalController.bulletControllerEnemy.addActor(bullet);
-
-	}
-
-	@Override
-	public void physicalAttackEngine()
-	{
-		super.physicalAttackEngine();
+		Projectile p = new Projectile(Projectiles.ENEMY_KNIGHT);
+		p.init(this);
+		GlobalController.bulletControllerEnemy.addActor(p);
 	}
 
 	@Override

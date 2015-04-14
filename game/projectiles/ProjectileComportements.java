@@ -223,7 +223,7 @@ public class ProjectileComportements
 					if (projectile.getVelocity().y <= 0)
 					{
 						projectile.setWalk(false);
-						projectile.doEnddingEffect(null, 1);
+						projectile.doEnddingEffect(null);
 					}
 				}
 			}
@@ -314,7 +314,7 @@ public class ProjectileComportements
 							public void run()
 							{
 								GameStage.cameraShake(GameStage.SMALL_SHAKE);
-								projectile.doEnddingEffect(null, 1); // Il n'y a pas de character recevant l'event
+								projectile.doEnddingEffect(null); // Il n'y a pas de character recevant l'event
 							}
 						};
 						projectile.addAction(new SequenceAction(delayAction, runnableAction));

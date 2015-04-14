@@ -111,6 +111,7 @@ public class EnemyComportements
 		{
 			enemy.setWalk(true);
 			enemy.setShoot(false);
+
 			if (enemy.getX() <= block.getX())
 			{
 				enemy.direction = Direction.RIGHT_DIRECTION;
@@ -122,7 +123,7 @@ public class EnemyComportements
 		}
 	}
 
-	private static boolean isOnSameBlock(Enemies enemy, Player player)
+	public static boolean isOnSameBlock(Enemies enemy, Player player)
 	{
 		if (enemy.getCollisionBlock() == player.getCollisionBlock())
 		{
