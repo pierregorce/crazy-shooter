@@ -120,7 +120,7 @@ public class LoadingScreen implements MovableScreen
 		Action a = Actions.moveTo(MyGdxGame.VIRTUAL_WIDTH / 2, 160 + y, 0.4f, Interpolation.sine);
 		b2.addAction(Actions.delay(0.3f, a));
 
-		ButtonScreen b3 = new ButtonScreen(loadingGroup, ScreenEnum.SETTINGS);
+		ButtonScreen b3 = new ButtonScreen(loadingGroup, ScreenEnum.CHEATS);
 		b3.putStyle(new TextureRegion(new Texture(Gdx.files.internal("images/loading/loading-button-goToCheatsCode.png"))));
 
 		b3.setPosition(-MyGdxGame.VIRTUAL_WIDTH, 40 + y); // place a sa position final - yRetreat

@@ -29,7 +29,7 @@ public class Enemy_17_KingWizard extends Enemies
 
 	private final static int				MAX_LIFE		= 1000;
 	private final static int				XP_GAIN_ON_KILL	= 550;
-	private final static int				ATTACK_POWER	= 25;
+	private final static int				ATTACK_POWER	= 20;
 	private final static float				MOVE_SPEED_MIN	= 7f;
 	private final static float				MOVE_SPEED_MAX	= 7f;
 
@@ -85,6 +85,7 @@ public class Enemy_17_KingWizard extends Enemies
 	public void act(float delta)
 	{
 		super.act(delta);
+		EnemyComportements.physicalAttack(this, player);
 		shoot = false;
 
 		if (m_switchPlateformTimer.doAction(delta))

@@ -1,19 +1,16 @@
 package game.ennemies;
 
-import game.entitiy.Character;
 import game.entitiy.Enemies;
 import game.entitiy.EnemyPopConstants;
 import game.fx.Beam;
 import game.fx.BloodParticle;
 import game.fx.ParticleColors;
 import game.projectiles.Projectile;
-import game.sound.MusicManager;
 import globals.Projectiles;
 
 import java.util.Random;
 
 import ressources.R;
-import ressources.S;
 import screen.MyGdxGame;
 import utilities.enumerations.Direction;
 
@@ -21,7 +18,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
-import com.oasix.crazyshooter.Timer;
 
 public class Enemy_19_Robot extends Enemies
 {
@@ -78,15 +74,6 @@ public class Enemy_19_Robot extends Enemies
 		}
 	}
 
-	private Timer	timer	= new Timer(0.6f);
-
-	private boolean sameY(Character character1, Character character2, float tolerance)
-	{
-
-		// todo
-		return true;
-	}
-
 	@Override
 	public boolean remove()
 	{
@@ -131,12 +118,7 @@ public class Enemy_19_Robot extends Enemies
 
 		updateBeams();
 
-		if (timer.doAction(delta))
-		{
-			S.c().soundEffect_enemies_whiteSlowEnemy.play(MusicManager.sfxVolume);
-		}
-
-		EnemyComportements.followPlayerAndPatrolOnGround(this, player);
+		EnemyComportements.followPlayerAndPatrolOnGroundAndShoot(this, player, Projectiles.ENEMY_ROBOT.lenghtAlive);
 		EnemyComportements.physicalAttack(this, player);
 	}
 

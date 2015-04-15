@@ -16,8 +16,8 @@ public enum Weapons
 	PLAYER_MINIGUN("MINIGUN", 0.06f, false, 9999, true, 8, R.c().player_weapons[7], Projectiles.PLAYER_MINIGUN),
 	PLAYER_GRENADE_LUNCHER("GRENADE THROWER", 0.6f, false, 12800, false, 15, R.c().player_weapons[8], Projectiles.PLAYER_GRENADE_LUNCHER),
 	PLAYER_SNIPER("RAIL GUN", 0.3f, false, 15000, true, 0, R.c().player_weapons[9], Projectiles.PLAYER_RAILGUN),
-	PLAYER_ROCKET_LUNCHER("ROCKET LUNCHER", 0.08f, false, 18500, false, 20, R.c().player_weapons[10], Projectiles.PLAYER_ROCKET_LUNCHER),
-	LIGHTING_GUN("LIGHTING GUN", 0.08f, false, 24500, false, 0, R.c().player_weapons[11], Projectiles.PLAYER_LIGHTING_GUN);
+	PLAYER_ROCKET_LUNCHER("ROCKET LUNCHER", 0.4f, false, 18500, false, 20, R.c().player_weapons[10], Projectiles.PLAYER_ROCKET_LUNCHER),
+	LIGHTING_GUN("LIGHTING GUN", 0.2f, false, 24500, false, 0, R.c().player_weapons[11], Projectiles.PLAYER_LIGHTING_GUN);
 
 	// Weapons spécifique
 	public float			fireRate;

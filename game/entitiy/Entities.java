@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.oasix.crazyshooter.Block;
 import com.oasix.crazyshooter.GameStage;
@@ -12,12 +13,13 @@ import com.oasix.crazyshooter.GameStage;
 public class Entities extends Actor
 {
 
-	private Rectangle collisionBox;
-	private Rectangle bouncingBox;
-	private ShapeRenderer shapeRenderer;
-	private Block collisionBlock = null;
+	private Rectangle		collisionBox;
+	private Rectangle		bouncingBox;
+	private ShapeRenderer	shapeRenderer;
+	private Block			collisionBlock	= null;
+	private Vector2			position;
 
-	protected boolean isBlock = false;
+	protected boolean		isBlock			= false;
 
 	public Entities()
 	{
@@ -78,9 +80,9 @@ public class Entities extends Actor
 		}
 	}
 
-	protected float collisionBoxWidth = getWidth();
-	protected float collisionBoxHeight = getHeight();
-	protected float collisionBoxLeftOffset = 0; // Decalage lorsque le player regarde vers la droite
+	protected float	collisionBoxWidth		= getWidth();
+	protected float	collisionBoxHeight		= getHeight();
+	protected float	collisionBoxLeftOffset	= 0;			// Decalage lorsque le player regarde vers la droite
 
 	/**
 	 * 
@@ -96,9 +98,9 @@ public class Entities extends Actor
 		collisionBoxLeftOffset = offset;
 	}
 
-	protected float bouncingBoxWidth;
-	protected float bouncingBoxHeight;
-	protected float bouncingBoxLeftOffset = 0; // Decalage lorsque le player regarde vers la droite
+	protected float	bouncingBoxWidth;
+	protected float	bouncingBoxHeight;
+	protected float	bouncingBoxLeftOffset	= 0;	// Decalage lorsque le player regarde vers la droite
 
 	public void editBouncingBox(float width, float height, float offset)
 	{
@@ -125,5 +127,15 @@ public class Entities extends Actor
 	public Block getCollisionBlock()
 	{
 		return collisionBlock;
+	}
+
+	public Vector2 getPosition()
+	{
+		if (position == null)
+		{
+			position = new Vector2(getX(), getY());
+		}
+		position.set(getX(), getY());
+		return position;
 	}
 }

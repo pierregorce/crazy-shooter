@@ -76,8 +76,17 @@ public class Projectile extends PhysicalEntity
 		projectilesType.projectileComportement.comportement_init(this, characterSender);
 	}
 
+	public void init(Direction direction, Vector2 position)
+	{
+		this.direction = direction;
+		setX(position.x);
+		setY(position.y);
+		m_xStart = 0;
+		projectilesType.projectileComportement.comportement_init(this, null);
+	}
+
 	/**
-	 * Permet d'avoir un target, utile pour les laser,bolt pour mettre un offset sur les projectiles Rend egalement non visible
+	 * Permet d'avoir un offset, utile pour les laser pour mettre un offset sur les projectiles Rend egalement non visible
 	 */
 	public void setTarget(Character characterSender, Vector2 target)
 	{
@@ -89,6 +98,22 @@ public class Projectile extends PhysicalEntity
 		{
 			setX(getX() + target.x - 70);
 		}
+	}
+
+	/**
+	 * Permet d'avoir un target, utile pour les bolt pour mettre un offset sur les projectiles Rend egalement non visible
+	 */
+	public void setTarget(Character characterSender, Character target)
+	{
+		setVisible(false);
+		if (characterSender.direction == Direction.LEFT_DIRECTION)
+		{
+			setX(target.getX() + 70);
+		} else
+		{
+			setX(target.getX() - 70);
+		}
+		setY(target.getCenterY());
 	}
 
 	@Override
@@ -140,25 +165,40 @@ public class Projectile extends PhysicalEntity
 	{
 		getActions().clear(); // Enleve au cas ou les actions en cours
 		enemyBumping(characterReceiving, direction);
-		characterReceiving.explosionByBullet(this);
+		if (characterReceiving != null)
+		{
+			characterReceiving.explosionByBullet(this);
+		}
 		projectilesType.projectileComportement.comportement_endingEffect(this, characterReceiving);
 	}
 
 	private void enemyBumping(Character character, Direction bumpDirection)
 	{
 		// Vérifie qu'il y a bien un character pour prendre l'action, car par exemple les grenables eclate avec un character_receiving null.
-		if (character instanceof Enemies)
+		if (character != null)
 		{
-			Enemies enemy = (Enemies) character;
+			if (character instanceof Enemies)
+			{
+				Enemies enemy = (Enemies) character;
 
-			if (enemy.isBumpSensibility())
+				if (enemy.isBumpSensibility())
+				{
+					if (direction == Direction.RIGHT_DIRECTION)
+					{
+						enemy.setX(enemy.getX() + projectilesType.bumpAmount);
+					} else
+					{
+						enemy.setX(enemy.getX() - projectilesType.bumpAmount);
+					}
+				}
+			} else
 			{
 				if (direction == Direction.RIGHT_DIRECTION)
 				{
-					enemy.setX(enemy.getX() + projectilesType.bumpAmount);
+					character.setX(character.getX() + projectilesType.bumpAmount);
 				} else
 				{
-					enemy.setX(enemy.getX() - projectilesType.bumpAmount);
+					character.setX(character.getX() - projectilesType.bumpAmount);
 				}
 			}
 		}

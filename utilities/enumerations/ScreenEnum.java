@@ -1,6 +1,7 @@
 package utilities.enumerations;
 
 import game.sound.MusicManager;
+import screen.CheatingScreen;
 import screen.EndingScreen;
 import screen.GameScreen;
 import screen.LevelScreen;
@@ -26,7 +27,6 @@ public enum ScreenEnum
 			MusicManager.play_Game_Music();
 		}
 	},
-
 	LEVEL
 	{
 		@Override
@@ -41,7 +41,6 @@ public enum ScreenEnum
 			MusicManager.play_Menu_Music();
 		}
 	},
-
 	UPGRADE
 	{
 		@Override
@@ -56,7 +55,6 @@ public enum ScreenEnum
 			MusicManager.play_Menu_Music();
 		}
 	},
-
 	GAME
 	{
 		@Override
@@ -91,6 +89,20 @@ public enum ScreenEnum
 		public MovableScreen getScreenInstance()
 		{
 			return new SettingsScreen();
+		}
+
+		@Override
+		public void setMusic()
+		{
+			MusicManager.play_Menu_Music();
+		}
+	},
+	CHEATS
+	{
+		@Override
+		public MovableScreen getScreenInstance()
+		{
+			return new CheatingScreen();
 		}
 
 		@Override

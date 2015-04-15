@@ -312,7 +312,6 @@ public abstract class Character extends PhysicalEntity
 
 	public void explosionByBullet(Projectile p)
 	{
-
 		DrawableAnimation drawableAnimation;
 		Ressource fx = null;
 

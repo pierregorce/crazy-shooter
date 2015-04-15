@@ -154,7 +154,7 @@ public class Player extends Character
 		}
 	}
 
-	Timer	timerPlayerMessage	= new Timer(4f);
+	Timer	timerPlayerMessage	= new Timer(6f);
 	boolean	playerMessage		= false;
 
 	public void eventEngine(float delta)
@@ -353,10 +353,17 @@ public class Player extends Character
 		} else
 		{
 			// Envoie 3 projectile mais à des Y et X endroits différents
-			Projectile projectile = new Projectile(projectiles);
-			projectile.init(this);
-			// projectile.setTarget(this, new Vector2(c.getCenterX(), c.getCenterY()));
-			GlobalController.bulletControllerFriendly.addActor(projectile);
+			for (int i = 0; i < 3; i++)
+			{
+				Character c = getClosestEnemyInAllDirection(i);
+				if (c != null)
+				{
+					Projectile projectile = new Projectile(projectiles);
+					projectile.init(this);
+					projectile.setTarget(this, c);
+					GlobalController.bulletControllerFriendly.addActor(projectile);
+				}
+			}
 		}
 		weaponsBumpBack(weapons.recoilStrenght);
 
@@ -504,9 +511,9 @@ public class Player extends Character
 	 */
 	private Character getClosestEnemyInAllDirection(int n)
 	{
-		float distance = Projectiles.PLAYER_LASER.lenghtAlive;
+		float distance = Projectiles.PLAYER_LIGHTING_GUN.lenghtAlive;
 		SnapshotArray<Actor> enemyArray = GlobalController.enemyController.getChildren();
-		final Vector2 v = new Vector2(getX(), getY());
+		final Vector2 v = getPosition();
 
 		Comparator<Actor> c = new Comparator<Actor>()
 		{
@@ -702,4 +709,5 @@ public class Player extends Character
 			return getRight() - rightAnchor;
 		}
 	}
+
 }

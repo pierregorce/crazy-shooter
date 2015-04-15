@@ -6,7 +6,6 @@ import game.hud.BossBar;
 import game.pop.PopMessage;
 import game.pop.PopMessage.MessageType;
 import game.projectiles.Projectile;
-import game.sound.MusicManager;
 import globals.Projectiles;
 
 import java.util.Random;
@@ -21,7 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.oasix.crazyshooter.BlockController;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
 import com.oasix.crazyshooter.Timer;
@@ -99,8 +97,7 @@ public class Enemy_Boss_12_Invocator extends Enemies
 
 	public Enemy_Boss_12_Invocator(Player player, float enemyCoef)
 	{
-		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH,
-				R.c().enemy_invocator_boss_walk);
+		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH, R.c().enemy_invocator_boss_walk);
 
 		Vector2 position = EnemyPopConstants.getInstance().getFallPosition();
 		setPosition(position.x, position.y);
@@ -157,7 +154,7 @@ public class Enemy_Boss_12_Invocator extends Enemies
 				GlobalController.enemyController.addActor(new Enemy_1_Spider_basic(player, 0.9f, new Vector2(getCenterX(), getY())));
 				GlobalController.fxController.addActor(new PopMessage(this, MessageType.BOSS_CRY_3));
 
-				R.c().soundEffect_boss3_magic[new Random().nextInt(R.c().soundEffect_boss3_magic.length)].play(MusicManager.sfxVolume_BossLow);
+				// R.c().soundEffect_boss3_magic[new Random().nextInt(R.c().soundEffect_boss3_magic.length)].play(MusicManager.sfxVolume_BossLow);
 
 			}
 
@@ -202,8 +199,7 @@ public class Enemy_Boss_12_Invocator extends Enemies
 					p.init(this);
 					GlobalController.bulletControllerEnemy.addActor(p);
 				}
-				R.c().soundEffect_boss3_tearAttack[new Random().nextInt(R.c().soundEffect_boss3_tearAttack.length)]
-						.play(MusicManager.sfxVolume_BossLow);
+				// R.c().soundEffect_boss3_tearAttack[new Random().nextInt(R.c().soundEffect_boss3_tearAttack.length)].play(MusicManager.sfxVolume_BossLow);
 			}
 
 			if (getActions().size == 0)
@@ -217,7 +213,7 @@ public class Enemy_Boss_12_Invocator extends Enemies
 						disablePhysics();
 					}
 				};
-				MoveToAction action1 = Actions.moveTo(getX(), BlockController.OFFSET_3_HEIGHT - 150, 1.25f);
+				// MoveToAction action1 = Actions.moveTo(getX(), BlockController.OFFSET_3_HEIGHT - 150, 1.25f);
 
 				RunnableAction action2 = new RunnableAction()
 				{
@@ -240,7 +236,7 @@ public class Enemy_Boss_12_Invocator extends Enemies
 					moveBy = -400;
 				}
 
-				MoveToAction action3 = Actions.moveTo(getX() + moveBy, BlockController.OFFSET_3_HEIGHT - 150, 3.5f);
+				// MoveToAction action3 = Actions.moveTo(getX() + moveBy, BlockController.OFFSET_3_HEIGHT - 150, 3.5f);
 
 				RunnableAction action4 = new RunnableAction()
 				{
@@ -264,9 +260,9 @@ public class Enemy_Boss_12_Invocator extends Enemies
 
 				SequenceAction sequenceAction = new SequenceAction();
 				sequenceAction.addAction(action0);
-				sequenceAction.addAction(action1);
+				// sequenceAction.addAction(action1);
 				sequenceAction.addAction(action2);
-				sequenceAction.addAction(action3);
+				// sequenceAction.addAction(action3);
 				sequenceAction.addAction(action4);
 				sequenceAction.addAction(action5);
 				sequenceAction.addAction(action6);

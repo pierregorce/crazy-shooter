@@ -15,7 +15,9 @@ import ressources.Ressource;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
@@ -104,9 +106,9 @@ public class ProjectileComportements
 			for (int i = 0; i < quantity / 2; i++)
 			{
 				int xRandomization = new Random().nextInt(100) - 50;
-				int yRandomization = new Random().nextInt(100);
+				int yRandomization = new Random().nextInt(20);
 				Projectile projectileExplosion = new Projectile(Projectiles.PLAYER_BAZOOKA_EXPLOSION);
-				projectileExplosion.init(characterReceiving);
+				projectileExplosion.init(projectile.direction, new Vector2(projectile.getX() + xRandomization, projectile.getY() + yRandomization));
 				projectileExplosion.setX(projectileExplosion.getX() + xRandomization);
 				projectileExplosion.setY(projectileExplosion.getY() + yRandomization);
 				GlobalController.bulletControllerFriendly.addActor(projectileExplosion);
@@ -114,9 +116,10 @@ public class ProjectileComportements
 			for (int i = 0; i < quantity / 2; i++)
 			{
 				int xRandomization = new Random().nextInt(240) - 120;
-				int yRandomization = new Random().nextInt(100);
+				int yRandomization = new Random().nextInt(20);
 				Projectile projectileExplosion = new Projectile(Projectiles.PLAYER_BAZOOKA_EXPLOSION);
-				projectileExplosion.init(characterReceiving);
+				projectileExplosion.init(projectile.direction, new Vector2(projectile.getX() + xRandomization, projectile.getY() + yRandomization));
+				// projectileExplosion.init(characterReceiving);
 				projectileExplosion.setX(projectileExplosion.getX() + xRandomization);
 				projectileExplosion.setY(projectileExplosion.getY() + yRandomization);
 				GlobalController.bulletControllerFriendly.addActor(projectileExplosion);
@@ -419,6 +422,22 @@ public class ProjectileComportements
 			projectile.setHeight(height);
 			projectile.rotation = 45;
 			projectile.setColor(ParticleColors.getInstance().getExplosionColor()[new Random().nextInt(ParticleColors.getInstance().getExplosionColor().length)]);
+		}
+	}
+
+	public class BazookaExplosion extends Explosion
+	{
+
+		public BazookaExplosion(int width, int height)
+		{
+			super(width, height);
+		}
+
+		@Override
+		protected void comportement_init(Projectile projectile, Character characterSender)
+		{
+			super.comportement_init(projectile, characterSender);
+			projectile.setColor(new Color(1, 1, 1, 0.4f));
 		}
 	}
 

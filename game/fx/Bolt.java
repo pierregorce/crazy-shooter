@@ -15,7 +15,7 @@ import com.oasix.crazyshooter.Timer;
 public class Bolt extends Actor
 {
 
-	private Timer			timerBoltChange	= new Timer(0.12f);
+	private Timer			timerBoltChange	= new Timer(0.02f);
 	private Timer			timerShow		= new Timer(0.22f, 0.10f);
 	private Player			player;
 	private ArrayList<Line>	lineArray		= new ArrayList<Line>();

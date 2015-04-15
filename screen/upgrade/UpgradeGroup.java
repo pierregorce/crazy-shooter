@@ -122,8 +122,6 @@ public class UpgradeGroup extends Group
 		compIconImage.setPosition(405 * factor, (screenHeight - 281) * factor);
 		float offset = 16;
 		comptenceIcon.setPosition(compIconImage.getX() + offset, compIconImage.getY() + offset);
-		competenceButtonReset.putOnlyPosition(597, 215, factor);
-		competenceButtonTrain.putOnlyPosition(474, 307, factor);
 		competenceTitle.setPosition(470 * factor, (screenHeight - 240) * factor);
 		competenceDescription.setPosition(470 * factor, (screenHeight - 250) * factor);
 
@@ -198,6 +196,9 @@ public class UpgradeGroup extends Group
 		competenceButtonReset.putPosition(400, 200, factor);
 		competenceButtonReset.addListener(new CompetenceButtonEvent());
 
+		competenceButtonReset.putOnlyPosition(597, 215, factor);
+		competenceButtonTrain.putOnlyPosition(474, 307, factor);
+
 	}
 
 	class CompetenceButtonAction extends ClickListener
@@ -250,6 +251,7 @@ public class UpgradeGroup extends Group
 			{
 				competenceButtonTrain.setDisabled(true);
 			}
+			Files.playerUpgradeWrite();
 		}
 	}
 
@@ -270,7 +272,7 @@ public class UpgradeGroup extends Group
 	private Label	profilAttackSpeed;
 	private Label	profilAttackSpeedSubtitle;
 	private Label	profilStarsForNextLevel;
-	private Image	profilLevelBarImage;		// TODO
+	private Image	profilLevelBarImage;
 
 	public void initialisationProfil()
 	{
@@ -431,9 +433,9 @@ public class UpgradeGroup extends Group
 			weaponDamage.setText(weapons.projectileType.damage + "/HIT");
 		}
 
-		weaponRange.setText(weapons.projectileType.lenghtAlive + "M");
+		weaponRange.setText(weapons.projectileType.lenghtAlive + " M");
 
-		weaponAttackSpeed.setText(weapons.fireRate + "DPS");
+		weaponAttackSpeed.setText(weapons.fireRate + " DPS");
 		if (weapons.cost == 0)
 		{
 			weaponCost.setText("FREE");
