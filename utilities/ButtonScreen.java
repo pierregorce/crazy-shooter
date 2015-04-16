@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -23,9 +24,20 @@ public class ButtonScreen extends ButtonUtilities
 		addListener(new ButtonScreenAction(screen));
 	}
 
+	public ButtonScreen(Stage stage, ScreenEnum screen)
+	{
+		stage.addActor(this);
+		addListener(new ButtonScreenAction(screen));
+	}
+
 	public void putSize()
 	{
 		setSize(Methods.scaleByHeight(height, getWidth(), getHeight()), height);
+	}
+
+	public void putSize(float factor)
+	{
+		setSize(getWidth() * factor, getHeight() * factor);
 	}
 
 	public void putStyle(TextureRegion up, TextureRegion down)

@@ -17,6 +17,8 @@ public class XXX
 	// lance flammetodo
 	// cheat panel
 	// label multi ligne comp description
+	// bug double click button
+	// doublé les drawable projectile pour gauche droite
 
 	// ************DESSIN
 	// wizard : bullet

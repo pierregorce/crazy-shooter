@@ -34,7 +34,7 @@ public class LoadingGameScreen implements MovableScreen
 
 		loadingLabel.setPosition(500, 500);
 		loadingLabel.setText("Loading : " + S.c().soundManager.getProgress() + "");
-		S.c().soundManager.finishLoading();
+		// S.c().soundManager.finishLoading();
 
 		if (loadingStage.getRoot().getActions().size == 0 && !done)
 		{
@@ -73,7 +73,7 @@ public class LoadingGameScreen implements MovableScreen
 		backgroundImage.setSize(backgroundImage.getWidth() * factor, backgroundImage.getHeight() * factor);
 		group.addActor(backgroundImage);
 
-		BitmapFont b = R.c().getEarlyGameBoyFont(30);
+		BitmapFont b = R.c().EarlyGameBoyFont_32;
 		loadingLabel = new Label("", new LabelStyle(b, Color.WHITE));
 		group.addActor(loadingLabel);
 

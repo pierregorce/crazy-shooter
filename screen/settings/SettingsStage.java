@@ -107,7 +107,8 @@ public class SettingsStage extends Stage
 	private ButtonRessource	removeScale;
 	private ButtonRessource	reset;
 	private ButtonRessource	save;
-	private Label			scaleLabel;								// TODO LABEL MIEUX AVEC FACTOR INTEGRER RESSOURCE LABEL ! //IDEm IMAGE //ADD EFFECT POPING !
+	private Label			scaleLabel;
+	private Label			dragTheButtonLabel;
 
 	private float			scaleIncrement	= 0.1f;
 	DecimalFormat			df				= new DecimalFormat("0.0");
@@ -125,7 +126,7 @@ public class SettingsStage extends Stage
 		image2.setPosition(174 * factor, (405 - 145) * factor);
 		group.addActor(image2);
 
-		LabelStyle labelStyle = new LabelStyle(R.c().getEarlyGameBoyFont((int) (14 * factor)), Color.valueOf("fbd00f"));
+		LabelStyle labelStyle = new LabelStyle(R.c().EarlyGameBoyFont_38, Color.valueOf("fbd00f"));
 		Preferences prefs = Gdx.app.getPreferences(PREFERENCE_FILE);
 		if (!prefs.contains(button_scale))
 		{
@@ -134,6 +135,9 @@ public class SettingsStage extends Stage
 		scaleLabel = new Label(df.format(prefs.getFloat(button_scale)) + "", labelStyle);
 		scaleLabel.setPosition(440 * factor, (405 - 128) * factor);
 		group.addActor(scaleLabel);
+
+		dragTheButtonLabel = new Label("Drag the buttons", new LabelStyle(R.c().EarlyGameBoyFont_40, Color.WHITE));
+		addActor(dragTheButtonLabel);
 
 		addScale = new ButtonRessource(group);
 		addScale.putUpDrawable(new TextureRegion(new Texture(Gdx.files.internal("images/options/option-button-add.png")))).putPosition(503, 134, factor);
@@ -151,6 +155,14 @@ public class SettingsStage extends Stage
 		save.putUpDrawable(new TextureRegion(new Texture(Gdx.files.internal("images/options/option-button-save.png")))).putPosition(317, 191, factor);
 		save.addListener(new HudButton());
 
+	}
+
+	@Override
+	public void act(float delta)
+	{
+		// TODO Auto-generated method stub
+		super.act(delta);
+		dragTheButtonLabel.setPosition(680, 400);
 	}
 
 	/**
@@ -249,7 +261,7 @@ public class SettingsStage extends Stage
 		public void drag(InputEvent event, float x, float y, int pointer)
 		{
 			super.drag(event, x, y, pointer);
-			event.getListenerActor().moveBy(x - event.getListenerActor().getWidth() / 2, y - event.getListenerActor().getHeight() / 2);
+			event.getListenerActor().moveBy(x - event.getListenerActor().getWidth() / 2, y - event.getListenerActor().getHeight());
 			modification(event.getListenerActor());
 		}
 	}
@@ -266,6 +278,7 @@ public class SettingsStage extends Stage
 			if (!prefs.contains(button_scale))
 			{
 				prefs.putFloat(button_scale, 1);
+				prefs.flush();
 			}
 
 			if (prefs.getFloat(button_scale) > 0 + scaleIncrement && prefs.getFloat(button_scale) <= 1.5f + scaleIncrement)
@@ -276,11 +289,13 @@ public class SettingsStage extends Stage
 			if (addScale == event.getListenerActor())
 			{
 				prefs.putFloat(button_scale, prefs.getFloat(button_scale) + scaleIncrement);
+				prefs.flush();
 			}
 
 			if (removeScale == event.getListenerActor())
 			{
 				prefs.putFloat(button_scale, prefs.getFloat(button_scale) - scaleIncrement);
+				prefs.flush();
 			}
 
 			if (reset == event.getListenerActor())

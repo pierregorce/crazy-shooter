@@ -3,6 +3,8 @@ package game.ennemies;
 import game.entitiy.Enemies;
 import game.entitiy.EnemyPopConstants;
 import game.path.WayPoint;
+import game.projectiles.Projectile;
+import globals.Projectiles;
 
 import java.util.Random;
 
@@ -209,9 +211,9 @@ public class Enemy_17_KingWizard extends Enemies
 	@Override
 	public void shootEngine()
 	{
-		// Projectile p = new Projectile(Projectiles.ENEMY_KING_WIZARD);
-		// p.init(this);
-		// GlobalController.bulletControllerEnemy.addActor(p);
+		Projectile p = new Projectile(Projectiles.ENEMY_KING_WIZARD);
+		p.init(this);
+		GlobalController.bulletControllerEnemy.addActor(p);
 	}
 
 	@Override

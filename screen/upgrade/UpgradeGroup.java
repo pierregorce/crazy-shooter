@@ -48,7 +48,7 @@ public class UpgradeGroup extends Group
 
 	public UpgradeGroup()
 	{
-		// Preferences prefs = Gdx.app.getPreferences(PREFERENCE_FILE);
+		System.out.println("Démarage de l'upgrade group");
 
 		Image image = new Image(R.c().upgrade_background);
 		image.setSize(image.getWidth() * factor, image.getHeight() * factor);
@@ -74,7 +74,7 @@ public class UpgradeGroup extends Group
 		initialisationWeapons();
 		initialisationProfil();
 		initialisationCompetences();
-
+		System.out.println("End upgrade group");
 	}
 
 	@Override
@@ -168,8 +168,8 @@ public class UpgradeGroup extends Group
 			}
 		}
 
-		LabelStyle labelStyleTitle = new LabelStyle(R.c().getEarlyGameBoyFont((int) (12 * factor)), Color.WHITE);
-		LabelStyle labelStyleDescription = new LabelStyle(R.c().getEarlyGameBoyFont((int) (8 * factor)), Color.WHITE);
+		LabelStyle labelStyleTitle = new LabelStyle(R.c().EarlyGameBoyFont_32, Color.WHITE);
+		LabelStyle labelStyleDescription = new LabelStyle(R.c().EarlyGameBoyFont_22, Color.WHITE);
 
 		competenceTitle = new Label(selectedUpgrade.title + "", labelStyleTitle);
 		addActor(competenceTitle);
@@ -276,9 +276,9 @@ public class UpgradeGroup extends Group
 
 	public void initialisationProfil()
 	{
-		LabelStyle labelStyleFat = new LabelStyle(R.c().getEarlyGameBoyFont((int) (14 * factor)), Color.valueOf("f9f4a2"));
-		LabelStyle labelStyleSmall = new LabelStyle(R.c().getEarlyGameBoyFont((int) (10 * factor)), Color.valueOf("f9f4a2"));
-		LabelStyle labelStyleMedium = new LabelStyle(R.c().getEarlyGameBoyFont((int) (12 * factor)), Color.WHITE);
+		LabelStyle labelStyleFat = new LabelStyle(R.c().EarlyGameBoyFont_38, Color.valueOf("f9f4a2"));
+		LabelStyle labelStyleSmall = new LabelStyle(R.c().EarlyGameBoyFont_26, Color.valueOf("f9f4a2"));
+		LabelStyle labelStyleMedium = new LabelStyle(R.c().EarlyGameBoyFont_32, Color.WHITE);
 		LabelStyle labelStyleWendy10 = new LabelStyle(R.c().getWendyFont((int) (10 * factor)), Color.WHITE);
 
 		profilGolds = new Label("", labelStyleFat);
@@ -377,8 +377,8 @@ public class UpgradeGroup extends Group
 		buy.addListener(new WeaponsUserActions());
 		equip.addListener(new WeaponsUserActions());
 
-		LabelStyle labelStyle = new LabelStyle(R.c().getEarlyGameBoyFont((int) (12 * factor)), Color.WHITE);
-		LabelStyle labelStyle2 = new LabelStyle(R.c().getEarlyGameBoyFont((int) (12 * factor)), Color.valueOf("fbd00f"));
+		LabelStyle labelStyle = new LabelStyle(R.c().EarlyGameBoyFont_32, Color.WHITE);
+		LabelStyle labelStyle2 = new LabelStyle(R.c().EarlyGameBoyFont_32, Color.valueOf("fbd00f"));
 
 		weaponTitle = new Label("", labelStyle);
 		weaponDamage = new Label("", labelStyle);

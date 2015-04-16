@@ -5,6 +5,7 @@ import ressources.S;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class ButtonUtilities extends Button
 {
@@ -15,6 +16,15 @@ public class ButtonUtilities extends Button
 	// Sound au click sur le button
 	private boolean	playSound;
 	public Sound	sound	= S.basicButtonClickSound;
+
+	public ButtonUtilities()
+	{
+	}
+
+	public ButtonUtilities(TextureRegionDrawable textureRegionDrawable)
+	{
+		super(textureRegionDrawable);
+	}
 
 	@Override
 	public void act(float delta)

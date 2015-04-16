@@ -4,9 +4,9 @@ public enum Upgrades
 {
 	// Objts directement construit
 	LIFE_MAX(0, "Max Life", "Increase you max life by 20", 20, "+20HP", 0, 1),
-	CRITICAL_CHANCE(0, "critical chance", "CRITICAL HIT", 0.05f, "+5%", 0, 2),
+	CRITICAL_CHANCE(0, "critical chance", "CRITICAL HIT", 0.02f, "+2%", 0, 2),
 	HEALTH_PACK(0, "Health pack", "Increase health gain by /n health pack by 2 hp", 2, "+2 HP", 0, 2),
-	DAMAGE_DONE(0, "Damage Done", "DAMMAMMAMAMGE DONE", 0.07f, "+10%", 0, 1),
+	DAMAGE_DONE(0, "Damage Done", "DAMMAMMAMAMGE DONE", 1, "+1", 0, 1),
 	ATTACK_SPEED(0, "Attack Speed", "DAMMAMMAMAMGE DONE", 0.07f, "+10%", 0, 1),
 	JUMP_HEIGHT(0, "Jump Height", "eddse ", 0.03f, "+5%", 0, 1);
 

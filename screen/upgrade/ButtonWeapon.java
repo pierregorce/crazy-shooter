@@ -52,7 +52,7 @@ public class ButtonWeapon extends ButtonRessource
 	public ButtonRessource putWeapon(Weapons weapons)
 	{
 		this.weapons = weapons;
-		LabelStyle labelStyle = new LabelStyle(R.c().getEarlyGameBoyFont((int) (5 * factor)), Color.valueOf("fbd00f"));
+		LabelStyle labelStyle = new LabelStyle(R.c().EarlyGameBoyFont_22, Color.valueOf("fbd00f"));
 		this.weapon_gold_cost = new Label(weapons.cost + "", labelStyle);
 		if (weapons.cost == 0)
 		{

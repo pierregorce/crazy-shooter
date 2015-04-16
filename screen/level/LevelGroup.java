@@ -103,6 +103,10 @@ public class LevelGroup extends Group
 
 	public LevelGroup()
 	{
+		// R.c().getEarlyGameBoyFont(40);
+		// R.c().getEarlyGameBoyFont(40);
+		// R.c().getEarlyGameBoyFont(40);
+		// R.c().getEarlyGameBoyFont(40);
 		DrawableSprite drawableSprite = new DrawableSprite(R.c().level_background);
 		addActor(new Ressource(drawableSprite, 0, 0, MyGdxGame.VIRTUAL_HEIGHT));
 		addActor(m_groupPath);

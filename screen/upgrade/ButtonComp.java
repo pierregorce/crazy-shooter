@@ -34,11 +34,11 @@ public class ButtonComp extends ButtonRessource
 	public ButtonRessource putStarsCost(Upgrades upgrades)
 	{
 		this.upgrades = upgrades;
-		LabelStyle labelStyle = new LabelStyle(R.c().getEarlyGameBoyFont((int) (8 * factor)), Color.valueOf("fbd00f"));
+		LabelStyle labelStyle = new LabelStyle(R.c().EarlyGameBoyFont_22, Color.valueOf("fbd00f"));
 		this.starsCost = new Label(upgrades.cost + "", labelStyle);
 		getParent().addActor(starsCost);
 
-		LabelStyle labelStyle2 = new LabelStyle(R.c().getEarlyGameBoyFont((int) (14 * factor)), Color.valueOf("f9f4a2"));
+		LabelStyle labelStyle2 = new LabelStyle(R.c().EarlyGameBoyFont_38, Color.valueOf("f9f4a2"));
 		points = new Label("", labelStyle2);
 		getParent().addActor(points);
 		return this;

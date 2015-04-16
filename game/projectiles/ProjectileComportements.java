@@ -60,7 +60,7 @@ public class ProjectileComportements
 
 	public class Flame extends ProjectileComportementFrame
 	{
-		private int	yLongOffset	= new Random().nextInt(4);
+		// private int yLongOffset = new Random().nextInt(4);
 
 		@Override
 		protected void comportement_init(Projectile projectile, Character characterSender)
@@ -68,10 +68,10 @@ public class ProjectileComportements
 			projectile.setSize(projectile.getWidth() / 1.8f, projectile.getHeight() / 1.8f);
 			GenericComportementList.goStraight_Initialisation(projectile, characterSender);
 			projectile.disablePhysics();
-			final float TIME_ALIVE = 0.6f;
+			final float TIME_ALIVE = 0.30f;
 			final float MAX_SIZE = projectile.getWidth() * 1.4f;
 			projectile.addAction(Actions.alpha(1));
-			projectile.addAction(Actions.alpha(0.1f, TIME_ALIVE));
+			projectile.addAction(Actions.alpha(0.5f, TIME_ALIVE));
 			projectile.addAction(Actions.sizeBy(MAX_SIZE, MAX_SIZE, TIME_ALIVE));
 			projectile.addAction(Actions.delay(TIME_ALIVE, Actions.removeActor()));
 		}
