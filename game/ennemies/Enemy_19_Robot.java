@@ -43,7 +43,7 @@ public class Enemy_19_Robot extends Enemies
 
 		this.enemyCoef = enemyCoef;
 
-		Vector2 position = EnemyPopConstants.getInstance().getPopablePosition();
+		Vector2 position = EnemyPopConstants.getInstance().getFallOrPopablePosition();
 		setPosition(position.x, position.y);
 
 		direction = Direction.RIGHT_DIRECTION;

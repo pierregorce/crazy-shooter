@@ -1,11 +1,11 @@
 package com.oasix.crazyshooter;
 
+import globals.Worlds;
 import ressources.DrawableSprite;
 import ressources.R;
 import ressources.Ressource;
 import screen.MyGdxGame;
 import screen.ScreenManager;
-import screen.level.LevelGroup_old;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -35,32 +35,28 @@ public class Background extends Group
 	{
 		this.globalController = globalController;
 
-		int[] m_boss_level = LevelGroup_old.m_boss_level_from_1; // Récupère les niveau des boss (commence à 1)
-		int level = ScreenManager.getInstance().getLevelSelected().levelIndex; // Recupère le level (commence à 1)
+		int level = ScreenManager.getInstance().getLevelSelected().levelIndex; // Recupère le level
 
 		// Charge le monde en fonction des niveau des boss
 		Array<Texture> textures = null;
 
-		if (level <= m_boss_level[0])
+		System.out.println(level);
+		System.out.println("le niveau " + level + " correspond a world : " + Worlds.getWorldNumber(level));
+
+		if (Worlds.getWorldNumber(level) == 0)
 		{
-			// BG1 - butcher
 			textures = R.c().backGroundLayer_level0;
-
-		} else if (level > m_boss_level[0] && level <= m_boss_level[1])
+		} else if (Worlds.getWorldNumber(level) == 1)
 		{
-			// BG2 - bee
 			textures = R.c().backGroundLayer_level1;
-
-		} else if (level > m_boss_level[1] && level < m_boss_level[2])
+		} else if (Worlds.getWorldNumber(level) == 2)
 		{
-			// BG3 - invocator
 			textures = R.c().backGroundLayer_level2;
-		} else if (level > m_boss_level[2] && level < m_boss_level[3])
+		} else if (Worlds.getWorldNumber(level) == 3)
 		{
-			// BG4 - town
-			// textures = R.c().backGroundLayer_level3;
+			textures = R.c().backGroundLayer_level3;
 			textures = R.c().backGroundLayer_level4;
-		} else if (level > m_boss_level[3] && level < m_boss_level[4])
+		} else if (Worlds.getWorldNumber(level) == 4)
 		{
 			textures = R.c().backGroundLayer_level5;
 		}
@@ -95,8 +91,7 @@ public class Background extends Group
 	{
 		super.act(delta);
 
-		if (globalController.getPlayer().direction == Direction.LEFT_DIRECTION && globalController.getPlayer().isWalk() && globalController.getPlayer().getX() > 10
-				&& GameStage.cameraMovingX)
+		if (globalController.getPlayer().direction == Direction.LEFT_DIRECTION && globalController.getPlayer().isWalk() && globalController.getPlayer().getX() > 10 && GameStage.cameraMovingX)
 		{
 			layer4.setX(layer4.getX() + layer4speed);
 			layer3.setX(layer3.getX() + layer3speed);

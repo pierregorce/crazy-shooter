@@ -20,7 +20,7 @@ public class PlayerStats
 
 	private static int getTalentPointsMax()
 	{
-		return level;
+		return level + Worlds.getStars();
 	}
 
 	public static int getTalentPointsRemaining()

@@ -44,7 +44,7 @@ public class Enemy_21_MiniKraken extends Enemies
 
 		this.enemyCoef = enemyCoef;
 
-		Vector2 position = EnemyPopConstants.getInstance().getGroundBlockPosition();
+		Vector2 position = EnemyPopConstants.getInstance().getFallOrPopablePosition();
 		setPosition(position.x, position.y);
 		editCollisionBox(60, 30, 0);
 		direction = Direction.RIGHT_DIRECTION;

@@ -54,6 +54,7 @@ public class ProjectileComportements
 			// Lance un projectile normal
 			Projectile projectile_bis = new Projectile(Projectiles.PLAYER_BASIC_GUN);
 			projectile_bis.init(characterSender);
+			projectile_bis.direction = projectile_bis.getOpositeDirection();
 			GlobalController.bulletControllerFriendly.addActor(projectile_bis);
 		}
 	}
@@ -441,9 +442,88 @@ public class ProjectileComportements
 		}
 	}
 
-	public class Rocket
+	public class Rocket extends Straight
+	{
+		@Override
+		protected void comportement_init(Projectile projectile, Character characterSender)
+		{
+			super.comportement_init(projectile, characterSender);
+
+			Player p = (Player) characterSender;
+			p.getCorretedX(rightAnchor)
+			// int height = 20;
+			// Ressource r = new Ressource(new DrawableAnimation(0.14f, R.c().fx_explode_circle), p.getCorretedX(projectile.getCenterX() - height / 2 + 25),
+			// projectile.getCenterY() - height / 2, height, true);
+			// r.setColor(1, 1, 1, 0.5f);
+			// GlobalController.fxController.addActor(r);
+			//
+			// int height2 = 25;
+			// Ressource r2 = new Ressource(new DrawableAnimation(0.14f, R.c().fx_explode_circle), p.getCorretedX(projectile.getCenterX() - height2 / 2 - 70),
+			// projectile.getCenterY() - height2 / 2, height2, true);
+			// r2.setColor(1, 1, 1, 0.5f);
+			// GlobalController.fxController.addActor(r2);
+
+			Projectile projectile_one = new Projectile(Projectiles.PLAYER_ROCKET_SIMPLE);
+			projectile_one.init(characterSender);
+			projectile_one.precision = 0;
+			GlobalController.bulletControllerFriendly.addActor(projectile_one);
+
+			Projectile projectile_bis = new Projectile(Projectiles.PLAYER_ROCKET_SIMPLE);
+			projectile_bis.init(characterSender);
+			projectile_bis.precision = 3.5f;
+			GlobalController.bulletControllerFriendly.addActor(projectile_bis);
+
+			Projectile projectile_ter = new Projectile(Projectiles.PLAYER_ROCKET_SIMPLE);
+			projectile_ter.init(characterSender);
+			projectile_ter.precision = -3.5f;
+			GlobalController.bulletControllerFriendly.addActor(projectile_ter);
+
+			if (projectile.direction == Direction.RIGHT_DIRECTION)
+			{
+				projectile_bis.rotation = 17;
+				projectile_ter.rotation = -17;
+			} else
+			{
+				projectile_bis.rotation = -17;
+				projectile_ter.rotation = 17;
+
+			}
+			projectile.active = false;
+		}
+
+		@Override
+		protected void comportement_act(Projectile projectile)
+		{
+			super.comportement_act(projectile);
+			projectile.remove();
+		}
+
+	}
+
+	public class SimpleRocket extends Straight
 	{
 
+		@Override
+		protected void comportement_init(Projectile projectile, Character characterSender)
+		{
+			super.comportement_init(projectile, characterSender);
+			projectile.effect = new Timer(0.04f);
+		}
+
+		@Override
+		protected void comportement_act(Projectile projectile)
+		{
+			super.comportement_act(projectile);
+			// do smoke
+			if (projectile.effect.doAction(Gdx.graphics.getDeltaTime()))
+			{
+				int height = 35;
+				Ressource r = new Ressource(new DrawableAnimation(0.1f, R.c().fx_pop), projectile.getCenterX() - height / 2, projectile.getCenterY() - height / 2, height, true);
+				r.setColor(1, 1, 1, 0.5f);
+				GlobalController.fxController.addActor(r);
+			}
+
+		}
 	}
 
 	private static class GenericComportementList
@@ -506,17 +586,25 @@ public class ProjectileComportements
 		protected void comportement_endingEffect(Projectile projectile, Character characterReceiving)
 		{
 			super.comportement_endingEffect(projectile, characterReceiving);
+			GameStage.cameraShake(GameStage.SMALL_SHAKE);
 			// Only effect, le degat est déja dans la bomb...
 
 			for (int i = 0; i < 4; i++)
 			{
 				int xRandomization = new Random().nextInt(100) - 50;
-				int yRandomization = new Random().nextInt(5);
+				int yRandomization = new Random().nextInt(30);
 				int height = 60;
-				Ressource r = new Ressource(new DrawableAnimation(0.16f, R.c().fx_explode_square_2), projectile.getCenterX() - height / 2 + xRandomization, projectile.getCenterY() - height / 2 + yRandomization, height,
+				Ressource r = new Ressource(new DrawableAnimation(0.16f, R.c().fx_explode_circle), projectile.getCenterX() - height / 2 + xRandomization, projectile.getCenterY() - height / 2 + yRandomization, height,
 						true);
 				r.setColor(ParticleColors.getInstance().getGreenWaste()[new Random().nextInt(ParticleColors.getInstance().getGreenWaste().length)]);
 				GlobalController.fxController.addActor(r);
+			}
+			// Add 4 particles
+			for (int j = 0; j < 4; j++)
+			{
+				ExplosionParticle explosionParticle = new ExplosionParticle();
+				explosionParticle.init(projectile.getCenterX(), projectile.getCenterY(), ParticleColors.getInstance().getGreenWaste());
+				GlobalController.particleController.addActor(explosionParticle);
 			}
 		}
 	}

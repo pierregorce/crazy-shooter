@@ -18,6 +18,7 @@ import game.projectiles.Projectile;
 import game.projectiles.ProjectilePoolFactory;
 import game.sound.MusicManager;
 import globals.PlayerStats;
+import globals.Worlds;
 
 import java.util.Random;
 
@@ -26,7 +27,6 @@ import ressources.R;
 import ressources.Ressource;
 import ressources.S;
 import screen.ScreenManager;
-import screen.level.LevelGroup_old;
 import screen.level.Levels;
 import utilities.enumerations.GameStatesEnum;
 
@@ -142,25 +142,20 @@ public class GlobalController
 			m_factoryArray.add(new EnemyFactory(enemyController, player, m_waveDetails[i]));
 		}
 
-		int[] m_boss_level = LevelGroup_old.m_boss_level_from_1; // Récupère les niveau des boss (commence à 1)
 		int level = ScreenManager.getInstance().getLevelSelected().levelIndex; // Recupère le level (commence à 1)
 
 		// Charge les timer en fonction des niveau des boss
 
-		if (level <= m_boss_level[0])
+		if (Worlds.getWorldNumber(level) == 0)
 		{
-			// Niveau 0
 			lifeBoxTimerPoping = new Timer(11f);
 			explosiveBoxTimerPoping = new Timer(11f);
-		} else if (level > m_boss_level[1])
+		} else if (Worlds.getWorldNumber(level) == 1)
 		{
-			// Niveau 2
 			lifeBoxTimerPoping = new Timer(12f);
-			// explosiveBoxTimerPoping = new Timer(13f);
 			explosiveBoxTimerPoping = new Timer(13f);
 		} else
 		{
-			// Niveau 1
 			lifeBoxTimerPoping = new Timer(13f);
 			explosiveBoxTimerPoping = new Timer(14f);
 		}

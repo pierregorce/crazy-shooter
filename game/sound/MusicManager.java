@@ -1,10 +1,11 @@
 package game.sound;
 
+import globals.Worlds;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import screen.ScreenManager;
-import screen.level.LevelGroup_old;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -17,19 +18,19 @@ public class MusicManager
 		// Cannot be instancied
 	}
 
-	public static Map<String, FileHandle> musics = new HashMap<String, FileHandle>();
-	public static float higherMusicVolume = 0.3f;
-	public static float lowerMusicVolume = 0f;
+	public static Map<String, FileHandle>	musics				= new HashMap<String, FileHandle>();
+	public static float						higherMusicVolume	= 0.3f;
+	public static float						lowerMusicVolume	= 0f;
 
 	// Surtout les enemies
-	public static float sfxVolume = 0.9f;
+	public static float						sfxVolume			= 0.9f;
 	// Evenement a faible occurence et les armes
-	public static float sfxVolume_Weapons = 0.85f;
-	public static float sfxVolume_Player = 1f;
-	public static float sfxVolume_BossLow = 0.9f;
+	public static float						sfxVolume_Weapons	= 0.85f;
+	public static float						sfxVolume_Player	= 1f;
+	public static float						sfxVolume_BossLow	= 0.9f;
 
-	public static String currentMusicKey = "";
-	public static Music currentMusic;
+	public static String					currentMusicKey		= "";
+	public static Music						currentMusic;
 
 	static
 	{
@@ -47,14 +48,16 @@ public class MusicManager
 
 	public static void play_Game_Music()
 	{
-		int[] m_boss_level = LevelGroup_old.m_boss_level_from_1; // Récupère les niveau des boss (commence à 1)
 		int level = ScreenManager.getInstance().getLevelSelected().levelIndex; // Recupère le level (commence à 1)
 
 		// Charge le monde en fonction des niveau des boss
-		if (level <= m_boss_level[0])
+		if (Worlds.getWorldNumber(level) == 0)
 		{
 			loadAndPlay("BG1");
-		} else if (level > m_boss_level[1])
+		} else if (Worlds.getWorldNumber(level) == 1)
+		{
+			loadAndPlay("BG2");
+		} else if (Worlds.getWorldNumber(level) == 2)
 		{
 			loadAndPlay("BG3");
 		} else

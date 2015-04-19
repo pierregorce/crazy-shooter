@@ -2,13 +2,13 @@ package com.oasix.crazyshooter;
 
 import game.entitiy.Entities;
 import game.path.WayPoint;
+import globals.Worlds;
 
 import java.util.ArrayList;
 
 import ressources.R;
 import screen.MyGdxGame;
 import screen.ScreenManager;
-import screen.level.LevelGroup_old;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -43,22 +43,21 @@ public class Block extends Entities
 		setX(x);
 		setY(y);
 
-		int[] m_boss_level = LevelGroup_old.m_boss_level_from_1; // Récupère les niveau des boss (commence à 1)
 		int level = ScreenManager.getInstance().getLevelSelected().levelIndex; // Recupère le level (commence à 1)
 
 		// Charge le monde en fonction des niveau des boss
 		Array<Texture> textures = null;
 
-		if (level <= m_boss_level[0])
+		if (Worlds.getWorldNumber(level) == 0)
 		{
 			textures = R.c().block_level0;
-		} else if (level > m_boss_level[0] && level < m_boss_level[1])
+		} else if (Worlds.getWorldNumber(level) == 1)
 		{
 			textures = R.c().block_level1;
-		} else if (level > m_boss_level[1] && level < m_boss_level[2])
+		} else if (Worlds.getWorldNumber(level) == 2)
 		{
 			textures = R.c().block_level2;
-		} else if (level > m_boss_level[2] && level < m_boss_level[3])
+		} else if (Worlds.getWorldNumber(level) == 3)
 		{
 			textures = R.c().block_level3;
 		}
@@ -139,7 +138,7 @@ public class Block extends Entities
 	 */
 	public Vector2 getPopPosition()
 	{
-		return new Vector2(getCenterX(), getTop() + 30);
+		return new Vector2(getCenterX(), getTop() + 0);
 	}
 
 	public void setBlocksLinked(Block... blocks)

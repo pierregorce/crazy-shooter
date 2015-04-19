@@ -59,7 +59,7 @@ public class ButtonScreen extends ButtonUtilities
 		b.down = new TextureRegionDrawable(down);
 		setStyle(b);
 		setSize(getPrefWidth(), getPrefHeight());
-		putSize();
+		// putSize();
 	}
 
 	public void putStyle(TextureRegion up)
@@ -68,7 +68,7 @@ public class ButtonScreen extends ButtonUtilities
 		b.up = new TextureRegionDrawable(up);
 		setStyle(b);
 		setSize(getPrefWidth(), getPrefHeight());
-		putSize();
+		// putSize();
 	}
 
 	public void putEffect()

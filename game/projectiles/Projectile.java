@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.oasix.crazyshooter.Timer;
 
 public class Projectile extends PhysicalEntity
 {
@@ -33,6 +34,7 @@ public class Projectile extends PhysicalEntity
 	public float		precision	= 0;
 	public float		rotation	= 0;
 	public int			rebound		= 0;
+	public Timer		effect;
 
 	public Projectile(Projectiles projectilesType)
 	{
@@ -86,6 +88,7 @@ public class Projectile extends PhysicalEntity
 		{
 			setX(projectilesType.characterAnchor.x);
 			setY(projectilesType.characterAnchor.y);
+			drawable = right_drawable;
 			m_xStart = 0;
 		}
 

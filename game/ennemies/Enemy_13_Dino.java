@@ -29,12 +29,11 @@ public class Enemy_13_Dino extends Enemies
 
 	public Enemy_13_Dino(Player player, float enemyCoef)
 	{
-		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH,
-				R.c().enemy_dino_walk);
+		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH, R.c().enemy_dino_walk);
 
 		this.enemyCoef = enemyCoef;
 
-		Vector2 position = EnemyPopConstants.getInstance().getGroundBlockPosition();
+		Vector2 position = EnemyPopConstants.getInstance().getFallOrPopablePosition();
 		setPosition(position.x, position.y);
 
 		direction = Direction.RIGHT_DIRECTION;

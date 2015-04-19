@@ -20,8 +20,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class GameStage extends Stage
 {
-	// Constantes
-	// public static final int GROUND_HEIGHT = 260; // TODO REMOVE
 
 	// Variables statics
 	public static final boolean				debug			= false;

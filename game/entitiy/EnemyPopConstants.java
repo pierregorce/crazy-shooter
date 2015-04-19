@@ -50,7 +50,7 @@ public class EnemyPopConstants
 	 */
 	public Vector2 getFlyPosition()
 	{
-		float flyMargin = 5;
+		float flyMargin = 1;
 		ArrayList<Block> blockCollection = new ArrayList<Block>();
 		blockCollection.addAll(BlockController.bigBlock);
 		blockCollection.addAll(BlockController.smallBlock);
@@ -118,8 +118,25 @@ public class EnemyPopConstants
 		return blockCollection.get(new Random().nextInt(blockCollection.size())).getPopPosition();
 	}
 
+	/**
+	 * Renvoie une position au sol ou sur le big block ou sur l'un des fictive block (50/50)
+	 */
+	public Vector2 getFallOrPopablePosition()
+	{
+
+		if (new Random().nextInt(2) == 1)
+		{
+			return EnemyPopConstants.getInstance().getPopablePosition();
+		} else
+		{
+			return EnemyPopConstants.getInstance().getFallPosition();
+		}
+
+	}
+
 	public Vector2 getPlayerPopPosition()
 	{
 		return getAllBlockPosition();
 	}
+
 }

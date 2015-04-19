@@ -21,8 +21,8 @@ public class Enemy_16_Eyes extends Enemies
 	// Flying basic enemy
 	// Move left then right, don't care about player
 
-	private final static int	MAX_LIFE		= 35;
-	private final static int	XP_GAIN_ON_KILL	= 35;
+	private final static int	MAX_LIFE		= 150;
+	private final static int	XP_GAIN_ON_KILL	= 50;
 	private final static int	ATTACK_POWER	= 15;
 	private final static float	MOVE_SPEED_MIN	= 3;
 	private final static float	MOVE_SPEED_MAX	= 6;
@@ -74,8 +74,7 @@ public class Enemy_16_Eyes extends Enemies
 		// si player est en dessous
 		// alors attaque
 
-		if (getRight() > player.getBouncingBox().getX() - 20 && getX() < player.getBouncingBox().getX() + player.getBouncingBox().getWidth() + 20
-				&& player.getTop() < getY())
+		if (getRight() > player.getBouncingBox().getX() - 20 && getX() < player.getBouncingBox().getX() + player.getBouncingBox().getWidth() + 20 && player.getTop() < getY())
 		{
 			canPick = true;
 		} else

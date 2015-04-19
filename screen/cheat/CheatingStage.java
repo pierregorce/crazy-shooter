@@ -58,7 +58,6 @@ public class CheatingStage extends Stage
 		buttonGoBack = new ButtonScreen(this, ScreenEnum.LOADING);
 		buttonGoBack.putStyle(new TextureRegion(new Texture(Gdx.files.internal("images/cheat/cheat-button-goBack.png"))));
 		buttonGoBack.putSize();
-		buttonGoBack.addListener(new ButtonCheat());
 
 		TextFieldStyle s = new TextFieldStyle();
 		s.font = R.c().EarlyGameBoyFont_40;

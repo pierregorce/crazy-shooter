@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import files.Files;
+import globals.Worlds;
 
 /**
  * Ne peut être utilisé que lors du chargement initial, prévoir un autre screen pour le game LOADING
@@ -74,7 +75,7 @@ public class LoadingScreen implements MovableScreen
 			Files.playerDataRead();
 			Files.playerWeaponsRead();
 			// Stock les données concernannt le game level
-			ScreenManager.getInstance().setLevelSelected(Files.levelDataRead().level[25]); // from 0
+			ScreenManager.getInstance().setLevelSelected(Worlds.getLastLevelUnlock());
 			// Initialisation des screens, ils peuvent utiliser les variables précedement chargées
 			System.out.println("Done.");
 			addButtons();
@@ -109,20 +110,22 @@ public class LoadingScreen implements MovableScreen
 	private void addButtons()
 	{
 		float y = 340;
-		ButtonScreen b = new ButtonScreen(loadingGroup, ScreenEnum.WORLD);
+		ButtonScreen b = new ButtonScreen(loadingGroup, ScreenEnum.GAMELOADING);
 		b.putStyle(new TextureRegion(new Texture(Gdx.files.internal("images/loading/loading-button-goToPlay.png"))));
+		b.putSize();
 		b.setPosition(-MyGdxGame.VIRTUAL_WIDTH, 280 + y); // place a sa position final - yRetreat
 		b.addAction(Actions.moveTo(MyGdxGame.VIRTUAL_WIDTH / 2, 280 + y, 0.4f, Interpolation.sine));
 
 		ButtonScreen b2 = new ButtonScreen(loadingGroup, ScreenEnum.SETTINGS);
 		b2.putStyle(new TextureRegion(new Texture(Gdx.files.internal("images/loading/loading-button-goToSettings.png"))));
 		b2.setPosition(-MyGdxGame.VIRTUAL_WIDTH, 160 + y); // place a sa position final - yRetreat
+		b2.putSize();
 		Action a = Actions.moveTo(MyGdxGame.VIRTUAL_WIDTH / 2, 160 + y, 0.4f, Interpolation.sine);
 		b2.addAction(Actions.delay(0.3f, a));
 
 		ButtonScreen b3 = new ButtonScreen(loadingGroup, ScreenEnum.CHEATS);
 		b3.putStyle(new TextureRegion(new Texture(Gdx.files.internal("images/loading/loading-button-goToCheatsCode.png"))));
-
+		b3.putSize();
 		b3.setPosition(-MyGdxGame.VIRTUAL_WIDTH, 40 + y); // place a sa position final - yRetreat
 		Action a2 = Actions.moveTo(MyGdxGame.VIRTUAL_WIDTH / 2, 40 + y, 0.4f, Interpolation.sine);
 		b3.addAction(Actions.delay(0.6f, a2));

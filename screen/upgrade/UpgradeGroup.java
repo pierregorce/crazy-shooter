@@ -39,7 +39,7 @@ public class UpgradeGroup extends Group
 {
 	private float			screenHeight	= 405;
 	private float			factor			= 2.66f;
-	private DecimalFormat	df				= new DecimalFormat("0.0");
+	private DecimalFormat	df				= new DecimalFormat("0.00");
 
 	private Image			image2;
 	private Image			image3;
@@ -69,6 +69,7 @@ public class UpgradeGroup extends Group
 
 		buttonScreen = new ButtonScreen(this, ScreenEnum.WORLD);
 		buttonScreen.putStyle(R.c().screens_iconGoToMenuScreen);
+		buttonScreen.putSize();
 		buttonScreen.putEffect();
 
 		initialisationWeapons();
@@ -327,7 +328,7 @@ public class UpgradeGroup extends Group
 		profilHealth.setText("" + PlayerStats.getMaxLife());
 		profilCriticalChance.setText("" + df.format(PlayerStats.getCriticalChance()) + "%");
 		profilHealthPack.setText("" + PlayerStats.getLifeBoxHp() + "HP");
-		profilDamage.setText("" + (int) PlayerStats.getDamage() + "");
+		profilDamage.setText("*" + (int) PlayerStats.getDamage() + "");
 		profilAttackSpeed.setText(df.format(PlayerStats.getAttackSpeed()) + "");
 		profilAttackSpeedSubtitle.setText("DPS");
 		profilStarsForNextLevel.setText("" + 1);

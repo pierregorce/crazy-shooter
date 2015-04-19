@@ -1,9 +1,11 @@
 package screen.worlds;
 
+import files.Files;
 import globals.Worlds;
 import ressources.ButtonRessource;
 import ressources.R;
 import screen.ScreenManager;
+import screen.level.Levels;
 import utilities.enumerations.ScreenEnum;
 
 import com.badlogic.gdx.Gdx;
@@ -40,7 +42,7 @@ public class ButtonWorld extends ButtonRessource
 		LabelStyle small = new LabelStyle(R.c().EarlyGameBoyFont_22, Color.valueOf("fbd00f"));
 
 		titleLabel = new Label("" + world.name, medium);
-		wavesLabel = new Label("" + world.wave, big);
+		wavesLabel = new Label("" + world.startWorld + " - " + world.endWorld, big);
 		bossLabel = new Label("" + world.finalBoss, big);
 		plateformLabel = new Label("" + world.plateformType, big);
 		completedLabel = new Label("", small);
@@ -62,10 +64,11 @@ public class ButtonWorld extends ButtonRessource
 		worldImage.setSize(world.level.getRegionWidth() * factor, world.level.getRegionHeight() * factor);
 		addActor(worldImage);
 
-		if (world.isCompleted)
+		if (world.isCompleted())
 		{
 			putUpDrawable(R.c().world_frame_completed);
 		}
+		putUpDrawable(R.c().world_frame_completed);
 
 		addListener(new ButtonScreenAction());
 	}
@@ -91,7 +94,7 @@ public class ButtonWorld extends ButtonRessource
 	{
 		positionning();
 		super.act(delta);
-		if (world.isCompleted)
+		if (world.isCompleted())
 		{
 			completedLabel.setText("Completed");
 			starsLabel.setText("");
@@ -110,6 +113,9 @@ public class ButtonWorld extends ButtonRessource
 		public void clicked(InputEvent event, float x, float y)
 		{
 			super.clicked(event, x, y);
+
+			Levels levels = Files.levelDataRead();
+			ScreenManager.getInstance().setLevelSelected(levels.level[world.startWorld]);
 			ScreenManager.getInstance().show(ScreenEnum.LEVEL);
 			Gdx.input.setInputProcessor(null); // empeche des actions durant le changement de screen
 		}

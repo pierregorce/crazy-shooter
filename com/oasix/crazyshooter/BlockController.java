@@ -3,13 +3,13 @@ package com.oasix.crazyshooter;
 import game.entitiy.Character;
 import game.path.WayPoint;
 import game.path.WayPoint.Action;
+import globals.Worlds;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import screen.MyGdxGame;
 import screen.ScreenManager;
-import screen.level.LevelGroup_old;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -34,7 +34,6 @@ public class BlockController extends Group
 		groundBlock = new ArrayList<Block>();
 		fictivesBlock = new ArrayList<Block>();
 
-		int[] m_boss_level = LevelGroup_old.m_boss_level_from_1; // Récupère les niveau des boss (commence à 1)
 		int level = ScreenManager.getInstance().getLevelSelected().levelIndex; // Recupère le level (commence à 1)
 
 		Block block_1 = new Block(0, 0, 0);
@@ -89,7 +88,8 @@ public class BlockController extends Group
 		block_6.active = true;
 
 		// BG2 - 6 blocs
-		if (level > m_boss_level[0])
+
+		if (Worlds.getWorldNumber(level) >= 1)
 		{
 			// 120
 			block_5 = new Block(397, 800 - 517 + background_offsetY - block_hauteur, 120, block_hauteur, true);
@@ -100,13 +100,13 @@ public class BlockController extends Group
 		}
 
 		// BG3 - 6 blocs + trou
-		if (level > m_boss_level[1])
+		if (Worlds.getWorldNumber(level) >= 2)
 		{
 			// Rien a rajouter pour les blocks, sol fait plus bas.
 		}
 
 		// BG4 - 10 blocs (+ big plateform) + trou
-		if (level > m_boss_level[2])
+		if (Worlds.getWorldNumber(level) >= 3)
 		{
 			// ------------------------------------- Block supplémentaire
 			// 150
@@ -149,7 +149,7 @@ public class BlockController extends Group
 		}
 
 		// BG5 - Tout !
-		if (level > m_boss_level[3])
+		if (Worlds.getWorldNumber(level) >= 4)
 		{
 			// deplacé au bg4
 		}
@@ -158,7 +158,7 @@ public class BlockController extends Group
 
 		final float hauteur = 20;
 
-		if (level > m_boss_level[1])
+		if (Worlds.getWorldNumber(level) >= 2)
 		{
 			// -------------------------------------------------------------- Sol avec 1 trou
 
@@ -220,13 +220,23 @@ public class BlockController extends Group
 
 		// --------------------------- Fictive Blocks, Only for Pop
 		Block block_fictive_1 = new Block(177, 800 - 239 + background_offsetY - block_hauteur, 75, block_hauteur, true);
+		block_fictive_1.debugNumber = "block_fictive_1";
 		fictivesBlock.add(block_fictive_1);
 		Block block_fictive_2 = new Block(867, 800 - 239 + background_offsetY - block_hauteur, 75, block_hauteur, true);
+		block_fictive_2.debugNumber = "block_fictive_2";
 		fictivesBlock.add(block_fictive_2);
+		Block block_fictive_3 = new Block(405, 800 - 495 + background_offsetY - block_hauteur, 75, block_hauteur, true);
+		block_fictive_3.debugNumber = "block_fictive_3";
+		fictivesBlock.add(block_fictive_3);
+		Block block_fictive_4 = new Block(684, 800 - 500 + background_offsetY - block_hauteur, 75, block_hauteur, true);
+		block_fictive_4.debugNumber = "block_fictive_4";
+		fictivesBlock.add(block_fictive_4);
 		if (GameStage.debug)
 		{
 			GlobalController.fxController.addActor(block_fictive_1);
 			GlobalController.fxController.addActor(block_fictive_2);
+			GlobalController.fxController.addActor(block_fictive_3);
+			GlobalController.fxController.addActor(block_fictive_4);
 		}
 
 		if (GameStage.debug)
@@ -262,7 +272,7 @@ public class BlockController extends Group
 		block_6.right.active = true;
 
 		// BG2 - 6 blocs
-		if (level > m_boss_level[0])
+		if (Worlds.getWorldNumber(level) >= 1)
 		{
 			block_3.middle.active = true;
 			block_5.right.active = true;
@@ -270,7 +280,7 @@ public class BlockController extends Group
 		}
 
 		// BG4 - 10 blocs (il manque la big plateform) + trou
-		if (level > m_boss_level[2])
+		if (Worlds.getWorldNumber(level) >= 3)
 		{
 			block_2.right.active = true;
 			block_5.left.active = true;
@@ -290,7 +300,7 @@ public class BlockController extends Group
 		}
 
 		// BG5 - Tout !
-		if (level > m_boss_level[3])
+		if (Worlds.getWorldNumber(level) >= 4)
 		{
 		}
 

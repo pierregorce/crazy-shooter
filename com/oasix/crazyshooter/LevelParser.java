@@ -47,7 +47,7 @@ public class LevelParser
 	 */
 	public int getWaveCount(int level)
 	{
-		level--;
+		// level--;
 		int waveCount = m_dom.getChild(level).getChildCount();
 		return waveCount;
 	}
@@ -61,7 +61,7 @@ public class LevelParser
 	 */
 	public float getWaveTime(int level, int wave)
 	{
-		level--;
+		// level--;
 		float waveTime = Integer.parseInt(m_dom.getChild(level).getChild(wave).getAttribute("time"));
 		return waveTime;
 	}
@@ -75,7 +75,7 @@ public class LevelParser
 	 */
 	public float[][] getpopForWave(int level, int wave)
 	{
-		level--; // Le level commence à 1, le tableau à 0.
+		// level--; // Le level commence à 1, le tableau à 0.
 		int popCount = m_dom.getChild(level).getChild(wave).getChildCount();
 		float[][] pop = new float[popCount][4];
 

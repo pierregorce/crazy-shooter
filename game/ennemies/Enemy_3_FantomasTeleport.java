@@ -72,7 +72,7 @@ public class Enemy_3_FantomasTeleport extends Enemies
 	public void enemyDirectionEngine()
 	{
 		// Patrouille si le player est loin
-		float distance = Math.abs(getX() - player.getX());
+		float distance = getPosition().dst(player.getPosition());
 		walk = false;
 		shoot = false;
 

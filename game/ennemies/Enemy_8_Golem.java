@@ -84,7 +84,8 @@ public class Enemy_8_Golem extends Enemies
 	public void enemyDirectionEngine()
 	{
 		super.enemyDirectionEngine();
-		faireFaceTo(player);
+		// faireFaceTo(player);
+		EnemyComportements.followPlayerAndPatrolOnGround(this, player);
 	}
 
 	@Override

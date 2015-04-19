@@ -280,4 +280,5 @@ public abstract class PhysicalEntity extends Entities
 	{
 		this.disableBlockCollision = disableBlockCollision;
 	}
+
 }

@@ -1,10 +1,10 @@
 package game.panels;
 
 import game.sound.MusicManager;
+import globals.Worlds;
 import ressources.S;
 import screen.MyGdxGame;
 import screen.ScreenManager;
-import screen.level.LevelGroup_old;
 import utilities.enumerations.GameStatesEnum;
 import utilities.enumerations.ScreenEnum;
 
@@ -40,7 +40,7 @@ public class GameMenu extends Stage
 			}
 			if (GameStage.gameState == GameStatesEnum.GAME_WIN)
 			{
-				if (ScreenManager.getInstance().getLevelSelected().levelIndex <= LevelGroup_old.m_last_level_from_1)
+				if (ScreenManager.getInstance().getLevelSelected().levelIndex <= Worlds.LAST_LEVEL)
 				{
 					shown = true;
 					gameBreakMenu = new GameBreakMenu(gameStage, GameStatesEnum.GAME_WIN);

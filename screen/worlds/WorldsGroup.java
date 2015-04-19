@@ -5,6 +5,8 @@ import globals.Worlds;
 import java.text.DecimalFormat;
 
 import ressources.R;
+import screen.MyGdxGame;
+import screen.ScreenManager;
 import utilities.ButtonScreen;
 import utilities.enumerations.ScreenEnum;
 
@@ -32,9 +34,12 @@ public class WorldsGroup extends Group
 
 	Image					image2;
 	Image					image4;
+	Image					image3;
 
 	public WorldsGroup()
 	{
+		ScreenManager.getInstance().setLevelSelected(Worlds.getLastLevelUnlock());
+
 		Image image = new Image(R.c().upgrade_background);
 		image.setSize(image.getWidth() * factor, image.getHeight() * factor);
 		// image.setPosition(174 * factor, (screenHeight - 145) * factor);
@@ -45,7 +50,7 @@ public class WorldsGroup extends Group
 		// image.setPosition(174 * factor, (screenHeight - 145) * factor);
 		addActor(image2);
 
-		Image image3 = new Image(R.c().world_blakc_rectangle);
+		image3 = new Image(R.c().world_black_rectangle);
 		image3.setSize(image3.getWidth() * factor, image3.getHeight() * factor);
 		// image.setPosition(174 * factor, (screenHeight - 145) * factor);
 		addActor(image3);
@@ -55,7 +60,7 @@ public class WorldsGroup extends Group
 		// image.setPosition(174 * factor, (screenHeight - 145) * factor);
 		addActor(image4);
 
-		currentProgressionValue = new Label("" + 22, new LabelStyle(R.c().EarlyGameBoyFont_32, Color.valueOf("fbd00f")));
+		currentProgressionValue = new Label("" + Worlds.getProgression(), new LabelStyle(R.c().EarlyGameBoyFont_32, Color.valueOf("fbd00f")));
 		addActor(currentProgressionValue);
 
 		initScreenButtons();
@@ -127,7 +132,7 @@ public class WorldsGroup extends Group
 	public void act(float delta)
 	{
 		super.act(delta);
-
+		image3.setSize(MyGdxGame.VIRTUAL_WIDTH, 65 * factor);
 	}
 
 }

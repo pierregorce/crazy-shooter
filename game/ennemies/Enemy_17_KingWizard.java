@@ -155,8 +155,8 @@ public class Enemy_17_KingWizard extends Enemies
 	public void patrouille()
 	{
 		// Patrouille si le player est loin
-		float distance = Math.abs(getX() - player.getX());
-		if (distance <= 250)
+		float distance = player.getPosition().dst(getPosition());
+		if (distance <= 400)
 		{
 			// Tir
 			walk = false;
