@@ -130,6 +130,7 @@ public class CheatingStage extends Stage
 				labelResult.setText(success);
 			}
 
+			Gdx.input.setOnscreenKeyboardVisible(false);
 		}
 	}
 }

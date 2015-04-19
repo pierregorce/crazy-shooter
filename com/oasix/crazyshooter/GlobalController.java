@@ -26,7 +26,7 @@ import ressources.R;
 import ressources.Ressource;
 import ressources.S;
 import screen.ScreenManager;
-import screen.level.LevelGroup;
+import screen.level.LevelGroup_old;
 import screen.level.Levels;
 import utilities.enumerations.GameStatesEnum;
 
@@ -142,7 +142,7 @@ public class GlobalController
 			m_factoryArray.add(new EnemyFactory(enemyController, player, m_waveDetails[i]));
 		}
 
-		int[] m_boss_level = LevelGroup.m_boss_level_from_1; // Récupère les niveau des boss (commence à 1)
+		int[] m_boss_level = LevelGroup_old.m_boss_level_from_1; // Récupère les niveau des boss (commence à 1)
 		int level = ScreenManager.getInstance().getLevelSelected().levelIndex; // Recupère le level (commence à 1)
 
 		// Charge les timer en fonction des niveau des boss

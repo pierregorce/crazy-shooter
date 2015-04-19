@@ -3,6 +3,7 @@ package utilities;
 import screen.ScreenManager;
 import utilities.enumerations.ScreenEnum;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -17,11 +19,21 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class ButtonScreen extends ButtonUtilities
 {
 	private float	height	= 100;
+	boolean			done	= false;
+	Group			group;
 
 	public ButtonScreen(Group group, ScreenEnum screen)
 	{
+		this.group = group;
 		group.addActor(this);
 		addListener(new ButtonScreenAction(screen));
+	}
+
+	public ButtonScreen(Group group, RunnableAction action)
+	{
+		this.group = group;
+		group.addActor(this);
+		addListener(new ButtonScreenRunnable(action));
 	}
 
 	public ButtonScreen(Stage stage, ScreenEnum screen)
@@ -82,22 +94,42 @@ public class ButtonScreen extends ButtonUtilities
 		super.setPosition(x - getWidth() / 2, y - getWidth() / 2);
 		currentY = getY();
 	}
-}
 
-class ButtonScreenAction extends ClickListener
-{
-	private ScreenEnum	screen;
-
-	public ButtonScreenAction(ScreenEnum screen)
+	class ButtonScreenAction extends ClickListener
 	{
-		super();
-		this.screen = screen;
+		private ScreenEnum	screen;
+
+		public ButtonScreenAction(ScreenEnum screen)
+		{
+			super();
+			this.screen = screen;
+		}
+
+		@Override
+		public void clicked(InputEvent event, float x, float y)
+		{
+			super.clicked(event, x, y);
+			ScreenManager.getInstance().show(screen);
+			Gdx.input.setInputProcessor(null); // empeche des actions durant le changement de screen
+		}
 	}
 
-	@Override
-	public void clicked(InputEvent event, float x, float y)
+	class ButtonScreenRunnable extends ClickListener
 	{
-		super.clicked(event, x, y);
-		ScreenManager.getInstance().show(screen);
+		private RunnableAction	action;
+
+		public ButtonScreenRunnable(RunnableAction action)
+		{
+			super();
+			this.action = action;
+		}
+
+		@Override
+		public void clicked(InputEvent event, float x, float y)
+		{
+			super.clicked(event, x, y);
+			action.run();
+			// Gdx.input.setInputProcessor(null); // empeche des actions durant le changement de screen
+		}
 	}
 }

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import screen.ScreenManager;
-import screen.level.LevelGroup;
+import screen.level.LevelGroup_old;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -47,7 +47,7 @@ public class MusicManager
 
 	public static void play_Game_Music()
 	{
-		int[] m_boss_level = LevelGroup.m_boss_level_from_1; // Récupère les niveau des boss (commence à 1)
+		int[] m_boss_level = LevelGroup_old.m_boss_level_from_1; // Récupère les niveau des boss (commence à 1)
 		int level = ScreenManager.getInstance().getLevelSelected().levelIndex; // Recupère le level (commence à 1)
 
 		// Charge le monde en fonction des niveau des boss

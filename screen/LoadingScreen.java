@@ -57,7 +57,7 @@ public class LoadingScreen implements MovableScreen
 
 		// Tant que le load n'est pas fait alors alors on ne passe pas au changement de screen
 
-		// R.c().assetManager.finishLoading();
+		R.c().assetManager.finishLoading();
 
 		if (R.c().assetManager.update(0) && !m_loading)
 		{
@@ -109,7 +109,7 @@ public class LoadingScreen implements MovableScreen
 	private void addButtons()
 	{
 		float y = 340;
-		ButtonScreen b = new ButtonScreen(loadingGroup, ScreenEnum.LEVEL);
+		ButtonScreen b = new ButtonScreen(loadingGroup, ScreenEnum.WORLD);
 		b.putStyle(new TextureRegion(new Texture(Gdx.files.internal("images/loading/loading-button-goToPlay.png"))));
 		b.setPosition(-MyGdxGame.VIRTUAL_WIDTH, 280 + y); // place a sa position final - yRetreat
 		b.addAction(Actions.moveTo(MyGdxGame.VIRTUAL_WIDTH / 2, 280 + y, 0.4f, Interpolation.sine));

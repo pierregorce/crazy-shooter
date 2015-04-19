@@ -148,9 +148,9 @@ public class Enemy_3_FantomasTeleport extends Enemies
 	@Override
 	public void shootEngine()
 	{
-		Vector2 position = new Vector2(getX(), getY());
-		Vector2 playerPosition = new Vector2(player.getX(), player.getY());
-		if (position.dst(playerPosition) <= 500)
+		float distance = getPosition().dst(player.getPosition()); // Distance x et y
+
+		if (distance <= 500)
 		{
 			Projectile p = new Projectile(Projectiles.ENEMY_FANTOMAS);
 			p.init(this);

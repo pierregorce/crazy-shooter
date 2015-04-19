@@ -107,7 +107,6 @@ public class ButtonWeapon extends ButtonRessource
 		}
 
 		putStyle();
-
 	}
 
 }

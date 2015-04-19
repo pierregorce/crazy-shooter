@@ -8,6 +8,7 @@ import game.ennemies.Enemy_17_KingWizard;
 import game.ennemies.Enemy_18_Turrel;
 import game.ennemies.Enemy_19_Robot;
 import game.ennemies.Enemy_1_Spider_basic;
+import game.ennemies.Enemy_21_MiniKraken;
 import game.ennemies.Enemy_2_Bat_Basic;
 import game.ennemies.Enemy_3_FantomasTeleport;
 import game.ennemies.Enemy_4_Limace;
@@ -19,6 +20,7 @@ import game.ennemies.Enemy_9_Wasp;
 import game.ennemies.Enemy_Boss_10_Golem;
 import game.ennemies.Enemy_Boss_11_SuperFly;
 import game.ennemies.Enemy_Boss_12_Invocator;
+import game.ennemies.Enemy_Boss_20_Kraken;
 import game.entitiy.Enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -152,6 +154,12 @@ public class EnemyFactory
 			break;
 		case 19:
 			enemy = new Enemy_19_Robot(m_player, enemyCoef);
+			break;
+		case 20:
+			enemy = new Enemy_Boss_20_Kraken(m_player, enemyCoef);
+			break;
+		case 21:
+			enemy = new Enemy_21_MiniKraken(m_player, enemyCoef);
 			break;
 		default:
 			break;

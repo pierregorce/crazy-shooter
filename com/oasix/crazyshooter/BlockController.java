@@ -9,7 +9,7 @@ import java.util.Random;
 
 import screen.MyGdxGame;
 import screen.ScreenManager;
-import screen.level.LevelGroup;
+import screen.level.LevelGroup_old;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -34,7 +34,7 @@ public class BlockController extends Group
 		groundBlock = new ArrayList<Block>();
 		fictivesBlock = new ArrayList<Block>();
 
-		int[] m_boss_level = LevelGroup.m_boss_level_from_1; // Récupère les niveau des boss (commence à 1)
+		int[] m_boss_level = LevelGroup_old.m_boss_level_from_1; // Récupère les niveau des boss (commence à 1)
 		int level = ScreenManager.getInstance().getLevelSelected().levelIndex; // Recupère le level (commence à 1)
 
 		Block block_1 = new Block(0, 0, 0);
@@ -239,7 +239,8 @@ public class BlockController extends Group
 		WayPoint groundWayPointLeft = new WayPoint(block_1.getX(), groundLevel, block_1.getWidth(), 30);
 		groundWayPointLeft.setActions(Action.JUMP);
 		groundWayPointLeft.active = true;
-		WayPoint groundWayPointRight = new WayPoint(block_4.getX(), groundLevel, block_4.getWidth(), 30);
+		float o = 2;
+		WayPoint groundWayPointRight = new WayPoint(block_4.getX() - o / 2, groundLevel, block_4.getWidth() + o, 30);
 		groundWayPointRight.setActions(Action.JUMP);
 		groundWayPointRight.active = true;
 		if (GameStage.debug)
@@ -374,13 +375,13 @@ public class BlockController extends Group
 
 	private Block checkCollisionForEachChildren(ArrayList<Block> blockCheckedClosedList, Character character, Block blockObjective)
 	{
-		System.out.println("Check for block " + blockObjective.debugNumber);
+		// System.out.println("Check for block " + blockObjective.debugNumber);
 		// Definit un block qui sera notre retour
 		Block returnBlock = null;
 		// Récupère la liste des blocks desquelles on peux venir sur notre objective
 		ArrayList<Block> blocksLinked = blockObjective.getBlocksLinked();
 		// Maintenant que l'on a ses enfant, on le met dans la liste fermé car on en a plus besoin.
-		System.out.println("Le block #" + blockObjective.debugNumber + " est mit dans la liste fermée");
+		// System.out.println("Le block #" + blockObjective.debugNumber + " est mit dans la liste fermée");
 		blockCheckedClosedList.add(blockObjective);
 
 		// On va maintenant s'occuper des linked
@@ -389,15 +390,15 @@ public class BlockController extends Group
 			// Si le block linked n'est pas dans la liste fermé (on l'a déja traité)
 			if (!isInClosedList(blockCheckedClosedList, blockLinked))
 			{
-				System.out.println("Test du block #" + blockLinked.debugNumber);
+				// System.out.println("Test du block #" + blockLinked.debugNumber);
 				if (character.getCollisionBlock() == blockLinked)
 				{
 					returnBlock = blockLinked;
-					System.out.println("BINGO FOUND !");
+					// System.out.println("BINGO FOUND !");
 					return blockObjective; // On retourne le block parent
 				} else
 				{
-					System.out.println("Le block " + blockLinked.debugNumber + " ne correspond pas, on check les block linkés a lui");
+					// System.out.println("Le block " + blockLinked.debugNumber + " ne correspond pas, on check les block linkés a lui");
 					// Le return block prend la valeur du block testé pour pouvoir renvoyer le parent des enfants.
 					returnBlock = blockLinked;
 					returnBlock = checkCollisionForEachChildren(blockCheckedClosedList, character, blockLinked);

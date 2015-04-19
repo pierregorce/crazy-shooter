@@ -15,12 +15,16 @@ import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class Projectile extends PhysicalEntity
 {
 	// Varable non modifiée
 	private Drawable	drawable;
+	private Drawable	left_drawable;
+	private Drawable	right_drawable;
+
 	public Projectiles	projectilesType;
 
 	// Variables modifiée a chaque init
@@ -35,32 +39,43 @@ public class Projectile extends PhysicalEntity
 		this.projectilesType = projectilesType;
 		if (projectilesType.animated)
 		{
-			drawable = new DrawableAnimation(0.1f, projectilesType.projectileTextureRegion);
+			right_drawable = new DrawableAnimation(0.1f, projectilesType.projectileTextureRegion);
 		} else
 		{
-			drawable = new DrawableSprite(projectilesType.projectileTextureRegion[new Random().nextInt(projectilesType.projectileTextureRegion.length)]);
+			right_drawable = new DrawableSprite(projectilesType.projectileTextureRegion[new Random().nextInt(projectilesType.projectileTextureRegion.length)]);
 		}
-		setWidth(drawable.getWidth() * MyGdxGame.PIXEL_SIZE);
-		setHeight(drawable.getHeight() * MyGdxGame.PIXEL_SIZE);
+
+		if (projectilesType.animated)
+		{
+			left_drawable = new DrawableAnimation(0.1f, projectilesType.projectileTextureRegion);
+		} else
+		{
+			left_drawable = new DrawableSprite(new TextureRegion(projectilesType.projectileTextureRegion[new Random().nextInt(projectilesType.projectileTextureRegion.length)]));
+			left_drawable.flip(true);
+		}
+
+		setWidth(right_drawable.getWidth() * MyGdxGame.PIXEL_SIZE);
+		setHeight(right_drawable.getHeight() * MyGdxGame.PIXEL_SIZE);
 	}
 
 	public void init(Character characterSender)
 	{
 		setVisible(true);
 		active = true;
-
 		if (characterSender != null)
 		{
 			if (characterSender.direction == Direction.RIGHT_DIRECTION)
 			{
 				setX(characterSender.getX() + projectilesType.characterAnchor.x);
 				direction = Direction.RIGHT_DIRECTION;
+				drawable = right_drawable;
 				m_xStart = getRight();
 			} else
 			{
 				direction = Direction.LEFT_DIRECTION;
 				float x = characterSender.getRight() - projectilesType.characterAnchor.x;
 				setX(x - getWidth());
+				drawable = left_drawable;
 				m_xStart = x - getWidth();
 			}
 
@@ -73,6 +88,7 @@ public class Projectile extends PhysicalEntity
 			setY(projectilesType.characterAnchor.y);
 			m_xStart = 0;
 		}
+
 		projectilesType.projectileComportement.comportement_init(this, characterSender);
 	}
 

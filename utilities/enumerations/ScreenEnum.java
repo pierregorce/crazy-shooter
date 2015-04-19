@@ -10,6 +10,7 @@ import screen.LoadingScreen;
 import screen.MovableScreen;
 import screen.SettingsScreen;
 import screen.UpgradeScreen;
+import screen.WorldScreen;
 
 public enum ScreenEnum
 {
@@ -103,6 +104,20 @@ public enum ScreenEnum
 		public MovableScreen getScreenInstance()
 		{
 			return new CheatingScreen();
+		}
+
+		@Override
+		public void setMusic()
+		{
+			MusicManager.play_Menu_Music();
+		}
+	},
+	WORLD
+	{
+		@Override
+		public MovableScreen getScreenInstance()
+		{
+			return new WorldScreen();
 		}
 
 		@Override

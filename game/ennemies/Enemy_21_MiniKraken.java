@@ -3,15 +3,12 @@ package game.ennemies;
 import game.entitiy.Enemies;
 import game.entitiy.EnemyPopConstants;
 import game.path.WayPoint;
-import game.projectiles.Projectile;
-import globals.Projectiles;
 
 import java.util.Random;
 
 import ressources.R;
 import utilities.enumerations.Direction;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -22,26 +19,26 @@ import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
 import com.oasix.crazyshooter.Timer;
 
-public class Enemy_17_KingWizard extends Enemies
+public class Enemy_21_MiniKraken extends Enemies
 {
 
 	/*
 	 * Walking,Jumping basic enemy Try to catch player
 	 */
 
-	private final static int				MAX_LIFE		= 1000;
-	private final static int				XP_GAIN_ON_KILL	= 550;
-	private final static int				ATTACK_POWER	= 20;
-	private final static float				MOVE_SPEED_MIN	= 7f;
-	private final static float				MOVE_SPEED_MAX	= 7f;
+	private final static int				MAX_LIFE		= 250;
+	private static int						XP_GAIN_ON_KILL	= 250;
+	private final static int				ATTACK_POWER	= 25;
+	private final static float				MOVE_SPEED_MIN	= 2.5f;
+	private final static float				MOVE_SPEED_MAX	= 7.5f;
 
-	private final static TextureRegion[]	walk_frames		= R.c().enemy_kingWizard_walk;
+	private final static TextureRegion[]	walk_frames		= R.c().enemy_minikraken_walk;
 	private final static int				PIXEL_SIZE		= 4;
 	private final static int				WIDTH			= walk_frames[0].getRegionWidth() * PIXEL_SIZE;
 
 	private float							enemyCoef;
 
-	public Enemy_17_KingWizard(Player player, float enemyCoef)
+	public Enemy_21_MiniKraken(Player player, float enemyCoef)
 	{
 		super(player, MAX_LIFE, new Random().nextFloat() * (MOVE_SPEED_MAX - MOVE_SPEED_MIN) + MOVE_SPEED_MIN, ATTACK_POWER, XP_GAIN_ON_KILL, WIDTH, walk_frames);
 
@@ -66,15 +63,6 @@ public class Enemy_17_KingWizard extends Enemies
 		m_goldValue = 10;
 		increaseStats(enemyCoef);
 	}
-
-	private enum States
-	{
-		CLIMB,
-		PATROL,
-		SWITCH;
-	}
-
-	private States		wizardStates			= States.CLIMB;
 
 	// Commence a climb car on est au sol
 	private Timer		m_switchPlateformTimer	= new Timer(15f);
@@ -122,8 +110,7 @@ public class Enemy_17_KingWizard extends Enemies
 		{
 			if (target == null)
 			{
-				patrouille();
-				// EnemyComportements.patrolOnBlock(this, player);
+				EnemyComportements.followPlayerAndPatrol(this, player);
 			} else
 			{
 				if (getCollisionBox().contains(target.getCenterX(), target.getCenterY()))
@@ -152,51 +139,13 @@ public class Enemy_17_KingWizard extends Enemies
 		}
 	}
 
-	public void patrouille()
+	public Enemy_21_MiniKraken(Player player, float enemyCoef, Vector2 position)
 	{
-		// Patrouille si le player est loin
-		float distance = Math.abs(getX() - player.getX());
-		if (distance <= 250)
-		{
-			// Tir
-			walk = false;
-			shoot = true;
-			faireFaceTo(player);
-		} else
-		{
-			// Patrouille
-			Block block = getCollisionBlock();
-
-			if (block != null)
-			{
-				maxVelocityX = 4;
-				walk = true;
-				shoot = false;
-				if (getX() <= block.getX())
-				{
-					direction = Direction.RIGHT_DIRECTION;
-				}
-				if (getRight() >= block.getRight())
-				{
-					direction = Direction.LEFT_DIRECTION;
-				}
-			}
-		}
-	}
-
-	@Override
-	public void shootEngine()
-	{
-		Projectile p = new Projectile(Projectiles.ENEMY_KING_WIZARD);
-		p.init(this);
-		GlobalController.bulletControllerEnemy.addActor(p);
-	}
-
-	@Override
-	public void setShootAnimation()
-	{
-		shootRight = new Animation(0.1f, R.c().enemy_kingWizard_attack);
-		shootLeft = R.invertAnimation(R.c().enemy_kingWizard_attack, 0.1f);
+		this(player, enemyCoef);
+		setPosition(position.x, position.y);
+		XP_GAIN_ON_KILL = 0;
+		m_goldQuantity = 0;
+		m_goldValue = 0;
 	}
 
 }

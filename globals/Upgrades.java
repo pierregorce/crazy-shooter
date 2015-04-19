@@ -3,12 +3,13 @@ package globals;
 public enum Upgrades
 {
 	// Objts directement construit
-	LIFE_MAX(0, "Max Life", "Increase you max life by 20", 20, "+20HP", 0, 1),
-	CRITICAL_CHANCE(0, "critical chance", "CRITICAL HIT", 0.02f, "+2%", 0, 2),
-	HEALTH_PACK(0, "Health pack", "Increase health gain by /n health pack by 2 hp", 2, "+2 HP", 0, 2),
-	DAMAGE_DONE(0, "Damage Done", "DAMMAMMAMAMGE DONE", 1, "+1", 0, 1),
-	ATTACK_SPEED(0, "Attack Speed", "DAMMAMMAMAMGE DONE", 0.07f, "+10%", 0, 1),
-	JUMP_HEIGHT(0, "Jump Height", "eddse ", 0.03f, "+5%", 0, 1);
+	LIFE_MAX(0, "Max Life", "Increases your maximum health by 20 points.", 20, "", 0, 1),
+	DAMAGE_DONE(0, "Damage Done", "Increases damage your weapon produced by 1 points.", 1, "", 0, 1),
+	ATTACK_SPEED(0, "Attack Speed", "Increases attack speed of your weapon by 3 percent.", 0.07f, "", 0, 1),
+	HEALTH_PACK(0, "Health pack", "Increases life gain in the life packs by 4 HP.", 2, "", 0, 2),
+	CRITICAL_CHANCE(0, "Critical Chance", "Increases the critical chance of your bullets by 2 percent.", 0.01f, "", 0, 2),
+	MOVE_SPEED(0, "NOT USED FOR NOW", "", 0.02f, "+2%", 0, 0),
+	JUMP_HEIGHT(0, "NOT USED FOR NOW", "", 0.03f, "+5%", 0, 1);
 
 	public int		point;
 	public String	stringDescription;
@@ -35,9 +36,6 @@ public enum Upgrades
 
 	public static int[] send()
 	{
-
-		// Base64Coder b;
-
 		int[] data = new int[values().length];
 
 		for (int i = 0; i < values().length; i++)

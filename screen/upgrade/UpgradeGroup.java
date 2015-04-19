@@ -67,7 +67,7 @@ public class UpgradeGroup extends Group
 		image2.setSize(image2.getWidth() * factor, image2.getHeight() * factor);
 		addActor(image2);
 
-		buttonScreen = new ButtonScreen(this, ScreenEnum.LEVEL);
+		buttonScreen = new ButtonScreen(this, ScreenEnum.WORLD);
 		buttonScreen.putStyle(R.c().screens_iconGoToMenuScreen);
 		buttonScreen.putEffect();
 
@@ -123,7 +123,10 @@ public class UpgradeGroup extends Group
 		float offset = 16;
 		comptenceIcon.setPosition(compIconImage.getX() + offset, compIconImage.getY() + offset);
 		competenceTitle.setPosition(470 * factor, (screenHeight - 240) * factor);
-		competenceDescription.setPosition(470 * factor, (screenHeight - 250) * factor);
+		competenceDescription.setPosition(470 * factor, (screenHeight - 260) * factor);
+
+		competenceDescription.setWrap(true);
+		competenceDescription.setWidth(570);
 
 	}
 
@@ -324,9 +327,9 @@ public class UpgradeGroup extends Group
 		profilHealth.setText("" + PlayerStats.getMaxLife());
 		profilCriticalChance.setText("" + df.format(PlayerStats.getCriticalChance()) + "%");
 		profilHealthPack.setText("" + PlayerStats.getLifeBoxHp() + "HP");
-		profilDamage.setText("+" + PlayerStats.getDamage() + "");
+		profilDamage.setText("" + (int) PlayerStats.getDamage() + "");
 		profilAttackSpeed.setText(df.format(PlayerStats.getAttackSpeed()) + "");
-		profilAttackSpeedSubtitle.setText("zqdqzd");
+		profilAttackSpeedSubtitle.setText("DPS");
 		profilStarsForNextLevel.setText("" + 1);
 	}
 

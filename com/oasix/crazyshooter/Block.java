@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import ressources.R;
 import screen.MyGdxGame;
 import screen.ScreenManager;
-import screen.level.LevelGroup;
+import screen.level.LevelGroup_old;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -43,7 +43,7 @@ public class Block extends Entities
 		setX(x);
 		setY(y);
 
-		int[] m_boss_level = LevelGroup.m_boss_level_from_1; // Récupère les niveau des boss (commence à 1)
+		int[] m_boss_level = LevelGroup_old.m_boss_level_from_1; // Récupère les niveau des boss (commence à 1)
 		int level = ScreenManager.getInstance().getLevelSelected().levelIndex; // Recupère le level (commence à 1)
 
 		// Charge le monde en fonction des niveau des boss

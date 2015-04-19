@@ -34,7 +34,7 @@ public class LoadingGameScreen implements MovableScreen
 
 		loadingLabel.setPosition(500, 500);
 		loadingLabel.setText("Loading : " + S.c().soundManager.getProgress() + "");
-		// S.c().soundManager.finishLoading();
+		S.c().soundManager.finishLoading();
 
 		if (loadingStage.getRoot().getActions().size == 0 && !done)
 		{

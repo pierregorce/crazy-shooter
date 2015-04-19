@@ -118,6 +118,34 @@ public class EnemyComportements
 		}
 	}
 
+	/**
+	 * Idem attackPhysic mais sans control du walk (utile pour les enemy avec path finding)
+	 */
+	public static void physicalAttackOnly(Enemies enemy, Player player)
+	{
+		if (player.getBouncingBox().overlaps(enemy.getBouncingBox()))
+		{
+			// Fait perdre de la vie au player
+			player.setLosingLifeEvent(true);
+			player.setLoosingLiveValueEvent(enemy.getAttackPower());
+
+			// TODO SOUND
+			// Genere le bump
+			if (player.getRight() > enemy.getX())
+			{
+				// player a droite de enemy
+				// enemy va vers la droite
+				player.setBumpingRightEvent(true); // TODO SET BUMP STRENGHT IN ENEMY
+			}
+			if (player.getX() < enemy.getX())
+			{
+				player.setBumpingLeftEvent(true);
+				// player a gauche de enemy
+				// enemy va a gauche
+			}
+		}
+	}
+
 	public static void patrolOnBlock(Enemies enemy, Player player)
 	{
 		Block block = enemy.getCollisionBlock();

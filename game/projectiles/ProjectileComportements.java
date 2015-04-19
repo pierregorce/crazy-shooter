@@ -441,6 +441,11 @@ public class ProjectileComportements
 		}
 	}
 
+	public class Rocket
+	{
+
+	}
+
 	private static class GenericComportementList
 	{
 		public static void goStraight_Initialisation(Projectile projectile, Character characterSender)
@@ -508,7 +513,7 @@ public class ProjectileComportements
 				int xRandomization = new Random().nextInt(100) - 50;
 				int yRandomization = new Random().nextInt(5);
 				int height = 60;
-				Ressource r = new Ressource(new DrawableAnimation(0.16f, R.c().fx_explode_circle), projectile.getCenterX() - height / 2 + xRandomization, projectile.getCenterY() - height / 2 + yRandomization, height,
+				Ressource r = new Ressource(new DrawableAnimation(0.16f, R.c().fx_explode_square_2), projectile.getCenterX() - height / 2 + xRandomization, projectile.getCenterY() - height / 2 + yRandomization, height,
 						true);
 				r.setColor(ParticleColors.getInstance().getGreenWaste()[new Random().nextInt(ParticleColors.getInstance().getGreenWaste().length)]);
 				GlobalController.fxController.addActor(r);

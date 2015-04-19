@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 public class LevelStage extends Stage
 {
-	private LevelGroup levelGroup;
+	private LevelGroup	levelGroup;
 
 	public LevelStage()
 	{

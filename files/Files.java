@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Json;
 
 public class Files
 {
+	private final static String	SALT_KEY			= "PGE";
 	private final static String	version				= "";
 	public final static String	levelConfigName		= "levels-config" + version + ".json";
 	public final static String	playerUpgradeName	= "player-upgrades" + version + ".json";
@@ -58,14 +59,14 @@ public class Files
 
 		if (!localFile.exists())
 		{
-			// Ecriture si le fichier n'existe pas
-			Json json = new Json();
-			String savedState = json.toJson(Upgrades.send());
-			localFile.writeString(savedState, false);
+			playerUpgradeWrite();
 		} else
 		{
 			// Lecture des données
 			String savedState = localFile.readString();
+			// savedState = savedState.replace(SALT_KEY, "");
+			// savedState = Base64Coder.decodeString(savedState);
+
 			Json json = new Json();
 			Upgrades.retrieve(json.fromJson(Integer[].class, savedState));
 		}
@@ -78,6 +79,8 @@ public class Files
 		Json json = new Json();
 		String savedState = json.toJson(Upgrades.send());
 		FileHandle localFile = Gdx.files.local(playerUpgradeName);
+		// savedState = Base64Coder.encodeString(savedState);
+		// localFile.writeString(SALT_KEY + savedState, false);
 		localFile.writeString(savedState, false);
 	}
 
@@ -125,6 +128,7 @@ public class Files
 		playerSavedDatas.weaponsType = PlayerStats.weaponsType;
 		;
 		String string = json.toJson(playerSavedDatas);
+
 		localFile.writeString(string, false);
 	}
 

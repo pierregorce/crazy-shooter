@@ -78,7 +78,7 @@ public class PlayerStats
 
 	public static float getMoveSpeed()
 	{
-		return BASE_MOVE_SPEED * (1 + Upgrades.DAMAGE_DONE.point * Upgrades.DAMAGE_DONE.amount);
+		return BASE_MOVE_SPEED * (1 + Upgrades.MOVE_SPEED.point * Upgrades.MOVE_SPEED.amount);
 	}
 
 	public static float getMoveSpeedReduce()
