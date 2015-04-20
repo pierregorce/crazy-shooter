@@ -197,7 +197,7 @@ public class BlockController extends Group
 
 			// -------------------------------------------------------------- Sol sans trou
 
-			globalGround = new Block(0, 800 - 665 + background_offsetY - hauteur, 1000, hauteur, true)
+			globalGround = new Block(0, 800 - 665 + background_offsetY - hauteur, MyGdxGame.VIRTUAL_WORLD_WIDTH / MyGdxGame.PIXEL_SIZE, hauteur, true)
 			{
 				@Override
 				public Vector2 getPopPosition()

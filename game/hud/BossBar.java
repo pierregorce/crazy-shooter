@@ -15,22 +15,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 public class BossBar extends Group
 {
-	public static boolean active = false;
-	public static Enemies enemy = null;
-	public static String name = "";
+	public static boolean	active		= false;
+	public static Enemies	enemy		= null;
+	public static String	name		= "";
 
-	private DrawableSprite lifeBarEmpty;
-	private DrawableSprite lifeBarFull;
-	private Ressource r_lifeBarEmpty;
-	private Ressource r_lifeBarFull;
+	private DrawableSprite	lifeBarEmpty;
+	private DrawableSprite	lifeBarFull;
+	private Ressource		r_lifeBarEmpty;
+	private Ressource		r_lifeBarFull;
 
-	private Label m_labelLife;
-	private static Label m_labelNameBoss;
+	private Label			m_labelLife;
+	private static Label	m_labelNameBoss;
 
-	int width = 850;
+	int						width		= 850;
 	// int xLifeBar = MyGdxGame.VIRTUAL_WIDTH / 2 - width / 2;
-	int xLifeBar = 1000;
-	int yLifeBar = 850;
+	int						xLifeBar	= 1000;
+	int						yLifeBar	= 850;
 
 	public static void setBossName(String name)
 	{
@@ -42,7 +42,6 @@ public class BossBar extends Group
 
 	public BossBar()
 	{
-
 		// ----------LIFE BAR---------------
 		// Recupération des textures regions
 		lifeBarEmpty = new DrawableSprite(R.c().bossBarEmpty);
@@ -92,6 +91,9 @@ public class BossBar extends Group
 
 		if (active)
 		{
+			m_labelNameBoss.setPosition(1000, yLifeBar + 60);
+			m_labelLife.setY(yLifeBar + 8);
+
 			float life = enemy.getLife();
 
 			m_labelLife.setText("" + (int) life + "/" + enemy.getMaxLife());
@@ -102,8 +104,7 @@ public class BossBar extends Group
 		}
 	}
 
-	public void setBarWidth(float x, float y, float height, float max, float current, Ressource ressourceFull, DrawableSprite drawableFull, Ressource ressourceEmpty,
-			DrawableSprite drawableEmpty)
+	public void setBarWidth(float x, float y, float height, float max, float current, Ressource ressourceFull, DrawableSprite drawableFull, Ressource ressourceEmpty, DrawableSprite drawableEmpty)
 	{
 		float maxLife = max; // 100%
 		float currentLife = current;

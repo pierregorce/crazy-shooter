@@ -11,7 +11,7 @@ public class MyGdxGame extends Game
 {
 
 	public static final int		VIRTUAL_WIDTH			= 1920;
-	public static final int		VIRTUAL_WORLD_WIDTH		= 1920 * 2;
+	public static final int		VIRTUAL_WORLD_WIDTH		= 1920 * 2 + 200;
 	public static final int		VIRTUAL_HEIGHT			= 1080;
 	public static final int		VIRTUAL_WORLD_HEIGHT	= 1080 * 2;
 

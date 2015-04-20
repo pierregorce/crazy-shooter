@@ -110,7 +110,7 @@ public class LoadingScreen implements MovableScreen
 	private void addButtons()
 	{
 		float y = 340;
-		ButtonScreen b = new ButtonScreen(loadingGroup, ScreenEnum.GAMELOADING);
+		ButtonScreen b = new ButtonScreen(loadingGroup, ScreenEnum.WORLD);
 		b.putStyle(new TextureRegion(new Texture(Gdx.files.internal("images/loading/loading-button-goToPlay.png"))));
 		b.putSize();
 		b.setPosition(-MyGdxGame.VIRTUAL_WIDTH, 280 + y); // place a sa position final - yRetreat

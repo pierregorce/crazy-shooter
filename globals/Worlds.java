@@ -70,7 +70,7 @@ public enum Worlds
 
 		for (Worlds world : Worlds.values())
 		{
-			if (world.startWorld >= levelNumber && levelNumber <= world.endWorld)
+			if (levelNumber >= world.startWorld && levelNumber <= world.endWorld)
 			{
 				return world;
 			}

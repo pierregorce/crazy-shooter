@@ -6,30 +6,25 @@ public class XXX
 	// idée armor assez simple a integrer
 	// base64code
 	// Pools.free(changeEvent);
-	// changer hud wave
 
 	// *************CODE
 	// reprendre position des projectiles lors du tirs des enemys (anchor)
-	// centrer le world avec les bounds
 	// check le cd des armes car ça a l'air trop rapide
-	// faire lancer rocket!
 	// lance flammetodo
-	// animation arriere du bazooka rocket fumée
-	// action projectile wizard et fantomas à baser sur la vitesse
+	// animation arriere du bazooka rocket fumée (bizzare getcorrected x)
 	// add + to weapons damage
 	// bug texture upgrade
-	// next level marche plus
-	// return form menu bug pas la bonne page
-	// barre de vie du boss mal placé
-	// laser - restreindre a une pricision plus fine bug glying mob
+	// laser - restreindre a une pricision plus fine bug flying mob
 	// anciens ennemies comportement pas bon
-	// camera to fix
+	// boss3 fix meteor
+	// tester les tonneau ?
 
 	// ************DESSIN
 	// Animation de saut du player
 	// renomer les iregular particle et les mettres dans primitive/fx, idem pour white square...
-	// BOSS 4 Scientist = boss 4, blizard / mega laser percing
 	// reprend bg3 decalage block
+	// bullet minigun bof...
+	// BOSS 4 Scientist = boss 4, blizard / mega laser percing
 
 	//
 	// ----------------------------------------------------------- IDEA

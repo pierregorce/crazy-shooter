@@ -450,18 +450,11 @@ public class ProjectileComportements
 			super.comportement_init(projectile, characterSender);
 
 			Player p = (Player) characterSender;
-			p.getCorretedX(rightAnchor)
-			// int height = 20;
-			// Ressource r = new Ressource(new DrawableAnimation(0.14f, R.c().fx_explode_circle), p.getCorretedX(projectile.getCenterX() - height / 2 + 25),
-			// projectile.getCenterY() - height / 2, height, true);
-			// r.setColor(1, 1, 1, 0.5f);
-			// GlobalController.fxController.addActor(r);
-			//
-			// int height2 = 25;
-			// Ressource r2 = new Ressource(new DrawableAnimation(0.14f, R.c().fx_explode_circle), p.getCorretedX(projectile.getCenterX() - height2 / 2 - 70),
-			// projectile.getCenterY() - height2 / 2, height2, true);
-			// r2.setColor(1, 1, 1, 0.5f);
-			// GlobalController.fxController.addActor(r2);
+
+			int height = 35;
+			Ressource r = new Ressource(new DrawableAnimation(0.14f, R.c().fx_explode_circle), p.getCorretedX(0), projectile.getCenterY() - height / 2, height, true);
+			r.setColor(1, 1, 1, 0.5f);
+			GlobalController.fxController.addActor(r);
 
 			Projectile projectile_one = new Projectile(Projectiles.PLAYER_ROCKET_SIMPLE);
 			projectile_one.init(characterSender);

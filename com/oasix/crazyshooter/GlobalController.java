@@ -57,7 +57,7 @@ public class GlobalController
 	private Array<EnemyFactory>			m_factoryArray				= new Array<EnemyFactory>();	// Contient l'ensemble des factory et les controlles.
 	private LevelParser					m_levelParser;
 	private float						m_time						= 0;
-
+	private int							nombreRestantEnnemies		= 0;
 	// ------------------------------ Groups
 	private Player						player;
 	public static BlockController		blockController;
@@ -159,6 +159,8 @@ public class GlobalController
 			lifeBoxTimerPoping = new Timer(13f);
 			explosiveBoxTimerPoping = new Timer(14f);
 		}
+
+		nombreRestantEnnemies = getTotalEnemiesCount();
 	}
 
 	private void initPools()
@@ -313,7 +315,13 @@ public class GlobalController
 						}
 
 						// ------------------------- Remove enemy
+						if (enemy.getXpGainOnKill() > 0)
+						{
+							// bypass des tonneaux
+							nombreRestantEnnemies -= 1;
+						}
 						enemy.remove();
+
 						// enemyArray.removeValue(enemy, false);
 					}
 					// Delete Bullet
@@ -499,9 +507,8 @@ public class GlobalController
 				GameStage.gameState = GameStatesEnum.GAME_WIN;
 				Levels levels = Files.levelDataRead();
 				int currentLevel = ScreenManager.getInstance().getLevelSelected().levelIndex;
-
 				levels.level[currentLevel].levelComplete = "true";
-				ScreenManager.getInstance().setLevelSelected(levels.level[currentLevel++]);
+				ScreenManager.getInstance().setLevelSelected(levels.level[currentLevel + 1]);
 
 				Files.levelDataWrite(levels);
 				Files.playerDataWrite();
@@ -533,6 +540,29 @@ public class GlobalController
 	public int getWaveCount()
 	{
 		return m_waveCount;
+	}
+
+	public int getTotalEnemiesCount()
+	{
+		int count = 0;
+
+		for (int i = 0; i < getWaveCount(); i++)
+		{
+			float[][] popForLevel = m_levelParser.getpopForWave(GameStage.levelData.levelIndex, i);
+
+			for (int j = 0; j < popForLevel.length; j++)
+			{
+				count += popForLevel[j][1];
+			}
+
+		}
+
+		return count;
+	}
+
+	public int getNombreRestantEnnemies()
+	{
+		return nombreRestantEnnemies;
 	}
 
 }

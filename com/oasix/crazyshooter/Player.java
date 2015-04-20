@@ -111,9 +111,9 @@ public class Player extends Character
 		super.act(delta);
 		xp();
 		eventEngine(delta);
-		if (getX() < 0)
+		if (getX() < 60)
 		{
-			setX(0);
+			setX(60);
 		}
 		if (getRight() > MyGdxGame.VIRTUAL_WORLD_WIDTH)
 		{

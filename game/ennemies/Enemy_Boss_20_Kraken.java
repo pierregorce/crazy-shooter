@@ -108,7 +108,7 @@ public class Enemy_Boss_20_Kraken extends Enemies
 	private Timer			shootBullet			= new Timer(3);
 	private boolean			changingOffset		= false;
 	private Phases			phase				= Phases.PHASE_1;
-	private final Integer[]	POPS				= { 15, 20, 25, 40 };
+	private final Integer[]	POPS				= { 7, 8, 10, 15 };
 	private final float[]	PHASES				= { 0.85f, 0.60f, 0.4f, 0.2f };
 	private final boolean[]	POP_DONE			= { false, false, false, false };
 	private Animation		kraken_invulnerable	= new Animation(0.1f, R.c().enemy_kraken_boss_invulnerable);

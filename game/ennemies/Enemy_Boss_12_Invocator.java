@@ -7,10 +7,12 @@ import game.pop.PopMessage;
 import game.pop.PopMessage.MessageType;
 import game.projectiles.Projectile;
 import globals.Projectiles;
+import globals.Worlds;
 
 import java.util.Random;
 
 import ressources.R;
+import screen.MyGdxGame;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.Color;
@@ -118,7 +120,7 @@ public class Enemy_Boss_12_Invocator extends Enemies
 		// colorization = new Color(Color.GREEN);
 		BossBar.active = true;
 		BossBar.enemy = this;
-		BossBar.setBossName("BOSS #3 : INVOCATOR"); // WIZARD
+		BossBar.setBossName("BOSS #3 : " + Worlds.WOLRD_3.finalBoss); // WIZARD
 		bumpSensibility = false;
 		m_goldQuantity = 50;
 		m_goldValue = 20;
@@ -179,6 +181,8 @@ public class Enemy_Boss_12_Invocator extends Enemies
 				{
 					Projectile p = new Projectile(Projectiles.ENEMY_METEORE);
 					p.init(this);
+					p.setPosition(getX() + new Random().nextInt(MyGdxGame.VIRTUAL_WIDTH) - MyGdxGame.VIRTUAL_WIDTH / 2, MyGdxGame.VIRTUAL_WORLD_HEIGHT);
+
 					GlobalController.bulletControllerEnemy.addActor(p);
 				}
 			}

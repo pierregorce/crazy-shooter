@@ -47,6 +47,7 @@ public class GameStage extends Stage
 	{
 		// --Initialisation des variables globales
 		gameState = GameStatesEnum.GAME_RUN;
+		System.out.println(ScreenManager.getInstance().getLevelSelected());
 		levelData = ScreenManager.getInstance().getLevelSelected();
 		hudMessages = new ArrayList<HudMessages>();
 
@@ -91,12 +92,16 @@ public class GameStage extends Stage
 		globalController.control(delta);
 
 		// Controle de si il faut deplacer la camera et donc le background-------------------------------------------------------------------------------------
-		if (globalController.getPlayer().getX() > MyGdxGame.VIRTUAL_WIDTH / 2 && globalController.getPlayer().getX() < MyGdxGame.VIRTUAL_WIDTH + MyGdxGame.VIRTUAL_WIDTH / 2)
-		{
-			cameraMovingX = true;
-		} else
+
+		float positionCameraStopRight = MyGdxGame.VIRTUAL_WORLD_WIDTH - MyGdxGame.VIRTUAL_WIDTH / 2;
+		float positionCameraStopLeft = MyGdxGame.VIRTUAL_WIDTH / 2 + 60;
+
+		if (globalController.getPlayer().getX() > positionCameraStopRight || globalController.getPlayer().getX() < positionCameraStopLeft)
 		{
 			cameraMovingX = false;
+		} else
+		{
+			cameraMovingX = true;
 		}
 
 		// Controle le depalcement de la camera ----------------------------------------------------------------------------------------------------------
@@ -105,21 +110,21 @@ public class GameStage extends Stage
 			if (cameraMovingX) // controle sur X
 			{
 				// cameraPosition.x += (globalController.getPlayer().getX() - cameraPosition.x) * cameraSmooth; // si l'on peut deplacer la camera alors on le fait FIXME
-				// cameraPosition.x += (globalController.getPlayer().getX() - cameraPosition.x); // si l'on peut deplacer la camera alors on le fait
+				cameraPosition.x += (globalController.getPlayer().getX() - cameraPosition.x); // si l'on peut deplacer la camera alors on le fait
 			}
 
 			// pas de controle sur Y
 
-			// if (globalController.getPlayer().getY() > BlockController.OFFSET_2_HEIGHT)
-			// {
-			// cameraPosition.y += (globalController.getPlayer().getY() - GROUND_HEIGHT / 2 - cameraPosition.y) * cameraSmooth;
-			// } else
-			// {
-			// cameraPosition.y += (MyGdxGame.VIRTUAL_HEIGHT / 2 - cameraPosition.y) * cameraSmooth;
-			// }
+			if (globalController.getPlayer().getY() > 600)
+			{
+				cameraPosition.y += (globalController.getPlayer().getY() - cameraPosition.y) * cameraSmooth;
+			} else
+			{
+				cameraPosition.y += (MyGdxGame.VIRTUAL_HEIGHT / 2 - cameraPosition.y) * cameraSmooth;
+			}
 
-			cameraPosition.x += (globalController.getPlayer().getX() - cameraPosition.x);
-			cameraPosition.y += (globalController.getPlayer().getY() - cameraPosition.y) * cameraSmooth;
+			// cameraPosition.x += (globalController.getPlayer().getX() - cameraPosition.x);
+			// cameraPosition.y += (globalController.getPlayer().getY() - cameraPosition.y) * cameraSmooth;
 		}
 
 		// Controle le shake ----------------------------------------------------------------------------------------------------------

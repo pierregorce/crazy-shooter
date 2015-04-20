@@ -75,12 +75,12 @@ public abstract class Character extends PhysicalEntity
 
 		if (getX() + 10 < 0)
 		{
-			setX(0 + 10);
+			// setX(0 + 10);
 		}
 
 		if (getRight() - 10 > MyGdxGame.VIRTUAL_WORLD_WIDTH)
 		{
-			setX(MyGdxGame.VIRTUAL_WORLD_WIDTH - getWidth() - 10);
+			// setX(MyGdxGame.VIRTUAL_WORLD_WIDTH - getWidth() - 10);
 		}
 	}
 
