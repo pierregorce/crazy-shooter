@@ -8,6 +8,7 @@ import game.pop.PopMessage.MessageType;
 import game.projectiles.Projectile;
 import game.sound.MusicManager;
 import globals.Projectiles;
+import globals.Worlds;
 
 import java.util.Random;
 
@@ -36,7 +37,7 @@ public class Enemy_Boss_10_Golem extends Enemies
 	 * Walking,Jumping basic enemy Try to catch player
 	 */
 
-	private final static int	MAX_LIFE			= 2500;
+	private final static int	MAX_LIFE			= 2600;
 	private final static int	XP_GAIN_ON_KILL		= 550;
 	private final static int	ATTACK_POWER		= 35;												// PHYSICAL ATAK
 	private final static float	MOVE_SPEED_MIN		= 1;
@@ -74,13 +75,30 @@ public class Enemy_Boss_10_Golem extends Enemies
 		colorization = normalColor;
 		BossBar.active = true;
 		BossBar.enemy = this;
-		BossBar.setBossName("BOSS #1 : BUTCHER");
-		bumpSensibility = false;
-		m_goldQuantity = 50;
-		m_goldValue = 10;
+		BossBar.setBossName("BOSS #1 : " + Worlds.WOLRD_1.finalBoss);
+	}
 
+	@Override
+	protected void enemies_initialisation()
+	{
+		// shootCooldwon = 0.2f;
+		// m_shootPauseTime = 0f;
+		// m_shootRunTime = 1f;
+
+		bumpSensibility = false;
 		maxJumpSpeedY = 7;
 
+		if (Worlds.WOLRD_1.isCompleted())
+		{
+			m_goldValue = 1;
+			m_goldQuantity = 10;
+		} else
+		{
+			m_goldValue = 10;
+			m_goldQuantity = 50;
+		}
+
+		increaseStats(0);
 	}
 
 	private enum State
@@ -98,7 +116,6 @@ public class Enemy_Boss_10_Golem extends Enemies
 	@Override
 	public void act(float delta)
 	{
-
 		super.act(delta);
 
 		if (attackAnimation && m_animation.isAnimationFinished(animationStateTime))
@@ -326,13 +343,6 @@ public class Enemy_Boss_10_Golem extends Enemies
 			return super.remove();
 		}
 		return super.remove();
-	}
-
-	@Override
-	protected void enemies_initialisation()
-	{
-		// TODO Auto-generated method stub
-
 	}
 
 }

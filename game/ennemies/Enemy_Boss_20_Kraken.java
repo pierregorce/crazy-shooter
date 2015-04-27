@@ -7,6 +7,7 @@ import game.pop.PopMessage;
 import game.pop.PopMessage.MessageType;
 import game.projectiles.Projectile;
 import globals.Projectiles;
+import globals.Worlds;
 
 import java.util.Random;
 
@@ -67,10 +68,29 @@ public class Enemy_Boss_20_Kraken extends Enemies
 
 		BossBar.active = true;
 		BossBar.enemy = this;
-		BossBar.setBossName("BOSS #4 : KRAKEN");
+		BossBar.setBossName("BOSS #4 : " + Worlds.WOLRD_4.finalBoss);
 		bumpSensibility = false;
 
 		// EDIT BOUNCING BOX CAR TROP SIMPLE A TOUCHER VOIR BOSS2
+	}
+
+	@Override
+	protected void enemies_initialisation()
+	{
+		// shootCooldwon = 0.2f;
+		// m_shootPauseTime = 0f;
+		// m_shootRunTime = 1f;
+
+		if (Worlds.WOLRD_4.isCompleted())
+		{
+			m_goldValue = 1;
+			m_goldQuantity = 10;
+		} else
+		{
+			m_goldValue = 60;
+			m_goldQuantity = 20;
+		}
+		increaseStats(0);
 	}
 
 	@Override
@@ -83,14 +103,6 @@ public class Enemy_Boss_20_Kraken extends Enemies
 			return super.remove();
 		}
 		return super.remove();
-	}
-
-	@Override
-	protected void enemies_initialisation()
-	{
-		m_goldQuantity = 150;
-		m_goldValue = 15;
-		increaseStats(enemyCoef);
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------------------

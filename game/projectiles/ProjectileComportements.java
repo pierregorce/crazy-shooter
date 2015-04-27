@@ -59,6 +59,16 @@ public class ProjectileComportements
 		}
 	}
 
+	public class Straight_Piercing extends Straight
+	{
+		@Override
+		protected void comportement_act(Projectile projectile)
+		{
+			super.comportement_act(projectile);
+			GenericComportementList.setActivation(projectile);
+		}
+	}
+
 	public class Flame extends ProjectileComportementFrame
 	{
 		// private int yLongOffset = new Random().nextInt(4);
@@ -140,19 +150,35 @@ public class ProjectileComportements
 		protected void comportement_init(Projectile projectile, Character characterSender)
 		{
 			projectile.setJump(false); // TODO TEST
-
-		}
-
-		@Override
-		protected void comportement_act(Projectile projectile)
-		{
-
 		}
 
 		@Override
 		protected void comportement_endingEffect(Projectile projectile, Character characterReceiving)
 		{
-			// add explosion effect
+			GameStage.cameraShake(GameStage.SMALL_SHAKE);
+			// Only effect, le degat est déja dans la bomb...
+			for (int i = 0; i < 15; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					int xRandomization = new Random().nextInt(100) - 50;
+					int yRandomization = new Random().nextInt(30);
+					int height = 60;
+					Ressource r = new Ressource(new DrawableAnimation(0.16f, R.c().fx_explode_circle), projectile.getCenterX() - height / 2 + xRandomization, projectile.getCenterY() - height / 2 + yRandomization,
+							height, true);
+					r.setColor(ParticleColors.getInstance().getGreenWaste()[new Random().nextInt(ParticleColors.getInstance().getGreenWaste().length)]);
+					GlobalController.fxController.addActor(r);
+				}
+
+				// Add 2 particles by explosion
+				for (int j = 0; j < 2; j++)
+				{
+					ExplosionParticle explosionParticle = new ExplosionParticle();
+					explosionParticle.init(projectile.getCenterX(), projectile.getCenterY(), ParticleColors.getInstance().getGreenWaste());
+					GlobalController.particleController.addActor(explosionParticle);
+				}
+			}
+			projectile.remove();
 		}
 
 	}
@@ -253,27 +279,32 @@ public class ProjectileComportements
 
 	public class PhysicMud extends Physic
 	{
-
 		public PhysicMud(int xSpeed, int xModulation, int ySpeed, int yModulation, int rebound)
 		{
 			super(xSpeed, xModulation, ySpeed, yModulation, rebound);
 		}
 
 		@Override
+		protected void comportement_init(Projectile projectile, Character characterSender)
+		{
+			super.comportement_init(projectile, characterSender);
+			projectile.direction = Direction.values()[new Random().nextInt(2)];
+			projectile.setColor(ParticleColors.getInstance().getVioletWaste()[new Random().nextInt(ParticleColors.getInstance().getVioletWaste().length)]);
+			projectile.setSize(projectile.getWidth() * 1.5f, projectile.getHeight() * 1.5f);
+		}
+
+		@Override
 		protected void comportement_act(Projectile projectile)
 		{
-			// TODO Auto-generated method stub
 			super.comportement_act(projectile);
-			projectile.active = true; // a couplet avec un controle du remove on colision
+			GenericComportementList.setActivation(projectile);
 		}
 
 		@Override
 		protected void comportement_endingEffect(Projectile projectile, Character characterReceiving)
 		{
-			// TODO Auto-generated method stub
 			// super.comportement_endingEffect(projectile, characterReceiving);
 		}
-
 	}
 
 	public class Physic_Grenade extends Physic
@@ -452,7 +483,7 @@ public class ProjectileComportements
 			Player p = (Player) characterSender;
 
 			int height = 35;
-			Ressource r = new Ressource(new DrawableAnimation(0.14f, R.c().fx_explode_circle), p.getCorretedX(0), projectile.getCenterY() - height / 2, height, true);
+			Ressource r = new Ressource(new DrawableAnimation(0.14f, R.c().fx_explode_circle), p.getCorretedX(-20) - height / 2, projectile.getCenterY() - height / 2, height, true);
 			r.setColor(1, 1, 1, 0.5f);
 			GlobalController.fxController.addActor(r);
 
@@ -558,6 +589,18 @@ public class ProjectileComportements
 			}
 
 			projectile.setY(projectile.getY() + projectile.precision);
+		}
+
+		public static void setActivation(final Projectile projectile)
+		{
+			projectile.addAction(Actions.delay(0.2f, Actions.run(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					projectile.active = true;
+				}
+			})));
 		}
 	}
 

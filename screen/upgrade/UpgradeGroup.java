@@ -71,6 +71,7 @@ public class UpgradeGroup extends Group
 		buttonScreen.putStyle(R.c().screens_iconGoToMenuScreen);
 		buttonScreen.putSize();
 		buttonScreen.putEffect();
+		buttonScreen.setPosition(675 * factor, (screenHeight - 25) * factor);
 
 		initialisationWeapons();
 		initialisationProfil();
@@ -86,8 +87,6 @@ public class UpgradeGroup extends Group
 		image2.setPosition(7 * factor, (screenHeight - 386) * factor);
 		image3.setPosition(308 * factor, (screenHeight - 170) * factor);
 		image4.setPosition(334 * factor, (screenHeight - 397) * factor);
-
-		buttonScreen.setPosition(675 * factor, (screenHeight - 25) * factor);
 
 		weaponTitle.setPosition(31 * factor, (screenHeight - 270) * factor);
 		weaponDamage.setPosition(209 * factor, (screenHeight - 296) * factor);
@@ -111,7 +110,9 @@ public class UpgradeGroup extends Group
 		profilCriticalChance.setPosition(582 * factor, (screenHeight - 72) * factor);
 		profilHealthPack.setPosition(582 * factor, (screenHeight - 99) * factor);
 		profilDamage.setPosition(582 * factor, (screenHeight - 122) * factor);
-		profilAttackSpeed.setPosition(582 * factor, (screenHeight - 144) * factor);
+		profilAdd.setPosition(582 * factor, 750);
+		profilAttackSpeed.setPosition(589 * factor, (screenHeight - 144) * factor);
+		profilMinus.setPosition(582 * factor, 691);
 		profilAttackSpeedSubtitle.setPosition(582 * factor, (screenHeight - 153) * factor);
 		profilStarsForNextLevel.setPosition(435 * factor, (screenHeight - 147) * factor);
 
@@ -276,6 +277,8 @@ public class UpgradeGroup extends Group
 	private Label	profilAttackSpeed;
 	private Label	profilAttackSpeedSubtitle;
 	private Label	profilStarsForNextLevel;
+	private Label	profilAdd;
+	private Label	profilMinus;
 	private Image	profilLevelBarImage;
 
 	public void initialisationProfil()
@@ -283,6 +286,7 @@ public class UpgradeGroup extends Group
 		LabelStyle labelStyleFat = new LabelStyle(R.c().EarlyGameBoyFont_38, Color.valueOf("f9f4a2"));
 		LabelStyle labelStyleSmall = new LabelStyle(R.c().EarlyGameBoyFont_26, Color.valueOf("f9f4a2"));
 		LabelStyle labelStyleMedium = new LabelStyle(R.c().EarlyGameBoyFont_32, Color.WHITE);
+		LabelStyle labelStyleSilk = new LabelStyle(R.c().Slkscr_30, Color.WHITE);
 		LabelStyle labelStyleWendy10 = new LabelStyle(R.c().getWendyFont((int) (10 * factor)), Color.WHITE);
 
 		profilGolds = new Label("", labelStyleFat);
@@ -296,6 +300,8 @@ public class UpgradeGroup extends Group
 		profilAttackSpeed = new Label("", labelStyleMedium);
 		profilAttackSpeedSubtitle = new Label("", labelStyleWendy10);
 		profilStarsForNextLevel = new Label("", labelStyleSmall);
+		profilAdd = new Label("", labelStyleSilk);
+		profilMinus = new Label("", labelStyleSilk);
 
 		addActor(profilGolds);
 		addActor(profilStars);
@@ -308,6 +314,8 @@ public class UpgradeGroup extends Group
 		addActor(profilAttackSpeed);
 		addActor(profilAttackSpeedSubtitle);
 		addActor(profilStarsForNextLevel);
+		addActor(profilAdd);
+		addActor(profilMinus);
 
 		profilUpdateLabels();
 
@@ -328,9 +336,12 @@ public class UpgradeGroup extends Group
 		profilHealth.setText("" + PlayerStats.getMaxLife());
 		profilCriticalChance.setText("" + df.format(PlayerStats.getCriticalChance()) + "%");
 		profilHealthPack.setText("" + PlayerStats.getLifeBoxHp() + "HP");
-		profilDamage.setText("*" + (int) PlayerStats.getDamage() + "");
+		profilDamage.setText("+" + (int) PlayerStats.getDamage() + "");
+		profilAdd.setText("+");
+		profilMinus.setText("-");
+
 		profilAttackSpeed.setText(df.format(PlayerStats.getAttackSpeed()) + "");
-		profilAttackSpeedSubtitle.setText("DPS");
+		profilAttackSpeedSubtitle.setText("TO weapon aps");
 		profilStarsForNextLevel.setText("" + 1);
 	}
 
@@ -396,7 +407,6 @@ public class UpgradeGroup extends Group
 		weaponsCoinImage.setSize(R.c().upgrade_weapons_icon_coin.getRegionWidth() * factor, R.c().upgrade_weapons_icon_coin.getRegionHeight() * factor);
 
 		weaponImage = new Image();
-		selectWeapon(Weapons.values()[0]);
 
 		addActor(weaponImage);
 		addActor(weaponsCoinImage);
@@ -406,6 +416,9 @@ public class UpgradeGroup extends Group
 		addActor(weaponAttackSpeed);
 		addActor(weaponCost);
 
+		selectWeapon(Weapons.values()[0]);
+		weaponImage.setDrawable(new TextureRegionDrawable(R.c().player_weapons_store[0]));
+		weaponImage.setSize(R.c().player_weapons_store[0].getRegionWidth() * 8, R.c().player_weapons_store[0].getRegionHeight() * 8);
 	}
 
 	public void selectWeapon(Weapons weapons)
@@ -439,7 +452,7 @@ public class UpgradeGroup extends Group
 
 		weaponRange.setText(weapons.projectileType.lenghtAlive + " M");
 
-		weaponAttackSpeed.setText(weapons.fireRate + " DPS");
+		weaponAttackSpeed.setText(weapons.fireRate + " APS");
 		if (weapons.cost == 0)
 		{
 			weaponCost.setText("FREE");
@@ -448,6 +461,7 @@ public class UpgradeGroup extends Group
 
 			weaponCost.setText(weapons.cost + "");
 		}
+
 	}
 
 	class WeaponButton extends ClickListener
@@ -459,6 +473,7 @@ public class UpgradeGroup extends Group
 			ButtonWeapon weaponsButton = (ButtonWeapon) event.getTarget();
 			selectedWeapon = weaponsButton.weapons;
 			selectWeapon(weaponsButton.weapons);
+
 			weaponImage.setDrawable(new TextureRegionDrawable(weaponsButton.weapon_textureRegion));
 			weaponImage.setSize(weaponsButton.weapon_textureRegion.getRegionWidth() * 8, weaponsButton.weapon_textureRegion.getRegionHeight() * 8);
 		}

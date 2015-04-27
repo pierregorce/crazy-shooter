@@ -71,11 +71,10 @@ public class Enemy_NapalmBarrel extends Enemies
 			for (int i = 0; i < Projectiles.BARREL_NAPALM.quantityPerShoot; i++)
 			{
 				int xRandomization = new Random().nextInt(180) - 90;
-				int yRandomization = new Random().nextInt(60);
+				int yRandomization = new Random().nextInt(100);
 
 				Projectile projectileExplosion = new Projectile(Projectiles.BARREL_NAPALM);
 				projectileExplosion.init(this);
-
 				projectileExplosion.setX(this.getCenterX() + xRandomization);
 				projectileExplosion.setY(this.getCenterY() + yRandomization);
 				GlobalController.bulletControllerFriendly.addActor(projectileExplosion);

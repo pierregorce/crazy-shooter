@@ -65,8 +65,8 @@ public class GameStage extends Stage
 		globalController = new GlobalController(this, levelParser);
 		cameraPosition = getCamera().position;
 		OrthographicCamera a = (OrthographicCamera) this.getCamera();
-		a.zoom += 0.2;
-		a.zoom -= 0.2;
+		a.zoom += 0.3;
+		a.zoom -= 0.3;
 		/*
 		 * Line aaa = new Line(new Vector2(1200, 300), new Vector2(1500,600), 50); addActor(aaa);
 		 * 

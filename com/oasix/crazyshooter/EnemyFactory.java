@@ -21,6 +21,7 @@ import game.ennemies.Enemy_Boss_10_Golem;
 import game.ennemies.Enemy_Boss_11_SuperFly;
 import game.ennemies.Enemy_Boss_12_Invocator;
 import game.ennemies.Enemy_Boss_20_Kraken;
+import game.ennemies.Enemy_Boss_22_Scientist;
 import game.entitiy.Enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -160,6 +161,9 @@ public class EnemyFactory
 			break;
 		case 21:
 			enemy = new Enemy_21_MiniKraken(m_player, enemyCoef);
+			break;
+		case 22:
+			enemy = new Enemy_Boss_22_Scientist(m_player, enemyCoef);
 			break;
 		default:
 			break;

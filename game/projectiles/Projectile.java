@@ -38,6 +38,7 @@ public class Projectile extends PhysicalEntity
 
 	public Projectile(Projectiles projectilesType)
 	{
+		getActions().clear(); // Enleve au cas ou les actions en cours
 		this.projectilesType = projectilesType;
 		if (projectilesType.animated)
 		{
@@ -182,7 +183,7 @@ public class Projectile extends PhysicalEntity
 
 	public void doEnddingEffect(Character characterReceiving)
 	{
-		getActions().clear(); // Enleve au cas ou les actions en cours
+		// getActions().clear(); // Enleve au cas ou les actions en cours FIX ME A QUI CA SERT CE PUTAIN DE TRUC
 		enemyBumping(characterReceiving, direction);
 		if (characterReceiving != null)
 		{
@@ -221,6 +222,5 @@ public class Projectile extends PhysicalEntity
 				}
 			}
 		}
-
 	}
 }

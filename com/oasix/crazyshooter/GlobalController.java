@@ -57,7 +57,7 @@ public class GlobalController
 	private Array<EnemyFactory>			m_factoryArray				= new Array<EnemyFactory>();	// Contient l'ensemble des factory et les controlles.
 	private LevelParser					m_levelParser;
 	private float						m_time						= 0;
-	private int							nombreRestantEnnemies		= 0;
+	public static int					nombreRestantEnnemies		= 0;
 	// ------------------------------ Groups
 	private Player						player;
 	public static BlockController		blockController;
@@ -148,16 +148,33 @@ public class GlobalController
 
 		if (Worlds.getWorldNumber(level) == 0)
 		{
+			lifeBoxTimerPoping = new Timer(9f);
+			explosiveBoxTimerPoping = new Timer(11f);
+		}
+		if (Worlds.getWorldNumber(level) == 1)
+		{
 			lifeBoxTimerPoping = new Timer(11f);
 			explosiveBoxTimerPoping = new Timer(11f);
-		} else if (Worlds.getWorldNumber(level) == 1)
+		}
+		if (Worlds.getWorldNumber(level) == 2)
 		{
-			lifeBoxTimerPoping = new Timer(12f);
-			explosiveBoxTimerPoping = new Timer(13f);
-		} else
+			lifeBoxTimerPoping = new Timer(11f);
+			explosiveBoxTimerPoping = new Timer(11f);
+		}
+		if (Worlds.getWorldNumber(level) == 3)
+		{
+			lifeBoxTimerPoping = new Timer(11f);
+			explosiveBoxTimerPoping = new Timer(11f);
+		}
+		if (Worlds.getWorldNumber(level) == 4)
 		{
 			lifeBoxTimerPoping = new Timer(13f);
-			explosiveBoxTimerPoping = new Timer(14f);
+			explosiveBoxTimerPoping = new Timer(11f);
+		}
+		if (Worlds.getWorldNumber(level) == 5)
+		{
+			lifeBoxTimerPoping = new Timer(15f);
+			explosiveBoxTimerPoping = new Timer(11f);
 		}
 
 		nombreRestantEnnemies = getTotalEnemiesCount();
@@ -229,9 +246,15 @@ public class GlobalController
 
 		if (explosiveBoxTimerPoping.doAction(delta) && !BossBar.active)
 		{
+			int level = ScreenManager.getInstance().getLevelSelected().levelIndex;
 
-			// enemyController.addActor(new Enemy_ExplosiveBarrel(player, 0));
-			enemyController.addActor(new Enemy_NapalmBarrel(player, 0));
+			if (Worlds.getWorldNumber(level) < 3)
+			{
+				enemyController.addActor(new Enemy_ExplosiveBarrel(player, 0));
+			} else
+			{
+				enemyController.addActor(new Enemy_NapalmBarrel(player, 0));
+			}
 		}
 
 	}
@@ -253,9 +276,9 @@ public class GlobalController
 
 				// Delete Bullet
 				bullet.doEnddingEffect(player);
+				bullet.active = false;
 				if (bullet.projectilesType.removeOnCollision)
 				{
-					bullet.active = false;
 					bullet.remove();
 				}
 				return;
@@ -282,6 +305,7 @@ public class GlobalController
 					int criticalVerification = new Random().nextInt(100) + 1; // Une valeur de 0 à 100
 					float critChance = PlayerStats.getCriticalChance() * 100; // % de chance de crit
 					int bulletDamage = bullet.getPower();
+					bulletDamage += PlayerStats.getDamage();
 					boolean crit = false;
 					if (criticalVerification <= critChance)
 					{
@@ -314,20 +338,13 @@ public class GlobalController
 							coinsController.addActor(new Coin(enemy.getCenterX(), enemy.getTop(), enemy.m_goldValue));
 						}
 
-						// ------------------------- Remove enemy
-						if (enemy.getXpGainOnKill() > 0)
-						{
-							// bypass des tonneaux
-							nombreRestantEnnemies -= 1;
-						}
 						enemy.remove();
-
 						// enemyArray.removeValue(enemy, false);
 					}
 					// Delete Bullet
+					bullet.active = false;
 					if (bullet.projectilesType.removeOnCollision)
 					{
-						bullet.active = false;
 						bullet.remove();
 					}
 				}
@@ -479,20 +496,16 @@ public class GlobalController
 
 	private boolean isThereNoMoreEnemy()
 	{
-
 		for (Actor enemy : enemyController.getChildren())
 		{
-			if (enemy instanceof Enemy_ExplosiveBarrel)
-			{
-				// Enemy_ExplosiveBarrel barrel = (Enemy_ExplosiveBarrel) enemy;
+			Enemies enemies = (Enemies) enemy;
 
-			} else
+			if (enemies.getXpGainOnKill() > 0)
 			{
 				return false;
 			}
 		}
 		return true;
-
 	}
 
 	private void finDuNiveauDelayed()
@@ -545,18 +558,14 @@ public class GlobalController
 	public int getTotalEnemiesCount()
 	{
 		int count = 0;
-
 		for (int i = 0; i < getWaveCount(); i++)
 		{
 			float[][] popForLevel = m_levelParser.getpopForWave(GameStage.levelData.levelIndex, i);
-
 			for (int j = 0; j < popForLevel.length; j++)
 			{
 				count += popForLevel[j][1];
 			}
-
 		}
-
 		return count;
 	}
 

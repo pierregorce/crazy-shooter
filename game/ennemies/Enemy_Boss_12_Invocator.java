@@ -122,8 +122,26 @@ public class Enemy_Boss_12_Invocator extends Enemies
 		BossBar.enemy = this;
 		BossBar.setBossName("BOSS #3 : " + Worlds.WOLRD_3.finalBoss); // WIZARD
 		bumpSensibility = false;
-		m_goldQuantity = 50;
-		m_goldValue = 20;
+	}
+
+	@Override
+	protected void enemies_initialisation()
+	{
+		// shootCooldwon = 0.2f;
+		// m_shootPauseTime = 0f;
+		// m_shootRunTime = 1f;
+
+		if (Worlds.WOLRD_3.isCompleted())
+		{
+			m_goldValue = 1;
+			m_goldQuantity = 10;
+		} else
+		{
+			m_goldQuantity = 50;
+			m_goldValue = 25;
+		}
+
+		increaseStats(0);
 	}
 
 	@Override
@@ -383,13 +401,6 @@ public class Enemy_Boss_12_Invocator extends Enemies
 			return super.remove();
 		}
 		return super.remove();
-	}
-
-	@Override
-	protected void enemies_initialisation()
-	{
-		// TODO Auto-generated method stub
-
 	}
 
 }

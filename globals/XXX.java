@@ -4,30 +4,28 @@ public class XXX
 {
 	// idée d'un panneau sur un block avec un pop up tutorial
 	// idée armor assez simple a integrer
-	// base64code
+	// base64code - reprendre le file save un peu mal codé...
 	// Pools.free(changeEvent);
 
 	// *************CODE
-	// reprendre position des projectiles lors du tirs des enemys (anchor)
-	// check le cd des armes car ça a l'air trop rapide
-	// lance flammetodo
-	// animation arriere du bazooka rocket fumée (bizzare getcorrected x)
-	// add + to weapons damage
-	// bug texture upgrade
-	// laser - restreindre a une pricision plus fine bug flying mob
+	// reprendre position des projectiles lors du tirs des enemys (anchor) idem player, faire ça en mode debug
 	// anciens ennemies comportement pas bon
-	// boss3 fix meteor
-	// tester les tonneau ?
+	// boss3 fix comportement (trop simple as alex)
+	// bug fail level ?
+	// faire le try catch sur les levels pour ne pas niquer les anciens jouers
+	// verifier la puissance des armes...
 
 	// ************DESSIN
 	// Animation de saut du player
 	// renomer les iregular particle et les mettres dans primitive/fx, idem pour white square...
-	// reprend bg3 decalage block
-	// bullet minigun bof...
-	// BOSS 4 Scientist = boss 4, blizard / mega laser percing
+	// BOSS 4 Scientist = boss 4, blizard / mega laser percing / fiole avec tapis au sol ?
+	// pourrait poser des fioles au sol et ?
 
-	//
-	// ----------------------------------------------------------- IDEA
+	// - ********* PAS TROP GENANT
+	// bullet minigun bof...
+	// projectile tapis effect de collision moyen...
+
+	// ----------------------------------------------------------- IDEA PATTERN
 	//
 	//
 	//

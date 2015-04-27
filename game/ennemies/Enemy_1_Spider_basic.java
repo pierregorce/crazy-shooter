@@ -22,7 +22,7 @@ public class Enemy_1_Spider_basic extends Enemies
 	 */
 
 	private final static int	MAX_LIFE		= 25;
-	private final static int	XP_GAIN_ON_KILL	= 15;
+	private static int			XP_GAIN_ON_KILL	= 15;
 	private final static int	ATTACK_POWER	= 15;
 	private final static float	MOVE_SPEED_MIN	= 1;
 	private final static float	MOVE_SPEED_MAX	= 5;
@@ -71,5 +71,9 @@ public class Enemy_1_Spider_basic extends Enemies
 	{
 		this(player, enemyCoef);
 		setPosition(position.x, position.y);
+		// Provient d'un pop du boss
+		XP_GAIN_ON_KILL = 0;
+		m_goldQuantity = 0;
+		m_goldValue = 0;
 	}
 }

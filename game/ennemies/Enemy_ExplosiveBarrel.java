@@ -77,6 +77,8 @@ public class Enemy_ExplosiveBarrel extends Enemies
 
 				Projectile p = new Projectile(Projectiles.BARREL_EXPLOSION);
 				p.init(this);
+				p.setX(this.getCenterX() + xRandomization);
+				p.setY(this.getCenterY() + yRandomization);
 				GlobalController.bulletControllerFriendly.addActor(p);
 			}
 
@@ -87,6 +89,8 @@ public class Enemy_ExplosiveBarrel extends Enemies
 
 				Projectile p = new Projectile(Projectiles.BARREL_EXPLOSION);
 				p.init(this);
+				p.setX(this.getCenterX() + xRandomization);
+				p.setY(this.getCenterY() + yRandomization);
 				GlobalController.bulletControllerFriendly.addActor(p);
 
 			}

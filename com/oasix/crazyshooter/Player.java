@@ -82,7 +82,8 @@ public class Player extends Character
 	@Override
 	protected void character_initialisation()
 	{
-		shootCooldwon = PlayerStats.getCurrentWeapons().fireRate;
+		shootCooldwon = PlayerStats.getCurrentWeapons().fireRate - PlayerStats.getAttackSpeed();
+		PlayerStats.getAttackSpeed(); // TODO A METTRE UNE FOIS QUE LES CD FONCTIONNERONT
 		m_shootPauseTime = 0f;
 		m_shootRunTime = 1f;
 		defineTimer();
@@ -557,7 +558,6 @@ public class Player extends Character
 	 */
 	private float getFirstEnemyInDirection()
 	{
-
 		SnapshotArray<Actor> enemyArray = GlobalController.enemyController.getChildren();
 		float distance = Projectiles.PLAYER_LASER.lenghtAlive;
 
@@ -569,7 +569,13 @@ public class Player extends Character
 			Enemies enemy = (Enemies) actor;
 
 			// Si l'enemy à le même y que le player (chauve souris)
-			if ((getY() <= enemy.getTop() && getTop() >= enemy.getTop()) || (getTop() >= enemy.getY() && getY() <= enemy.getY()))
+
+			boolean a = getTop() >= enemy.getTop();
+			boolean b = getY() <= enemy.getY();
+			boolean c = getY() == enemy.getY();
+			// if ((getY() <= enemy.getTop() && getTop() >= enemy.getTop()) || (getTop() >= enemy.getY() && getY() <= enemy.getY()))
+
+			if (a && b || c)
 			{
 				// Caclul de la distance avec l'enemy,
 				float tempDistanceRight = enemy.getCenterX() - getRight();

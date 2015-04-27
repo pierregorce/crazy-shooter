@@ -43,7 +43,7 @@ public enum Worlds
 		this.endWorld = endWorld;
 	}
 
-	public static int	LAST_LEVEL	= 35;
+	public static int	LAST_LEVEL	= WOLRD_6.endWorld;
 
 	/**
 	 * Retourne le numéro du monde dans lequel se situe le level demandé
@@ -82,20 +82,16 @@ public enum Worlds
 
 	public boolean isCompleted()
 	{
-		return isCompleted;
-	}
+		Levels levels = Files.levelDataRead();
 
-	public void setCompleted(boolean isCompleted)
-	{
-		// Si le monde est déjà completé on ne crédite pas les étoiles
-		if (isCompleted)
+		if (levels.level[endWorld].levelComplete.equals("true"))
 		{
-
+			return true;
 		} else
 		{
-
+			return false;
 		}
-		this.isCompleted = isCompleted;
+
 	}
 
 	public static int getStars()
@@ -104,7 +100,7 @@ public enum Worlds
 
 		for (Worlds world : Worlds.values())
 		{
-			if (world.isCompleted)
+			if (world.isCompleted())
 			{
 				total += world.onComplete;
 			}

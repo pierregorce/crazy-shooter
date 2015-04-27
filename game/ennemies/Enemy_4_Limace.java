@@ -60,19 +60,7 @@ public class Enemy_4_Limace extends Enemies
 	public void enemyDirectionEngine()
 	{
 		super.enemyDirectionEngine();
-
-		if (player.getX() > getRight())
-		{
-			// player a droite de enemy
-			// enemy va vers la droite
-			direction = Direction.RIGHT_DIRECTION;
-		}
-		if (player.getRight() < getX())
-		{
-			// player a gauche de enemy
-			// enemy va a gauche
-			direction = Direction.LEFT_DIRECTION;
-		}
+		EnemyComportements.followPlayerAndPatrolOnGround(this, player);
 	}
 
 	@Override

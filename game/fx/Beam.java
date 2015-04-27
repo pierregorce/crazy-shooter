@@ -85,6 +85,23 @@ public class Beam extends Actor
 		spriteRoundWhite2.setColor(Color.valueOf("a52e2e"));
 	}
 
+	public void setScientistSpecification()
+	{
+
+		sprite.setColor(Color.BLUE);
+		spriteMiddle.setColor(Color.WHITE);
+		spriteRound1.setColor(Color.BLUE);
+		spriteRoundWhite1.setColor(Color.WHITE);
+		spriteRound2.setColor(Color.BLUE);
+		spriteRoundWhite2.setColor(Color.WHITE);
+		spriteRoundSizeStart = 50;
+		spriteRoundWhiteSizeStart = 35;
+		spriteRoundSizeEnd = 35;
+		spriteRoundWhiteSizeEnd = 20;
+		thickness = 20;
+		thicknessVariation = 5;
+	}
+
 	public void setPlayerSpecification()
 	{
 		sprite.setColor(Color.MAGENTA);

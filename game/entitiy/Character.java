@@ -116,7 +116,10 @@ public abstract class Character extends PhysicalEntity
 		{
 			// Gere le fait que si on ne tire plus ça doit être direct disponible une fois le cd passé
 			m_timerShootTiming.resetForLunchImmediatly();
-			m_timerShootCooldownInRunTime.resetForLunchImmediatly();
+			if (m_timerShootCooldownInRunTime.doAction(delta))
+			{
+				m_timerShootCooldownInRunTime.resetForLunchImmediatly();
+			}
 		}
 	}
 

@@ -17,15 +17,16 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 public class BlockController extends Group
 {
 
-	public static float				block_hauteur		= 15;
-	public static float				background_offsetY	= -70;
+	public static float				block_hauteur			= 15;
+	public static float				background_offsetY		= -70;
+	public static float				marginBlockGroundPop	= 90;
 
 	// ---------- Global variables
-	public static float				groundLevel			= 000;
+	public static float				groundLevel				= 000;
 	public static ArrayList<Block>	bigBlock;
 	public static ArrayList<Block>	smallBlock;
 	public static ArrayList<Block>	groundBlock;
-	public static ArrayList<Block>	fictivesBlock;				// Contient des blocks fictif pour une apparition en l'air
+	public static ArrayList<Block>	fictivesBlock;					// Contient des blocks fictif pour une apparition en l'air
 
 	public BlockController()
 	{
@@ -138,8 +139,9 @@ public class BlockController extends Group
 				@Override
 				public Vector2 getPopPosition()
 				{
-					Block block = new Block(531, 800 - 405 + background_offsetY, 22, block_hauteur, true);
-					return block.getPopPosition();
+					// Block block = new Block(531, 800 - 405 + background_offsetY, 22, block_hauteur, true);
+					// return block.getPopPosition();
+					return super.getPopPosition();
 				}
 			};
 			addActor(bigblock);
@@ -167,7 +169,7 @@ public class BlockController extends Group
 				@Override
 				public Vector2 getPopPosition()
 				{
-					return new Vector2(0, (800 - 665 + background_offsetY) * MyGdxGame.PIXEL_SIZE);
+					return new Vector2(0 + marginBlockGroundPop, (800 - 665 + background_offsetY) * MyGdxGame.PIXEL_SIZE);
 				}
 			};
 
@@ -176,7 +178,7 @@ public class BlockController extends Group
 				@Override
 				public Vector2 getPopPosition()
 				{
-					return new Vector2(MyGdxGame.VIRTUAL_WORLD_WIDTH, (800 - 665 + background_offsetY) * MyGdxGame.PIXEL_SIZE);
+					return new Vector2(MyGdxGame.VIRTUAL_WORLD_WIDTH - marginBlockGroundPop, (800 - 665 + background_offsetY) * MyGdxGame.PIXEL_SIZE);
 				}
 			};
 
@@ -203,8 +205,8 @@ public class BlockController extends Group
 				public Vector2 getPopPosition()
 				{
 					Vector2[] v = new Vector2[2];
-					v[0] = new Vector2(0, (800 - 665 + background_offsetY) * MyGdxGame.PIXEL_SIZE);
-					v[1] = new Vector2(MyGdxGame.VIRTUAL_WORLD_WIDTH, (800 - 665 + background_offsetY) * MyGdxGame.PIXEL_SIZE);
+					v[0] = new Vector2(0 + marginBlockGroundPop, (800 - 665 + background_offsetY) * MyGdxGame.PIXEL_SIZE);
+					v[1] = new Vector2(MyGdxGame.VIRTUAL_WORLD_WIDTH - marginBlockGroundPop, (800 - 665 + background_offsetY) * MyGdxGame.PIXEL_SIZE);
 					return v[new Random().nextInt(v.length)];
 				}
 			};

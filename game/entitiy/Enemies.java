@@ -19,8 +19,8 @@ public abstract class Enemies extends Character
 
 	private int			attackPower;
 	private int			xpGainOnKill;
-	public int			m_goldQuantity	= 1;
-	public int			m_goldValue		= 10;
+	public int			m_goldQuantity;
+	public int			m_goldValue;
 	protected boolean	bumpSensibility	= true;
 	protected Player	player;
 
@@ -162,6 +162,11 @@ public abstract class Enemies extends Character
 		{
 			super.loseLife(quantity);
 			explosionOnLosingLife();
+		}
+
+		if (life <= 0 && getXpGainOnKill() > 0)
+		{
+			GlobalController.nombreRestantEnnemies -= 1;
 		}
 	}
 

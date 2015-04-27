@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
+import com.oasix.crazyshooter.Timer;
 
 public class Enemy_19_Robot extends Enemies
 {
@@ -62,7 +63,8 @@ public class Enemy_19_Robot extends Enemies
 		increaseStats(enemyCoef);
 	}
 
-	private Beam	beam;	// Laser Beam
+	private Beam	beam;									// Laser Beam
+	private Timer	delayedShootTime	= new Timer(0.6f);
 
 	private void updateBeams()
 	{
@@ -71,6 +73,7 @@ public class Enemy_19_Robot extends Enemies
 			Vector2 vector = new Vector2(getRight() - 23 + 15, getY() - 8 + 40 + 1);
 			float dist = Math.abs(getCenterX() - player.getCenterX());
 			beam.init(vector, dist, this);
+			beam.setRobotSpecification();
 		}
 	}
 
@@ -88,10 +91,14 @@ public class Enemy_19_Robot extends Enemies
 	public void act(float delta)
 	{
 		super.act(delta);
+		EnemyComportements.physicalAttack(this, player);
 
 		if (Math.abs(getX() - player.getX()) < Projectiles.ENEMY_ROBOT.lenghtAlive && player.getY() == getY())
 		{
-			shoot = true;
+			if (!shoot && delayedShootTime.doAction(delta))
+			{
+				shoot = true;
+			}
 		} else
 		{
 			shoot = false;
@@ -118,8 +125,15 @@ public class Enemy_19_Robot extends Enemies
 
 		updateBeams();
 
-		EnemyComportements.followPlayerAndPatrolOnGroundAndShoot(this, player, Projectiles.ENEMY_ROBOT.lenghtAlive);
-		EnemyComportements.physicalAttack(this, player);
+		if (shoot)
+		{
+			faireFaceTo(player);
+			setWalk(false);
+		} else
+		{
+			EnemyComportements.followPlayerAndPatrol(this, player);
+		}
+
 	}
 
 	@Override
@@ -130,12 +144,6 @@ public class Enemy_19_Robot extends Enemies
 		float dist = Math.abs(getRight() - player.getX()) - 20;
 		p.setTarget(this, new Vector2(dist, player.getY()));
 		GlobalController.bulletControllerEnemy.addActor(p);
-	}
-
-	public Enemy_19_Robot(Player player, float enemyCoef, Vector2 position)
-	{
-		this(player, enemyCoef);
-		setPosition(position.x, position.y);
 	}
 
 	@Override

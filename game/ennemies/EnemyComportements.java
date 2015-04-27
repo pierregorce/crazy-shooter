@@ -44,21 +44,6 @@ public class EnemyComportements
 		}
 	}
 
-	public static void followPlayerAndPatrolOnGroundAndShoot(Enemies enemy, Player player, float distanceShoot)
-	{
-
-		if (enemy.getPosition().dst(player.getPosition()) < distanceShoot)
-		{
-			enemy.faireFaceTo(player);
-			enemy.setWalk(false);
-			enemy.setShoot(true);
-		} else
-		{
-			enemy.setShoot(false);
-			followPlayerAndPatrolOnGround(enemy, player);
-		}
-	}
-
 	/**
 	 * Patrol si le player n'est pas sur le même block
 	 */

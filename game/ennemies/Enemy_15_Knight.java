@@ -27,7 +27,7 @@ import com.oasix.crazyshooter.Timer;
 public class Enemy_15_Knight extends Enemies
 {
 	private final static int				MAX_LIFE		= 500;
-	private final static int				XP_GAIN_ON_KILL	= 70;
+	private final static int				XP_GAIN_ON_KILL	= 180;
 	private final static int				ATTACK_POWER	= 20;
 	private final static float				MOVE_SPEED_MIN	= 1.8f;
 	private final static float				MOVE_SPEED_MAX	= 2.1f;
@@ -79,8 +79,9 @@ public class Enemy_15_Knight extends Enemies
 		}
 	}
 
-	private KnightStates	m_knightStates	= KnightStates.WALK;
-	private Timer			timer			= new Timer(m_knightStates.phaseDuration);	// Timer qui devient vrai lorqu'il faut changer de phase;
+	private KnightStates	m_knightStates		= KnightStates.WALK;
+	private Timer			timer				= new Timer(m_knightStates.phaseDuration);	// Timer qui devient vrai lorqu'il faut changer de phase;
+	private Timer			delayedBlockTimer	= new Timer(0.75f);
 
 	private void swichBetweenBossStates(float delta)
 	{
@@ -117,9 +118,12 @@ public class Enemy_15_Knight extends Enemies
 		{
 			if (m_knightStates == KnightStates.WALK)
 			{
-				m_knightStates = KnightStates.BLOCK;
-				GlobalController.fxController.addActor(new PopMessage(this, MessageType.KNIGHT));
-				timer = new Timer(m_knightStates.phaseDuration);
+				if (delayedBlockTimer.doAction(delta))
+				{
+					m_knightStates = KnightStates.BLOCK;
+					GlobalController.fxController.addActor(new PopMessage(this, MessageType.KNIGHT));
+					timer = new Timer(m_knightStates.phaseDuration);
+				}
 			}
 		} else
 		{

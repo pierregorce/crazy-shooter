@@ -12,6 +12,7 @@ import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
 import com.oasix.crazyshooter.Timer;
@@ -80,12 +81,13 @@ public class Enemy_14_Pot extends Enemies
 	@Override
 	public void shootEngine()
 	{
-		// WizardProjectile bullet = ProjectilePoolFactory.getInstance().wizardBulletPool.obtain();
-		// bullet.init(this, new Vector2(getRight(), getCenterY()));
-		// GlobalController.bulletControllerEnemy.addActor(bullet);
-
 		Projectile p = new Projectile(Projectiles.TAPIS);
 		p.init(this);
+		float min = 4f;
+		float max = 6;
+		float time = new Random().nextFloat() * (max - min) + min;
+		// add do endng effect
+		p.addAction(Actions.delay(time, Actions.removeActor(p)));
 		GlobalController.bulletControllerEnemy.addActor(p);
 	}
 

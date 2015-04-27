@@ -8,6 +8,7 @@ import game.pop.PopMessage.MessageType;
 import game.projectiles.Projectile;
 import game.sound.MusicManager;
 import globals.Projectiles;
+import globals.Worlds;
 
 import java.util.Random;
 
@@ -30,7 +31,7 @@ public class Enemy_Boss_11_SuperFly extends Enemies
 	 * Walking,Jumping basic enemy Try to catch player
 	 */
 
-	private final static int	MAX_LIFE		= 3700;
+	private final static int	MAX_LIFE		= 3900;
 	private final static int	XP_GAIN_ON_KILL	= 700;
 	private final static int	ATTACK_POWER	= 30;	// PHYSICAL ATAK
 	private final static float	MOVE_SPEED_MIN	= 3;
@@ -60,15 +61,28 @@ public class Enemy_Boss_11_SuperFly extends Enemies
 		// colorization = new Color(214 / 255f, 119 / 255f, 105 / 255f, 1);
 		BossBar.active = true;
 		BossBar.enemy = this;
-		BossBar.setBossName("BOSS #2 : SUPERFLY BEAST"); // GUEPE
+		BossBar.setBossName("BOSS #2 : " + Worlds.WOLRD_2.finalBoss); // GUEPE
 		bumpSensibility = false;
-		shootCooldwon = 0.2f;
-
-		m_goldQuantity = 50;
-		m_goldValue = 25;
-		m_shootPauseTime = 0;
 
 		disablePhysics();
+	}
+
+	@Override
+	protected void enemies_initialisation()
+	{
+		shootCooldwon = 0.2f;
+		m_shootPauseTime = 0;
+
+		if (Worlds.WOLRD_2.isCompleted())
+		{
+			m_goldValue = 1;
+			m_goldQuantity = 10;
+		} else
+		{
+			m_goldQuantity = 50;
+			m_goldValue = 25;
+		}
+
 	}
 
 	private enum BossPhases
@@ -283,13 +297,6 @@ public class Enemy_Boss_11_SuperFly extends Enemies
 			return super.remove();
 		}
 		return super.remove();
-	}
-
-	@Override
-	protected void enemies_initialisation()
-	{
-		// TODO Auto-generated method stub
-
 	}
 
 }
