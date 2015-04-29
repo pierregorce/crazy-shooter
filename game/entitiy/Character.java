@@ -75,12 +75,12 @@ public abstract class Character extends PhysicalEntity
 
 		if (getX() + 10 < 0)
 		{
-			// setX(0 + 10);
+			setX(0 + 10);
 		}
 
 		if (getRight() - 10 > MyGdxGame.VIRTUAL_WORLD_WIDTH)
 		{
-			// setX(MyGdxGame.VIRTUAL_WORLD_WIDTH - getWidth() - 10);
+			setX(MyGdxGame.VIRTUAL_WORLD_WIDTH - getWidth() - 10);
 		}
 	}
 
@@ -203,9 +203,11 @@ public abstract class Character extends PhysicalEntity
 	 */
 	public Animation getCurrentAnimation()
 	{
+		Animation animation = null;
+
 		if (walk)
 		{
-			return getWalkAnimation();
+			animation = getWalkAnimation();
 		}
 
 		if (shoot)
@@ -214,13 +216,13 @@ public abstract class Character extends PhysicalEntity
 			{
 				animationStateTime = 0;
 			}
-			return getShootAnimation();
+			animation = getShootAnimation();
 		}
 
 		if (!walk && !shoot)
 		{
 			animationStateTime = 0;
-			return getWalkAnimation();
+			animation = getWalkAnimation();
 		}
 
 		/**
@@ -229,10 +231,10 @@ public abstract class Character extends PhysicalEntity
 		if (inAir && !walk)
 		{
 			animationStateTime = 0.11f;
-			return getWalkAnimation();
+			animation = getWalkAnimation();
 		}
 
-		return null;
+		return animation;
 
 	}
 

@@ -343,6 +343,7 @@ public class GlobalController
 					}
 					// Delete Bullet
 					bullet.active = false;
+
 					if (bullet.projectilesType.removeOnCollision)
 					{
 						bullet.remove();

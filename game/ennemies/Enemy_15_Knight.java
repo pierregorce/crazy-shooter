@@ -44,7 +44,7 @@ public class Enemy_15_Knight extends Enemies
 
 		this.enemyCoef = enemyCoef;
 
-		Vector2 position = EnemyPopConstants.getInstance().getPopablePosition();
+		Vector2 position = EnemyPopConstants.getInstance().getBigBlockPosition();
 		setPosition(position.x, position.y);
 
 		editCollisionBox(40, 20, 0);
@@ -52,6 +52,7 @@ public class Enemy_15_Knight extends Enemies
 		walk = false;
 		shoot = false;
 		bumpSensibility = false;
+
 	}
 
 	@Override

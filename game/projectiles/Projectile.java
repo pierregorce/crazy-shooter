@@ -103,6 +103,7 @@ public class Projectile extends PhysicalEntity
 		setY(position.y);
 		m_xStart = 0;
 		projectilesType.projectileComportement.comportement_init(this, null);
+		drawable = right_drawable;
 	}
 
 	/**

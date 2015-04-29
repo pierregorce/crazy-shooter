@@ -58,7 +58,7 @@ public class LoadingGameScreen implements MovableScreen
 			}
 		}
 
-		// S.c().soundManager.finishLoading();
+		S.c().soundManager.finishLoading();
 
 		if (loadingStage.getRoot().getActions().size == 0 && !done)
 		{

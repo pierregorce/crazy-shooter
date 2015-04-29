@@ -27,9 +27,9 @@ public class Enemy_19_Robot extends Enemies
 	 * Walking,Jumping basic enemy Try to catch player
 	 */
 
-	private final static int				MAX_LIFE		= 150;
-	private final static int				XP_GAIN_ON_KILL	= 15;
-	private final static int				ATTACK_POWER	= 15;
+	private final static int				MAX_LIFE		= 500;
+	private final static int				XP_GAIN_ON_KILL	= 180;
+	private final static int				ATTACK_POWER	= 45;
 	private final static float				MOVE_SPEED_MIN	= 1;
 	private final static float				MOVE_SPEED_MAX	= 5;
 
@@ -55,8 +55,8 @@ public class Enemy_19_Robot extends Enemies
 	@Override
 	protected void enemies_initialisation()
 	{
-		m_goldQuantity = 1;
-		m_goldValue = 3;
+		m_goldQuantity = 5;
+		m_goldValue = 15;
 		m_shootPauseTime = 0;
 		shootCooldwon = 0.05f;
 		m_shootRunTime = 1;
@@ -123,8 +123,6 @@ public class Enemy_19_Robot extends Enemies
 			}
 		}
 
-		updateBeams();
-
 		if (shoot)
 		{
 			faireFaceTo(player);
@@ -134,6 +132,7 @@ public class Enemy_19_Robot extends Enemies
 			EnemyComportements.followPlayerAndPatrol(this, player);
 		}
 
+		updateBeams();
 	}
 
 	@Override

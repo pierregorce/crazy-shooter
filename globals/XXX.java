@@ -8,16 +8,15 @@ public class XXX
 	// Pools.free(changeEvent);
 
 	// *************CODE
-	// reprendre position des projectiles lors du tirs des enemys (anchor) idem player, faire ça en mode debug
-	// anciens ennemies comportement pas bon
+	// reprendre position des projectiles lors du tirs des enemys (anchor)
 	// boss3 fix comportement (trop simple as alex)
-	// bug fail level ?
 	// faire le try catch sur les levels pour ne pas niquer les anciens jouers
+
 	// verifier la puissance des armes...
+	// faire les sons
+	// faire les levels
 
 	// ************DESSIN
-	// Animation de saut du player
-	// renomer les iregular particle et les mettres dans primitive/fx, idem pour white square...
 	// BOSS 4 Scientist = boss 4, blizard / mega laser percing / fiole avec tapis au sol ?
 	// pourrait poser des fioles au sol et ?
 

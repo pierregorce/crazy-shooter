@@ -6,6 +6,8 @@ import game.fx.Beam;
 import game.fx.ParticleColors;
 import game.hud.BossBar;
 import game.path.WayPoint;
+import game.pop.PopMessage;
+import game.pop.PopMessage.MessageType;
 import game.projectiles.Projectile;
 import globals.Projectiles;
 import globals.Worlds;
@@ -33,8 +35,8 @@ public class Enemy_Boss_22_Scientist extends Enemies
 	 * Walking,Jumping basic enemy Try to catch player
 	 */
 
-	private final static int				MAX_LIFE		= 250;
-	private static int						XP_GAIN_ON_KILL	= 250;
+	private final static int				MAX_LIFE		= 8000;
+	private static int						XP_GAIN_ON_KILL	= 2500;
 	private final static int				ATTACK_POWER	= 25;
 	private final static float				MOVE_SPEED_MIN	= 2.5f;
 	private final static float				MOVE_SPEED_MAX	= 7.5f;
@@ -85,34 +87,113 @@ public class Enemy_Boss_22_Scientist extends Enemies
 		}
 	}
 
+	@Override
+	public void act(float delta)
+	{
+		super.act(delta);
+
+		swichBetweenBossStates(delta);
+
+		EnemyComportements.physicalAttack(this, player);
+		// shoot = false;
+		// maxVelocityX = MOVE_SPEED_MAX;
+
+		switch (m_bossPhase) {
+		case PATROL:
+			shoot = false;
+			switchPlateformControlleur(delta);
+			break;
+
+		case LASER_ATTACK:
+			walk = false;
+
+			if (getActions().size > 0)
+			{
+				jump = true;
+			}
+
+			if (!laserAttackDone)
+			{
+				faireFaceTo(player);
+				jump = true;
+
+				if (getActions().size == 0)
+				{
+					addAction(Actions.delay(0.9f, Actions.run(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							shoot = true;
+							laserAttackDone = true;
+						}
+					})));
+				}
+			}
+			break;
+
+		default:
+			break;
+		}
+
+		updateBeams();
+
+		if (walk)
+		{
+			doPopDuringWalk(delta);
+		}
+	}
+
+	private enum BossPhases
+	{
+		PATROL(8),
+		LASER_ATTACK(5);
+
+		public float	phaseDuration;
+
+		private BossPhases(float phaseDuration)
+		{
+			this.phaseDuration = phaseDuration;
+		}
+	}
+
+	private BossPhases	m_bossPhase		= BossPhases.PATROL;					// Commence à patrol
+	private Timer		timer			= new Timer(m_bossPhase.phaseDuration); // Timer qui devient vrai lorqu'il faut changer de phase;
+	private boolean		laserAttackDone	= false;
+
+	private void swichBetweenBossStates(float delta)
+	{
+		if (timer.doAction(delta))
+		{
+			// Changement phase
+			switch (m_bossPhase) {
+			case PATROL:
+				m_bossPhase = BossPhases.LASER_ATTACK;
+				GlobalController.fxController.addActor(new PopMessage(this, MessageType.BOSS_CRY_5));
+				maxJumpSpeedY = 5;
+				m_switchPlateformTimer.resetForLunchImmediatly();
+				controlled = false;
+				break;
+			case LASER_ATTACK:
+				m_bossPhase = BossPhases.PATROL;
+				laserAttackDone = false;
+				maxJumpSpeedY = 30f;
+				break;
+			default:
+				break;
+			}
+			// Repercution sur le timer
+			timer = new Timer(m_bossPhase.phaseDuration);
+		}
+
+	}
+
 	// Commence a climb car on est au sol
 	private Timer		m_switchPlateformTimer	= new Timer(15f);
 	private Block		finalBlockObjective		= GlobalController.blockController.getTopsBlocks();
 	private Block		currentBlockObjective	= null;
 	private WayPoint	target;
 	private boolean		controlled				= false;
-
-	@Override
-	public void act(float delta)
-	{
-		super.act(delta);
-		if (walk)
-		{
-			doPopDuringWalk(delta);
-		}
-		EnemyComportements.physicalAttackOnly(this, player);
-		shoot = false;
-		maxVelocityX = MOVE_SPEED_MAX;
-
-		// shoot = true;
-
-		switchPlateformControlleur(delta);
-		updateBeams();
-
-		// jump = true;
-		// maxJumpSpeedY = 5;
-
-	}
 
 	private void switchPlateformControlleur(float delta)
 	{

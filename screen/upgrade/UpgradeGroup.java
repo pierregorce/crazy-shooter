@@ -487,7 +487,7 @@ public class UpgradeGroup extends Group
 		{
 			super.clicked(event, x, y);
 
-			if (event.getListenerActor() == buy)
+			if (event.getListenerActor() == buy && !selectedWeapon.isBuy)
 			{
 				if (PlayerStats.ressource >= selectedWeapon.cost)
 				{

@@ -116,7 +116,7 @@ public class Enemy_Boss_20_Kraken extends Enemies
 		PHASE_2
 	}
 
-	private Timer			changeOffsetTimer	= new Timer(4);
+	private Timer			changeOffsetTimer	= new Timer(6);
 	private Timer			shootBullet			= new Timer(3);
 	private boolean			changingOffset		= false;
 	private Phases			phase				= Phases.PHASE_1;
@@ -225,7 +225,6 @@ public class Enemy_Boss_20_Kraken extends Enemies
 		protection = false;
 		if (!changingOffset)
 		{
-
 			if (shootBullet.doAction(delta))
 			{
 				faireFaceTo(player);

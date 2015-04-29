@@ -1,6 +1,5 @@
 package game.entitiy;
 
-import ressources.ActionFactory;
 import ressources.DrawableAnimation;
 import ressources.R;
 import ressources.Ressource;
@@ -110,7 +109,7 @@ public abstract class PhysicalEntity extends Entities
 			if (jumpUpFxAnimation != null) // FIXME METTRE METHODE ABSTRACT DANS CHARACTER
 			{
 				DrawableAnimation drawableAnimation = new DrawableAnimation(0.05f, R.c().jumpUpFxAnimation);
-				Ressource ressource = new Ressource(drawableAnimation, getCenterX(), getY(), 40, ActionFactory.getRemoveAction(drawableAnimation.getAnimationDuration() - 0.05f));
+				Ressource ressource = new Ressource(drawableAnimation, getCenterX(), getY(), 40, true);
 				GlobalController.fxController.addActor(ressource);
 			}
 
@@ -131,8 +130,9 @@ public abstract class PhysicalEntity extends Entities
 				if (jumpDownFxAnimation != null)
 				{
 					DrawableAnimation drawableAnimation = new DrawableAnimation(0.05f, R.c().jumpDownFxAnimation);
-					Ressource ressource = new Ressource(drawableAnimation, getCenterX(), getY(), 40, ActionFactory.getRemoveAction(drawableAnimation.getAnimationDuration() - 0.05f));
+					Ressource ressource = new Ressource(drawableAnimation, getCenterX(), getY(), 40, true);
 					GlobalController.fxController.addActor(ressource);
+
 				}
 			}
 		}

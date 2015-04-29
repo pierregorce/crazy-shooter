@@ -114,6 +114,7 @@ public class ProjectileComportements
 		protected void comportement_endingEffect(Projectile projectile, Character characterReceiving)
 		{
 			int quantity = Projectiles.PLAYER_BAZOOKA_EXPLOSION.quantityPerShoot;
+
 			for (int i = 0; i < quantity / 2; i++)
 			{
 				int xRandomization = new Random().nextInt(100) - 50;
@@ -124,9 +125,10 @@ public class ProjectileComportements
 				projectileExplosion.setY(projectileExplosion.getY() + yRandomization);
 				GlobalController.bulletControllerFriendly.addActor(projectileExplosion);
 			}
+
 			for (int i = 0; i < quantity / 2; i++)
 			{
-				int xRandomization = new Random().nextInt(240) - 120;
+				int xRandomization = new Random().nextInt(200) - 100;
 				int yRandomization = new Random().nextInt(20);
 				Projectile projectileExplosion = new Projectile(Projectiles.PLAYER_BAZOOKA_EXPLOSION);
 				projectileExplosion.init(projectile.direction, new Vector2(projectile.getX() + xRandomization, projectile.getY() + yRandomization));
@@ -385,21 +387,26 @@ public class ProjectileComportements
 				int yRandomization = new Random().nextInt(50);
 
 				Projectile projectileExplosion = new Projectile(Projectiles.PLAYER_GRENADE_EXPLOSION);
-				projectileExplosion.init(characterReceiving);
+				projectileExplosion.init(projectile.direction, new Vector2(projectile.getX() + xRandomization, projectile.getY() + yRandomization));
+				projectileExplosion.setX(projectileExplosion.getX() + xRandomization);
+				projectileExplosion.setY(projectileExplosion.getY() + yRandomization);
+				GlobalController.bulletControllerFriendly.addActor(projectileExplosion);
 
-				if (characterReceiving == null)
-				{
-					// Cas d'un truc qui explose tout seul
-					projectileExplosion.setX(projectile.getCenterX() + xRandomization);
-					projectileExplosion.setY(projectile.getCenterY() + yRandomization);
-					GlobalController.bulletControllerFriendly.addActor(projectileExplosion);
+				// projectileExplosion.init(characterReceiving);
 
-				} else
-				{
-					projectileExplosion.setX(projectileExplosion.getX() + xRandomization);
-					projectileExplosion.setY(projectileExplosion.getY() + yRandomization);
-					GlobalController.bulletControllerFriendly.addActor(projectileExplosion);
-				}
+				// if (characterReceiving == null)
+				// {
+				// // Cas d'un truc qui explose tout seul
+				// projectileExplosion.setX(projectile.getCenterX() + xRandomization);
+				// projectileExplosion.setY(projectile.getCenterY() + yRandomization);
+				// GlobalController.bulletControllerFriendly.addActor(projectileExplosion);
+				//
+				// } else
+				// {
+				// projectileExplosion.setX(projectileExplosion.getX() + xRandomization);
+				// projectileExplosion.setY(projectileExplosion.getY() + yRandomization);
+				// GlobalController.bulletControllerFriendly.addActor(projectileExplosion);
+				// }
 				// Add 2 particles by explosion
 				for (int j = 0; j < 2; j++)
 				{
@@ -459,7 +466,6 @@ public class ProjectileComportements
 
 	public class BazookaExplosion extends Explosion
 	{
-
 		public BazookaExplosion(int width, int height)
 		{
 			super(width, height);
@@ -593,14 +599,17 @@ public class ProjectileComportements
 
 		public static void setActivation(final Projectile projectile)
 		{
-			projectile.addAction(Actions.delay(0.2f, Actions.run(new Runnable()
+			if (projectile.getActions().size == 0)
 			{
-				@Override
-				public void run()
+				projectile.addAction(Actions.delay(0.2f, Actions.run(new Runnable()
 				{
-					projectile.active = true;
-				}
-			})));
+					@Override
+					public void run()
+					{
+						projectile.active = true;
+					}
+				})));
+			}
 		}
 	}
 

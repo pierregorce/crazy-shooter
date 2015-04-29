@@ -5,7 +5,7 @@ public enum Upgrades
 	// Objts directement construit
 	LIFE_MAX(0, "Max Life", "Increases your maximum health by 20 points.", 20, "", 0, 1),
 	DAMAGE_DONE(0, "Damage Done", "Increases damage your weapon produced by 1 points.", 1, "", 0, 1),
-	ATTACK_SPEED(0, "Attack Speed", "Increases attack speed of your weapon by 0.01 seconds.", 0.005f, "", 0, 2),
+	ATTACK_SPEED(0, "Attack Speed", "Increases attack speed of your weapon by 0.01 seconds.", 0.0025f, "", 0, 4),
 	HEALTH_PACK(0, "Health pack", "Increases life gain in the life packs by 4 HP.", 2, "", 0, 2),
 	CRITICAL_CHANCE(0, "Critical Chance", "Increases the critical chance of your bullets by 2 percent.", 0.01f, "", 0, 2),
 	MOVE_SPEED(0, "NOT USED FOR NOW", "", 0.02f, "+2%", 0, 0),
