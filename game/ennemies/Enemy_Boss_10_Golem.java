@@ -6,7 +6,6 @@ import game.hud.BossBar;
 import game.pop.PopMessage;
 import game.pop.PopMessage.MessageType;
 import game.projectiles.Projectile;
-import game.sound.MusicManager;
 import globals.Projectiles;
 import globals.Worlds;
 
@@ -17,15 +16,16 @@ import ressources.DrawableAnimation;
 import ressources.R;
 import ressources.Ressource;
 import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
 import com.oasix.crazyshooter.Timer;
@@ -50,7 +50,8 @@ public class Enemy_Boss_10_Golem extends Enemies
 	private boolean				soundSlashPlaying	= false;
 	private Timer				timerSpeak			= new Timer(5f);
 	private Timer				timerSpit			= new Timer(1f);
-	private Sound				soundSlash			= S.c().soundEffect_boss1_umbrellaSlash;
+
+	// private Sound soundSlash = S.c().soundEffect_boss1_umbrellaSlash;
 
 	public Enemy_Boss_10_Golem(Player player, float enemyCoef)
 	{
@@ -148,7 +149,7 @@ public class Enemy_Boss_10_Golem extends Enemies
 			SequenceAction action = new SequenceAction();
 			m_state = State.PREPARATION;
 
-			S.c().soundEffect_boss1_stomp[new Random().nextInt(S.c().soundEffect_boss1_stomp.length)].play(MusicManager.sfxVolume);
+			S.c().play(TyrianSound.soundEffect_boss1_stomp);
 
 			action.addAction(Actions.delay(0.7f));
 
@@ -158,7 +159,7 @@ public class Enemy_Boss_10_Golem extends Enemies
 				@Override
 				public void run()
 				{
-					S.c().soundEffect_boss1_dash.play(MusicManager.sfxVolume);
+					S.c().play(TyrianSound.soundEffect_boss1_dash);
 					m_state = State.TACKLE;
 					walk = false;
 				}
@@ -208,13 +209,13 @@ public class Enemy_Boss_10_Golem extends Enemies
 
 		if (timerSpeak.doAction(delta))
 		{
-			S.c().soundEffect_boss1_laugh[new Random().nextInt(S.c().soundEffect_boss1_laugh.length)].play(MusicManager.sfxVolume);
+			S.c().play(TyrianSound.soundEffect_boss1_laugh);
 		}
 
 		if (timerSpit.doAction(delta) && shoot)
 		{
-			S.c().soundEffect_boss1_burp[new Random().nextInt(S.c().soundEffect_boss1_burp.length)].play(MusicManager.sfxVolume);
 
+			S.c().play(TyrianSound.soundEffect_boss1_burp);
 		}
 
 	}
@@ -225,7 +226,8 @@ public class Enemy_Boss_10_Golem extends Enemies
 		super.shootEngine();
 		for (int i = 0; i < Projectiles.ENEMY_BOSS_1.quantityPerShoot; i++)
 		{
-			Projectile p = new Projectile(Projectiles.ENEMY_BOSS_1);
+			Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+			p.construct(Projectiles.ENEMY_BOSS_1);
 			p.init(this);
 			GlobalController.bulletControllerEnemy.addActor(p);
 		}
@@ -254,7 +256,7 @@ public class Enemy_Boss_10_Golem extends Enemies
 
 			if (!soundSlashPlaying)
 			{
-				soundSlash.loop(MusicManager.sfxVolume);
+				// soundSlash.loop(MusicManager.sfxVolume);
 				soundSlashPlaying = true;
 			}
 
@@ -282,7 +284,7 @@ public class Enemy_Boss_10_Golem extends Enemies
 			{
 				setWalk(true);
 				soundSlashPlaying = false;
-				soundSlash.stop();
+				// soundSlash.stop();
 			}
 
 		}

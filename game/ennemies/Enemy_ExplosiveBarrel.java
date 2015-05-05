@@ -4,17 +4,18 @@ import game.entitiy.Enemies;
 import game.pop.PopMessage;
 import game.pop.PopMessage.MessageType;
 import game.projectiles.Projectile;
-import game.sound.MusicManager;
 import globals.Projectiles;
 
 import java.util.Random;
 
 import ressources.R;
 import ressources.S;
+import ressources.S.TyrianSound;
 import screen.MyGdxGame;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.GameStage;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
@@ -75,7 +76,8 @@ public class Enemy_ExplosiveBarrel extends Enemies
 
 				Vector2 vector = new Vector2(getCenterX() + xRandomization, getY() + yRandomization);
 
-				Projectile p = new Projectile(Projectiles.BARREL_EXPLOSION);
+				Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+				p.construct(Projectiles.BARREL_EXPLOSION);
 				p.init(this);
 				p.setX(this.getCenterX() + xRandomization);
 				p.setY(this.getCenterY() + yRandomization);
@@ -87,7 +89,8 @@ public class Enemy_ExplosiveBarrel extends Enemies
 				int xRandomization = new Random().nextInt(240) - 120;
 				int yRandomization = new Random().nextInt(150);
 
-				Projectile p = new Projectile(Projectiles.BARREL_EXPLOSION);
+				Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+				p.construct(Projectiles.BARREL_EXPLOSION);
 				p.init(this);
 				p.setX(this.getCenterX() + xRandomization);
 				p.setY(this.getCenterY() + yRandomization);
@@ -114,7 +117,7 @@ public class Enemy_ExplosiveBarrel extends Enemies
 		// super.popDamageOnLosingLife(bulletDamage, crit);
 
 		GlobalController.fxController.addActor(new PopMessage(this, MessageType.EXPLOSION));
-		S.c().soundEffect_player_barrelExplosion.play(MusicManager.sfxVolume_Player);
+		S.c().play(TyrianSound.soundEffect_player_barrelExplosion);
 
 	}
 

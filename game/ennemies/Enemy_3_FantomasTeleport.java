@@ -3,17 +3,18 @@ package game.ennemies;
 import game.entitiy.Enemies;
 import game.entitiy.EnemyPopConstants;
 import game.projectiles.Projectile;
-import game.sound.MusicManager;
 import globals.Projectiles;
 
 import java.util.Random;
 
 import ressources.R;
 import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.Block;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
@@ -152,10 +153,11 @@ public class Enemy_3_FantomasTeleport extends Enemies
 
 		if (distance <= 500)
 		{
-			Projectile p = new Projectile(Projectiles.ENEMY_FANTOMAS);
+			Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+			p.construct(Projectiles.ENEMY_FANTOMAS);
 			p.init(this);
 			GlobalController.bulletControllerEnemy.addActor(p);
-			S.c().soundEffect_enemies_wizardFireball[new Random().nextInt(S.c().soundEffect_enemies_wizardFireball.length)].play(MusicManager.sfxVolume);
+			S.c().play(TyrianSound.soundEffect_enemies_wizardFireball);
 		}
 	}
 
@@ -212,7 +214,7 @@ public class Enemy_3_FantomasTeleport extends Enemies
 		teleportApparitionAnimation = true;
 		animationStateTime = 0;
 		// SFX
-		S.c().soundEffect_enemies_wizardSpawn[new Random().nextInt(S.c().soundEffect_enemies_wizardSpawn.length)].play(MusicManager.sfxVolume);
+		S.c().play(TyrianSound.soundEffect_enemies_wizardSpawn);
 	}
 
 	public void setTeleportDisparitionTrue()
@@ -220,7 +222,7 @@ public class Enemy_3_FantomasTeleport extends Enemies
 		teleportVanishAnimation = true;
 		animationStateTime = 0;
 		// SFX
-		S.c().soundEffect_enemies_wizardTeleport[new Random().nextInt(S.c().soundEffect_enemies_wizardTeleport.length)].play(MusicManager.sfxVolume);
+		S.c().play(TyrianSound.soundEffect_enemies_wizardTeleport);
 	}
 
 	public void setAnimationTeleportFalse()

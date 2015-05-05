@@ -1,6 +1,14 @@
 package com.oasix.crazyshooter;
 
+import game.ennemies.Enemy_13_Dino;
+import game.ennemies.Enemy_14_Pot;
+import game.ennemies.Enemy_15_Knight;
+import game.ennemies.Enemy_16_Eyes;
+import game.ennemies.Enemy_17_KingWizard;
+import game.ennemies.Enemy_18_Turrel;
+import game.ennemies.Enemy_19_Robot;
 import game.ennemies.Enemy_1_Spider_basic;
+import game.ennemies.Enemy_21_MiniKraken;
 import game.ennemies.Enemy_2_Bat_Basic;
 import game.ennemies.Enemy_3_FantomasTeleport;
 import game.ennemies.Enemy_4_Limace;
@@ -12,9 +20,12 @@ import game.ennemies.Enemy_9_Wasp;
 import game.ennemies.Enemy_Boss_10_Golem;
 import game.ennemies.Enemy_Boss_11_SuperFly;
 import game.ennemies.Enemy_Boss_12_Invocator;
+import game.ennemies.Enemy_Boss_20_Kraken;
+import game.ennemies.Enemy_Boss_22_Scientist;
 import game.entitiy.Enemies;
 import globals.PlayerStats;
 import globals.Weapons;
+import globals.Worlds;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.XmlReader;
@@ -31,7 +42,6 @@ public class LevelParser
 		{
 			XmlReader xml = new XmlReader();
 			m_dom = xml.parse(Gdx.files.internal("Levels.xml"));
-			// sumByLevel();
 		} catch (Exception e)
 		{
 			e.printStackTrace();
@@ -99,10 +109,10 @@ public class LevelParser
 
 	public void sumByLevel()
 	{
-		int nombreDeLevel = 23;
+		int nombreDeLevel = Worlds.LAST_LEVEL;
 		int weaponsBuy = 1; // ON COMMENCE PAR VOULOIR ACHETER L'ARME 1
 
-		for (int i = 1; i <= nombreDeLevel; i++)
+		for (int i = 0; i < nombreDeLevel - 5; i++)
 		{
 			int nombreDeVague = getWaveCount(i);
 
@@ -129,6 +139,7 @@ public class LevelParser
 			}
 			System.out.println(global + level);
 		}
+
 		System.out.println("Xp Total : " + xpTotalWin);
 		System.out.println("Golds Totaux : " + goldTotalWin);
 		System.out.println("Temps Total : " + timePlay + " secondes - soit " + timePlay / 60 + " minutes");
@@ -193,7 +204,36 @@ public class LevelParser
 		case 12:
 			enemy = new Enemy_Boss_12_Invocator(m_player, enemyCoef);
 			break;
-
+		case 13:
+			enemy = new Enemy_13_Dino(m_player, enemyCoef);
+			break;
+		case 14:
+			enemy = new Enemy_14_Pot(m_player, enemyCoef);
+			break;
+		case 15:
+			enemy = new Enemy_15_Knight(m_player, enemyCoef);
+			break;
+		case 16:
+			enemy = new Enemy_16_Eyes(m_player, enemyCoef);
+			break;
+		case 17:
+			enemy = new Enemy_17_KingWizard(m_player, enemyCoef);
+			break;
+		case 18:
+			enemy = new Enemy_18_Turrel(m_player, enemyCoef);
+			break;
+		case 19:
+			enemy = new Enemy_19_Robot(m_player, enemyCoef);
+			break;
+		case 20:
+			enemy = new Enemy_Boss_20_Kraken(m_player, enemyCoef);
+			break;
+		case 21:
+			enemy = new Enemy_21_MiniKraken(m_player, enemyCoef);
+			break;
+		case 22:
+			enemy = new Enemy_Boss_22_Scientist(m_player, enemyCoef);
+			break;
 		default:
 			break;
 		}

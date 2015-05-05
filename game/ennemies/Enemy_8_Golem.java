@@ -2,15 +2,12 @@ package game.ennemies;
 
 import game.entitiy.Enemies;
 import game.entitiy.EnemyPopConstants;
-import game.sound.MusicManager;
 
 import java.util.Random;
 
 import ressources.R;
-import ressources.S;
 import utilities.enumerations.Direction;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.oasix.crazyshooter.Player;
@@ -30,9 +27,10 @@ public class Enemy_8_Golem extends Enemies
 	private final static int	WIDTH			= 150;
 
 	private Player				player;
-	private Sound				soundSlash		= S.c().soundEffect_enemies_umbrellaSlash;
-	private boolean				soundPlaying	= false;
 	private float				enemyCoef;
+
+	// private Sound soundSlash = S.c().soundEffect_enemies_umbrellaSlash;
+	private boolean				soundPlaying	= false;
 
 	public Enemy_8_Golem(Player player, float enemyCoef)
 	{
@@ -103,7 +101,7 @@ public class Enemy_8_Golem extends Enemies
 
 			if (!soundPlaying)
 			{
-				soundSlash.loop(MusicManager.sfxVolume);
+				// soundSlash.loop(MusicManager.sfxVolume);
 				soundPlaying = true;
 			}
 
@@ -130,7 +128,7 @@ public class Enemy_8_Golem extends Enemies
 			if (!attackAnimation)
 			{
 				setWalk(true);
-				soundSlash.stop();
+				// soundSlash.stop();
 				soundPlaying = false;
 			}
 

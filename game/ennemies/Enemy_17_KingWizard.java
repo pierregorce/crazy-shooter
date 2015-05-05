@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.Block;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
@@ -187,7 +188,8 @@ public class Enemy_17_KingWizard extends Enemies
 	@Override
 	public void shootEngine()
 	{
-		Projectile p = new Projectile(Projectiles.ENEMY_KING_WIZARD);
+		Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+		p.construct(Projectiles.ENEMY_KING_WIZARD);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
 	}

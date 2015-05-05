@@ -11,18 +11,17 @@ import game.hud.HudMessages;
 import game.pop.PopMessage;
 import game.pop.PopMessage.MessageType;
 import game.projectiles.Projectile;
-import game.sound.MusicManager;
 import globals.PlayerStats;
 import globals.Projectiles;
 import globals.Weapons;
 
 import java.util.Comparator;
-import java.util.Random;
 
 import ressources.DrawableAnimation;
 import ressources.R;
 import ressources.Ressource;
 import ressources.S;
+import ressources.S.TyrianSound;
 import screen.MyGdxGame;
 import utilities.Methods;
 import utilities.enumerations.Direction;
@@ -37,6 +36,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.Sort;
 
@@ -151,7 +151,7 @@ public class Player extends Character
 			GameStage.cameraShake(30);
 			setLife(PlayerStats.getMaxLife());
 
-			S.c().soundEffect_player_levelUp.play(MusicManager.sfxVolume_Player);
+			S.c().play(TyrianSound.soundEffect_player_levelUp);
 		}
 	}
 
@@ -343,7 +343,8 @@ public class Player extends Character
 		{
 			for (int i = 0; i < projectiles.quantityPerShoot; i++)
 			{
-				Projectile projectile = new Projectile(projectiles);
+				Projectile projectile = Pools.get(Projectile.class, 250).obtain();
+				projectile.construct(projectiles);
 				projectile.init(this);
 				if (PlayerStats.weaponsType == 6)
 				{
@@ -359,7 +360,8 @@ public class Player extends Character
 				Character c = getClosestEnemyInAllDirection(i);
 				if (c != null)
 				{
-					Projectile projectile = new Projectile(projectiles);
+					Projectile projectile = Pools.get(Projectile.class, 250).obtain();
+					projectile.construct(projectiles);
 					projectile.init(this);
 					projectile.setTarget(this, c);
 					GlobalController.bulletControllerFriendly.addActor(projectile);
@@ -690,14 +692,14 @@ public class Player extends Character
 	public void setJump(boolean jump)
 	{
 		super.setJump(jump);
-		S.c().soundEffect_player_jump[new Random().nextInt(S.c().soundEffect_player_jump.length)].play(MusicManager.sfxVolume_Player);
+		S.c().play(TyrianSound.soundEffect_player_jump);
 	}
 
 	@Override
 	public void loseLife(int quantity)
 	{
 		super.loseLife(quantity);
-		S.c().soundEffect_player_gettingHit[new Random().nextInt(S.c().soundEffect_player_gettingHit.length)].play(MusicManager.sfxVolume_Player);
+		S.c().play(TyrianSound.soundEffect_player_gettingHit);
 	}
 
 	/**

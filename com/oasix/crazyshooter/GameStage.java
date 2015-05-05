@@ -22,9 +22,11 @@ public class GameStage extends Stage
 {
 
 	// Variables statics
-	public static final boolean				debug			= false;
-	public static LevelData					levelData		= ScreenManager.getInstance().getLevelSelected();
-	public static GameStatesEnum			gameState		= GameStatesEnum.GAME_RUN;
+	public static final boolean				debug				= false;
+	public static final boolean				debugRapidAndLevels	= false;
+
+	public static LevelData					levelData			= ScreenManager.getInstance().getLevelSelected();
+	public static GameStatesEnum			gameState			= GameStatesEnum.GAME_RUN;
 	public static ArrayList<HudMessages>	hudMessages;
 
 	private GlobalController				globalController;
@@ -32,16 +34,16 @@ public class GameStage extends Stage
 
 	// Camera gestion --------------------------------------------------------------
 	private Vector3							cameraPosition;
-	private float							cameraSmooth	= 0.07f;
-	public static boolean					cameraMovingX	= false;											// Permet de gerer le deplacement du background on
-																												// fonction de si la caméra bouge ou non.
+	private float							cameraSmooth		= 0.07f;
+	public static boolean					cameraMovingX		= false;											// Permet de gerer le deplacement du background on
+																													// fonction de si la caméra bouge ou non.
 	// Initialisation du shake
-	private static boolean					shake			= false;											// Permet de faire un shake de l'écran
-	private static float					shakeRadius		= 25;
-	public static int						SMALL_SHAKE		= 10;
-	public static int						HIGH_SHAKE		= 30;
+	private static boolean					shake				= false;											// Permet de faire un shake de l'écran
+	private static float					shakeRadius			= 25;
+	public static int						SMALL_SHAKE			= 10;
+	public static int						HIGH_SHAKE			= 30;
 	private int								randomAngle;
-	private Vector2							offsetVector	= new Vector2();
+	private Vector2							offsetVector		= new Vector2();
 
 	public GameStage()
 	{

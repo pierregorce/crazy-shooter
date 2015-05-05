@@ -22,20 +22,12 @@ public class MusicManager
 	public static float						higherMusicVolume	= 0.3f;
 	public static float						lowerMusicVolume	= 0f;
 
-	// Surtout les enemies
-	public static float						sfxVolume			= 0.9f;
-	// Evenement a faible occurence et les armes
-	public static float						sfxVolume_Weapons	= 0.85f;
-	public static float						sfxVolume_Player	= 1f;
-	public static float						sfxVolume_BossLow	= 0.9f;
-
 	public static String					currentMusicKey		= "";
 	public static Music						currentMusic;
 
 	static
 	{
 		musics.put("Menu", Gdx.files.internal("music/crazy shooter menu theme v1.1.mp3"));
-		// musics.put("BG1", Gdx.files.internal("music/crazy spooky theme v1.5.ogg"));
 		musics.put("BG1", Gdx.files.internal("music/crazy spooky theme v1.5.mp3"));
 		musics.put("BG2", Gdx.files.internal("music/Crazy shooter underground.mp3"));
 		musics.put("BG3", Gdx.files.internal("music/Crazy Shooter Nature Theme v1.2.mp3"));

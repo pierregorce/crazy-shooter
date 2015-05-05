@@ -1,8 +1,8 @@
 package game.panels;
 
-import game.sound.MusicManager;
 import globals.Worlds;
 import ressources.S;
+import ressources.S.TyrianSound;
 import screen.MyGdxGame;
 import screen.ScreenManager;
 import utilities.enumerations.GameStatesEnum;
@@ -45,7 +45,7 @@ public class GameMenu extends Stage
 					shown = true;
 					gameBreakMenu = new GameBreakMenu(gameStage, GameStatesEnum.GAME_WIN);
 					addActor(gameBreakMenu);
-					S.c().soundEffect_player_win.play(MusicManager.sfxVolume_Player);
+					S.c().play(TyrianSound.soundEffect_player_win);
 				} else
 				{
 					ScreenManager.getInstance().show(ScreenEnum.ENDING);
@@ -56,7 +56,7 @@ public class GameMenu extends Stage
 				shown = true;
 				gameBreakMenu = new GameBreakMenu(gameStage, GameStatesEnum.GAME_LOOSE);
 				addActor(gameBreakMenu);
-				S.c().soundEffect_player_loose.play(MusicManager.sfxVolume_Player);
+				S.c().play(TyrianSound.soundEffect_player_loose);
 			}
 		}
 		if (getActors().size == 0)

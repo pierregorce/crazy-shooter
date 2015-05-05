@@ -4,16 +4,17 @@ import game.entitiy.Enemies;
 import game.pop.PopMessage;
 import game.pop.PopMessage.MessageType;
 import game.projectiles.Projectile;
-import game.sound.MusicManager;
 import globals.Projectiles;
 
 import java.util.Random;
 
 import ressources.R;
 import ressources.S;
+import ressources.S.TyrianSound;
 import screen.MyGdxGame;
 import utilities.enumerations.Direction;
 
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.GameStage;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
@@ -73,7 +74,9 @@ public class Enemy_NapalmBarrel extends Enemies
 				int xRandomization = new Random().nextInt(180) - 90;
 				int yRandomization = new Random().nextInt(100);
 
-				Projectile projectileExplosion = new Projectile(Projectiles.BARREL_NAPALM);
+				Projectile projectileExplosion = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+				projectileExplosion.construct(Projectiles.BARREL_NAPALM);
+
 				projectileExplosion.init(this);
 				projectileExplosion.setX(this.getCenterX() + xRandomization);
 				projectileExplosion.setY(this.getCenterY() + yRandomization);
@@ -100,7 +103,7 @@ public class Enemy_NapalmBarrel extends Enemies
 		// super.popDamageOnLosingLife(bulletDamage, crit);
 
 		GlobalController.fxController.addActor(new PopMessage(this, MessageType.EXPLOSION));
-		S.c().soundEffect_player_barrelExplosion.play(MusicManager.sfxVolume_Player);
+		S.c().play(TyrianSound.soundEffect_player_barrelExplosion);
 
 	}
 

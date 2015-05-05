@@ -108,7 +108,7 @@ public abstract class PhysicalEntity extends Entities
 
 			if (jumpUpFxAnimation != null) // FIXME METTRE METHODE ABSTRACT DANS CHARACTER
 			{
-				DrawableAnimation drawableAnimation = new DrawableAnimation(0.05f, R.c().jumpUpFxAnimation);
+				DrawableAnimation drawableAnimation = new DrawableAnimation(0.07f, R.c().jumpUpFxAnimation);
 				Ressource ressource = new Ressource(drawableAnimation, getCenterX(), getY(), 40, true);
 				GlobalController.fxController.addActor(ressource);
 			}
@@ -192,10 +192,7 @@ public abstract class PhysicalEntity extends Entities
 			yMove(delta);
 		}
 
-		if (getY() < 0)
-		{
-			remove();
-		}
+		checkVerticalDeath();
 
 		// Change la position de la collision box pour qu'elle soit toujours placé à l'arrière (dos) du player.
 		if (direction == Direction.RIGHT_DIRECTION)
@@ -220,6 +217,18 @@ public abstract class PhysicalEntity extends Entities
 			}
 		}
 
+	}
+
+	public boolean checkVerticalDeath()
+	{
+		if (getY() < 0)
+		{
+			remove();
+			return true;
+		} else
+		{
+			return false;
+		}
 	}
 
 	public Vector2 getVelocity()

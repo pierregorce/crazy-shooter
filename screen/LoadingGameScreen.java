@@ -3,7 +3,6 @@ package screen;
 import java.util.TreeMap;
 
 import ressources.R;
-import ressources.S;
 import utilities.enumerations.ScreenEnum;
 
 import com.badlogic.gdx.Gdx;
@@ -11,8 +10,11 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -41,7 +43,9 @@ public class LoadingGameScreen implements MovableScreen
 		loadingLabel.setPosition(0, MyGdxGame.VIRTUAL_HEIGHT / 2 + 30);
 		loadingLabel.setAlignment(Align.center);
 		loadingLabel.setWidth(MyGdxGame.VIRTUAL_WIDTH);
-		loadingLabel.setText("Loading : " + (int) (S.c().soundManager.getProgress() * 100) + "");
+		// loadingLabel.setText("Loading : " + (int) (S.c().soundManager.getProgress() * 100) + "");
+
+		loadingLabel.setText("Loading");
 
 		explainLabel.setPosition(200, MyGdxGame.VIRTUAL_HEIGHT / 2 - 30);
 		explainLabel.setAlignment(Align.center);
@@ -49,27 +53,56 @@ public class LoadingGameScreen implements MovableScreen
 		explainLabel.setWrap(true);
 		explainLabel.setDebug(false);
 
-		// On itère sur la map pour trouver le poucentage sur lequel on est
-		for (Integer key : hash.keySet())
+		if (!done)
 		{
-			if (key <= ((int) (S.c().soundManager.getProgress() * 100)))
+			Action a = Actions.delay(0.8f);
+			Action b = new RunnableAction()
 			{
-				explainLabel.setText(hash.get(key));
-			}
+				@Override
+				public void run()
+				{
+					// S.c().construct();
+				}
+			};
+			Action c = Actions.delay(1f);
+
+			Action d = new RunnableAction()
+			{
+				@Override
+				public void run()
+				{
+					ScreenManager.getInstance().show(ScreenEnum.GAME);
+				}
+			};
+
+			loadingStage.addAction(Actions.sequence(a, b, c, d));
+
+			done = true;
 		}
 
-		S.c().soundManager.finishLoading();
-
-		if (loadingStage.getRoot().getActions().size == 0 && !done)
-		{
-			System.out.println("Chargement du game en cours");
-			if (S.c().soundManager.update())
-			{
-				S.c().generateSound();
-				ScreenManager.getInstance().show(ScreenEnum.GAME);
-				done = true;
-			}
-		}
+		// // On itère sur la map pour trouver le poucentage sur lequel on est
+		// for (Integer key : hash.keySet())
+		// {
+		// if (key <= ((int) (S.c().soundManager.getProgress() * 100)))
+		// {
+		// explainLabel.setText(hash.get(key));
+		// }
+		// }
+		//
+		// if (GameStage.debugRapidAndLevels)
+		// {
+		// S.c().soundManager.finishLoading();
+		// }
+		//
+		// if (loadingStage.getRoot().getActions().size == 0 && !done)
+		// {
+		// System.out.println("Chargement du game en cours");
+		// if (S.c().soundManager.update())
+		// {
+		// S.c().generateSound();
+		// done = true;
+		// }
+		// }
 
 	}
 
@@ -118,7 +151,6 @@ public class LoadingGameScreen implements MovableScreen
 	{
 		System.out.println("LoadingGameScreen Hidden");
 		// Lancement d'une action
-
 	}
 
 	@Override

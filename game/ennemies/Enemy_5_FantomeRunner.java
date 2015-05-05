@@ -4,12 +4,12 @@ import game.entitiy.Enemies;
 import game.entitiy.EnemyPopConstants;
 import game.fx.MetalParticle;
 import game.fx.ParticleColors;
-import game.sound.MusicManager;
 
 import java.util.Random;
 
 import ressources.R;
 import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.math.Vector2;
@@ -92,10 +92,10 @@ public class Enemy_5_FantomeRunner extends Enemies
 			}
 			if (maxVelocityX == m_initialVelocity)
 			{
-				S.c().soundEffect_enemies_bumpyEnemyJump.play(MusicManager.sfxVolume);
+				S.c().play(TyrianSound.soundEffect_enemies_bumpyEnemyJump);
 			} else
 			{
-				S.c().soundEffect_enemies_bumpyEnemyCharge.play(MusicManager.sfxVolume);
+				S.c().play(TyrianSound.soundEffect_enemies_bumpyEnemyCharge);
 			}
 		}
 	}

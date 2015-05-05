@@ -17,26 +17,33 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool.Poolable;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.Timer;
 
-public class Projectile extends PhysicalEntity
+public class Projectile extends PhysicalEntity implements Poolable
 {
+	public static final int	PROJECTILE_POOL_SIZE	= 250;
 	// Varable non modifiée
-	private Drawable	drawable;
-	private Drawable	left_drawable;
-	private Drawable	right_drawable;
+	private Drawable		drawable;
+	private Drawable		left_drawable;
+	private Drawable		right_drawable;
 
-	public Projectiles	projectilesType;
+	public Projectiles		projectilesType;
 
 	// Variables modifiée a chaque init
-	public boolean		active		= true;
-	private float		m_xStart	= 0;
-	public float		precision	= 0;
-	public float		rotation	= 0;
-	public int			rebound		= 0;
-	public Timer		effect;
+	public boolean			active					= true;
+	private float			m_xStart				= 0;
+	public float			precision				= 0;
+	public float			rotation				= 0;
+	public int				rebound					= 0;
+	public Timer			effect;
 
-	public Projectile(Projectiles projectilesType)
+	public Projectile()
+	{
+	}
+
+	public void construct(Projectiles projectilesType)
 	{
 		getActions().clear(); // Enleve au cas ou les actions en cours
 		this.projectilesType = projectilesType;
@@ -224,4 +231,31 @@ public class Projectile extends PhysicalEntity
 			}
 		}
 	}
+
+	@Override
+	public void reset()
+	{
+		System.out.println("reset");
+		active = true;
+		m_xStart = 0;
+		rotation = 0;
+		rebound = 0;
+		effect = null;
+		setColor(Color.WHITE);
+		setX(0);
+		setY(0);
+		disablePhysics();
+	}
+
+	@Override
+	public boolean remove()
+	{
+		if (super.remove())
+		{
+			Pools.free(this);
+			return true;
+		}
+		return false;
+	}
+
 }

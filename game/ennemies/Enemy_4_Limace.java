@@ -4,12 +4,12 @@ import game.entitiy.Enemies;
 import game.entitiy.EnemyPopConstants;
 import game.fx.LimaceParticle;
 import game.fx.ParticleColors;
-import game.sound.MusicManager;
 
 import java.util.Random;
 
 import ressources.R;
 import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -142,7 +142,7 @@ public class Enemy_4_Limace extends Enemies
 
 			if (spitSound)
 			{
-				S.c().soundEffect_enemies_greenEnemyBurp[new Random().nextInt(S.c().soundEffect_enemies_greenEnemyBurp.length)].play(MusicManager.sfxVolume);
+				S.c().play(TyrianSound.soundEffect_enemies_greenEnemyBurp);
 				spitSound = false;
 			}
 			// GameStage.cameraShake(7);

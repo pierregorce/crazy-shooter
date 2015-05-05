@@ -2,16 +2,12 @@ package globals;
 
 public class XXX
 {
-	// idée d'un panneau sur un block avec un pop up tutorial
-	// idée armor assez simple a integrer
-	// base64code - reprendre le file save un peu mal codé...
-	// Pools.free(changeEvent);
 
 	// *************CODE
 	// reprendre position des projectiles lors du tirs des enemys (anchor)
 	// boss3 fix comportement (trop simple as alex)
 	// faire le try catch sur les levels pour ne pas niquer les anciens jouers
-
+	// sound loader nul ...
 	// verifier la puissance des armes...
 	// faire les sons
 	// faire les levels
@@ -19,10 +15,21 @@ public class XXX
 	// ************DESSIN
 	// BOSS 4 Scientist = boss 4, blizard / mega laser percing / fiole avec tapis au sol ?
 	// pourrait poser des fioles au sol et ?
+	// pour l'instant run un peu partout
+	// mega laser
+	// pop fiole and
+	// bug bomb...
+	// reprendre quelques colision box
 
 	// - ********* PAS TROP GENANT
 	// bullet minigun bof...
+	// api facebook
+	// api google paid
 	// projectile tapis effect de collision moyen...
+	// idée d'un panneau sur un block avec un pop up tutorial
+	// idée armor assez simple a integrer
+	// base64code - reprendre le file save un peu mal codé...
+	// Pools.free(changeEvent);
 
 	// ----------------------------------------------------------- IDEA PATTERN
 	//

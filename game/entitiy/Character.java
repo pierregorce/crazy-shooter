@@ -82,6 +82,7 @@ public abstract class Character extends PhysicalEntity
 		{
 			setX(MyGdxGame.VIRTUAL_WORLD_WIDTH - getWidth() - 10);
 		}
+
 	}
 
 	protected void defineTimer()
@@ -210,7 +211,7 @@ public abstract class Character extends PhysicalEntity
 			animation = getWalkAnimation();
 		}
 
-		if (shoot)
+		if (shoot && !walk)
 		{
 			if (shootRight == null)
 			{

@@ -16,6 +16,7 @@ import utilities.enumerations.Direction;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
 import com.oasix.crazyshooter.Timer;
@@ -65,7 +66,7 @@ public class Enemy_18_Turrel extends Enemies
 		m_shootPauseTime = 0f;
 		m_shootRunTime = 1f;
 		m_goldQuantity = 10;
-		m_goldValue = 10;
+		m_goldValue = 25;
 		increaseStats(enemyCoef);
 	}
 
@@ -86,7 +87,8 @@ public class Enemy_18_Turrel extends Enemies
 	@Override
 	public void shootEngine()
 	{
-		Projectile p = new Projectile(Projectiles.ENEMY_TURREL);
+		Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+		p.construct(Projectiles.ENEMY_TURREL);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
 	}

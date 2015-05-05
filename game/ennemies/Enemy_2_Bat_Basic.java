@@ -2,12 +2,12 @@ package game.ennemies;
 
 import game.entitiy.Enemies;
 import game.entitiy.EnemyPopConstants;
-import game.sound.MusicManager;
 
 import java.util.Random;
 
 import ressources.R;
 import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.math.Vector2;
@@ -119,7 +119,7 @@ public class Enemy_2_Bat_Basic extends Enemies
 				public void run()
 				{
 					GameStage.cameraShake(15);
-					S.c().soundEffect_enemies_batAttack.play(MusicManager.sfxVolume);
+					S.c().play(TyrianSound.soundEffect_enemies_batAttack);
 					// player.setWalk(false);
 
 					// Fait perdre de la vie au player

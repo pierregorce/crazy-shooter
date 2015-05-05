@@ -57,8 +57,7 @@ public class LoadingScreen implements MovableScreen
 		m_stage.draw();
 
 		// Tant que le load n'est pas fait alors alors on ne passe pas au changement de screen
-
-		R.c().assetManager.finishLoading();
+		// R.c().assetManager.finishLoading();
 
 		if (R.c().assetManager.update(0) && !m_loading)
 		{

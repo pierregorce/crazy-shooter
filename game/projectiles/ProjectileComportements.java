@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.GameStage;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
@@ -52,7 +53,9 @@ public class ProjectileComportements
 		{
 			super.comportement_init(projectile, characterSender);
 			// Lance un projectile normal
-			Projectile projectile_bis = new Projectile(Projectiles.PLAYER_BASIC_GUN);
+			Projectile projectile_bis = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+			projectile_bis.construct(Projectiles.PLAYER_BASIC_GUN);
+
 			projectile_bis.init(characterSender);
 			projectile_bis.direction = projectile_bis.getOpositeDirection();
 			GlobalController.bulletControllerFriendly.addActor(projectile_bis);
@@ -119,7 +122,10 @@ public class ProjectileComportements
 			{
 				int xRandomization = new Random().nextInt(100) - 50;
 				int yRandomization = new Random().nextInt(20);
-				Projectile projectileExplosion = new Projectile(Projectiles.PLAYER_BAZOOKA_EXPLOSION);
+
+				Projectile projectileExplosion = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+				projectileExplosion.construct(Projectiles.PLAYER_BAZOOKA_EXPLOSION);
+
 				projectileExplosion.init(projectile.direction, new Vector2(projectile.getX() + xRandomization, projectile.getY() + yRandomization));
 				projectileExplosion.setX(projectileExplosion.getX() + xRandomization);
 				projectileExplosion.setY(projectileExplosion.getY() + yRandomization);
@@ -130,7 +136,10 @@ public class ProjectileComportements
 			{
 				int xRandomization = new Random().nextInt(200) - 100;
 				int yRandomization = new Random().nextInt(20);
-				Projectile projectileExplosion = new Projectile(Projectiles.PLAYER_BAZOOKA_EXPLOSION);
+
+				Projectile projectileExplosion = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+				projectileExplosion.construct(Projectiles.PLAYER_BAZOOKA_EXPLOSION);
+
 				projectileExplosion.init(projectile.direction, new Vector2(projectile.getX() + xRandomization, projectile.getY() + yRandomization));
 				// projectileExplosion.init(characterReceiving);
 				projectileExplosion.setX(projectileExplosion.getX() + xRandomization);
@@ -386,7 +395,9 @@ public class ProjectileComportements
 				int xRandomization = new Random().nextInt(160) - 80;
 				int yRandomization = new Random().nextInt(50);
 
-				Projectile projectileExplosion = new Projectile(Projectiles.PLAYER_GRENADE_EXPLOSION);
+				Projectile projectileExplosion = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+				projectileExplosion.construct(Projectiles.PLAYER_GRENADE_EXPLOSION);
+
 				projectileExplosion.init(projectile.direction, new Vector2(projectile.getX() + xRandomization, projectile.getY() + yRandomization));
 				projectileExplosion.setX(projectileExplosion.getX() + xRandomization);
 				projectileExplosion.setY(projectileExplosion.getY() + yRandomization);
@@ -493,17 +504,20 @@ public class ProjectileComportements
 			r.setColor(1, 1, 1, 0.5f);
 			GlobalController.fxController.addActor(r);
 
-			Projectile projectile_one = new Projectile(Projectiles.PLAYER_ROCKET_SIMPLE);
+			Projectile projectile_one = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+			projectile_one.construct(Projectiles.PLAYER_ROCKET_SIMPLE);
 			projectile_one.init(characterSender);
 			projectile_one.precision = 0;
 			GlobalController.bulletControllerFriendly.addActor(projectile_one);
 
-			Projectile projectile_bis = new Projectile(Projectiles.PLAYER_ROCKET_SIMPLE);
+			Projectile projectile_bis = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+			projectile_bis.construct(Projectiles.PLAYER_ROCKET_SIMPLE);
 			projectile_bis.init(characterSender);
 			projectile_bis.precision = 3.5f;
 			GlobalController.bulletControllerFriendly.addActor(projectile_bis);
 
-			Projectile projectile_ter = new Projectile(Projectiles.PLAYER_ROCKET_SIMPLE);
+			Projectile projectile_ter = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+			projectile_ter.construct(Projectiles.PLAYER_ROCKET_SIMPLE);
 			projectile_ter.init(characterSender);
 			projectile_ter.precision = -3.5f;
 			GlobalController.bulletControllerFriendly.addActor(projectile_ter);

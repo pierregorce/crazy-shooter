@@ -15,8 +15,6 @@ import game.pop.PopMessage;
 import game.pop.PopMessage.MessageType;
 import game.pop.PopXP;
 import game.projectiles.Projectile;
-import game.projectiles.ProjectilePoolFactory;
-import game.sound.MusicManager;
 import globals.PlayerStats;
 import globals.Worlds;
 
@@ -26,6 +24,7 @@ import ressources.DrawableSprite;
 import ressources.R;
 import ressources.Ressource;
 import ressources.S;
+import ressources.S.TyrianSound;
 import screen.ScreenManager;
 import screen.level.Levels;
 import utilities.enumerations.GameStatesEnum;
@@ -42,6 +41,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.SnapshotArray;
 
 public class GlobalController
@@ -161,11 +161,13 @@ public class GlobalController
 			lifeBoxTimerPoping = new Timer(11f);
 			explosiveBoxTimerPoping = new Timer(11f);
 		}
+
 		if (Worlds.getWorldNumber(level) == 3)
 		{
 			lifeBoxTimerPoping = new Timer(11f);
 			explosiveBoxTimerPoping = new Timer(11f);
 		}
+
 		if (Worlds.getWorldNumber(level) == 4)
 		{
 			lifeBoxTimerPoping = new Timer(13f);
@@ -178,11 +180,16 @@ public class GlobalController
 		}
 
 		nombreRestantEnnemies = getTotalEnemiesCount();
+
+		if (GameStage.debugRapidAndLevels)
+		{
+			levelParser.sumByLevel();
+		}
 	}
 
 	private void initPools()
 	{
-		ProjectilePoolFactory.reCreatePool();
+		Pools.get(Projectile.class).clear();
 
 		bloodParticlePool = new Pool<BloodParticle>(150)
 		{
@@ -209,9 +216,7 @@ public class GlobalController
 			{
 				return new Ammos();
 			}
-
 		};
-
 	}
 
 	public void control(float delta)
@@ -372,7 +377,7 @@ public class GlobalController
 				// Suppression de l'objet
 				coin.remove();
 				// Sfx
-				S.c().soundEffect_player_coinPickup[new Random().nextInt(S.c().soundEffect_player_coinPickup.length)].play(MusicManager.sfxVolume_Player);
+				S.c().play(TyrianSound.soundEffect_player_coinPickup);
 				// Affichage de particle
 
 				Vector2 initialPosition = new Vector2(coin.getX(), coin.getY());
@@ -404,7 +409,7 @@ public class GlobalController
 				// Suppression de l'objet
 				lifeBox.remove();
 				// Sfx
-				S.c().soundEffect_player_healthPackPickup.play(MusicManager.sfxVolume_Player);
+				S.c().play(TyrianSound.soundEffect_player_healthPackPickup);
 			}
 		}
 

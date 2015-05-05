@@ -6,7 +6,6 @@ import game.hud.BossBar;
 import game.pop.PopMessage;
 import game.pop.PopMessage.MessageType;
 import game.projectiles.Projectile;
-import game.sound.MusicManager;
 import globals.Projectiles;
 import globals.Worlds;
 
@@ -14,12 +13,14 @@ import java.util.Random;
 
 import ressources.R;
 import ressources.S;
+import ressources.S.TyrianSound;
 import screen.MyGdxGame;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
 import com.oasix.crazyshooter.Timer;
@@ -126,7 +127,7 @@ public class Enemy_Boss_11_SuperFly extends Enemies
 			timer = new Timer(m_bossPhase.phaseDuration);
 			System.out.println("BOSS #2 : Je change de phase ! " + m_bossPhase.name());
 			GlobalController.fxController.addActor(new PopMessage(this, MessageType.BOSS_CRY_2));
-			S.c().soundEffect_boss2_pulse[new Random().nextInt(S.c().soundEffect_boss2_pulse.length)].play(MusicManager.sfxVolume);
+			S.c().play(TyrianSound.soundEffect_boss2_pulse);
 		}
 
 	}
@@ -173,10 +174,11 @@ public class Enemy_Boss_11_SuperFly extends Enemies
 	@Override
 	public void shootEngine()
 	{
-		Projectile p = new Projectile(Projectiles.ENEMY_BOSS_2);
+		Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+		p.construct(Projectiles.ENEMY_BOSS_2);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
-		S.c().soundEffect_boss2_shoot[new Random().nextInt(S.c().soundEffect_boss2_shoot.length)].play(MusicManager.sfxVolume);
+		S.c().play(TyrianSound.soundEffect_boss2_shoot);
 	}
 
 	@Override

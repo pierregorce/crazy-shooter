@@ -13,6 +13,7 @@ import utilities.enumerations.Direction;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
 import com.oasix.crazyshooter.Timer;
@@ -81,7 +82,9 @@ public class Enemy_14_Pot extends Enemies
 	@Override
 	public void shootEngine()
 	{
-		Projectile p = new Projectile(Projectiles.TAPIS);
+		Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+		p.construct(Projectiles.TAPIS);
+
 		p.init(this);
 		float min = 4f;
 		float max = 6;

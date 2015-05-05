@@ -1,7 +1,6 @@
 package screen.upgrade;
 
 import files.Files;
-import game.sound.MusicManager;
 import globals.PlayerStats;
 import globals.Upgrades;
 import globals.Weapons;
@@ -11,6 +10,7 @@ import java.text.DecimalFormat;
 import ressources.ButtonRessource;
 import ressources.R;
 import ressources.S;
+import ressources.S.TyrianSound;
 import screen.MyGdxGame;
 import utilities.ButtonScreen;
 import utilities.Methods;
@@ -499,7 +499,7 @@ public class UpgradeGroup extends Group
 			{
 				if (selectedWeapon.isBuy)
 				{
-					S.selectWeaponClickSound.play(MusicManager.sfxVolume);
+					S.c().play(TyrianSound.soundEffect_menu_selectWeapon);
 					equipedMessage();
 					// weaponsButton.setChecked(true);
 					PlayerStats.weaponsType = selectedWeapon.ordinal();
@@ -571,7 +571,7 @@ public class UpgradeGroup extends Group
 					super.touchUp(event, x, y, pointer, button);
 					System.out.println("click yes");
 
-					S.buyWeaponClickSound.play(MusicManager.sfxVolume);
+					S.c().play(TyrianSound.soundEffect_menu_buyWeapon);
 					// weaponsButton.setDisabled(false);
 					// weaponsButton.weapons.setBuy(true);
 					// weaponsButton.setChecked(true);

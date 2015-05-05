@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
 import com.oasix.crazyshooter.Timer;
@@ -197,7 +198,8 @@ public class Enemy_Boss_12_Invocator extends Enemies
 			{
 				for (int i = 0; i < 3; i++)
 				{
-					Projectile p = new Projectile(Projectiles.ENEMY_METEORE);
+					Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+					p.construct(Projectiles.ENEMY_METEORE);
 					p.init(this);
 					p.setPosition(getX() + new Random().nextInt(MyGdxGame.VIRTUAL_WIDTH) - MyGdxGame.VIRTUAL_WIDTH / 2, MyGdxGame.VIRTUAL_WORLD_HEIGHT);
 
@@ -217,7 +219,8 @@ public class Enemy_Boss_12_Invocator extends Enemies
 			{
 				for (int i = 0; i < 15; i++)
 				{
-					Projectile p = new Projectile(Projectiles.ENEMY_BOSS_3);
+					Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+					p.construct(Projectiles.ENEMY_BOSS_3);
 					p.init(this);
 					GlobalController.bulletControllerEnemy.addActor(p);
 				}

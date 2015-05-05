@@ -11,6 +11,7 @@ import ressources.R;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
 import com.oasix.crazyshooter.Timer;
@@ -21,7 +22,7 @@ public class Enemy_16_Eyes extends Enemies
 	// Flying basic enemy
 	// Move left then right, don't care about player
 
-	private final static int	MAX_LIFE		= 150;
+	private final static int	MAX_LIFE		= 175;
 	private final static int	XP_GAIN_ON_KILL	= 50;
 	private final static int	ATTACK_POWER	= 15;
 	private final static float	MOVE_SPEED_MIN	= 3;
@@ -49,8 +50,8 @@ public class Enemy_16_Eyes extends Enemies
 	@Override
 	protected void enemies_initialisation()
 	{
-		m_goldQuantity = 2;
-		m_goldValue = 4;
+		m_goldQuantity = 8;
+		m_goldValue = 12;
 		increaseStats(enemyCoef);
 	}
 
@@ -99,7 +100,9 @@ public class Enemy_16_Eyes extends Enemies
 
 	private void pickAction(float delta)
 	{
-		Projectile p = new Projectile(Projectiles.FALLING_BOMB);
+		Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+
+		p.construct(Projectiles.FALLING_BOMB);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
 	}

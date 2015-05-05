@@ -173,7 +173,10 @@ public class BlockController extends Group
 				}
 			};
 
-			groundRight = new Block(565, 800 - 665 + background_offsetY - hauteur, 523 - (565 - 523), hauteur, true)
+			// 1010
+
+			// groundRight = new Block(565, 800 - 665 + background_offsetY - hauteur, 523 - (565 - 523), hauteur, true)
+			groundRight = new Block(565, 800 - 665 + background_offsetY - hauteur, 445, hauteur, true)
 			{
 				@Override
 				public Vector2 getPopPosition()

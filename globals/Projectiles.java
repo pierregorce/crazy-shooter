@@ -16,7 +16,7 @@ public enum Projectiles
 	PLAYER_PUMP(7, 2, 20, 4, new Vector2(30, 50), 1000, 25, true, new ProjectileComportements().new Straight(), false, R.c().weapons_w2_projectile),
 	PLAYER_BAZOOKA(5, 2, 22, 1, new Vector2(30, 30), 1000, 50, true, new ProjectileComportements().new Straight_Bazooka(), false, R.c().weapons_w3_projectile),
 	PLAYER_BAZOOKA_EXPLOSION(5, 1, 22, 4, new Vector2(0, 0), 99999, 50, true, new ProjectileComportements().new BazookaExplosion(60, 60), true, R.c().fx_explode_circle),
-	PLAYER_MACHINE(7, 2, 20, 1, new Vector2(50, 50), 1000, 50, true, new ProjectileComportements().new Straight(), false, R.c().weapons_w4_projectile),
+	PLAYER_MACHINE(7, 2, 20, 1, new Vector2(70, 40), 1000, 50, true, new ProjectileComportements().new Straight(), false, R.c().weapons_w4_projectile),
 	PLAYER_FLAME_THROWER(5, 2, 15, 4, new Vector2(75, 23), 1000, 5, true, new ProjectileComportements().new Flame(), false, R.c().weapons_w5_projectile),
 	PLAYER_LASER(6, 2, 25, 2, new Vector2(30, 10), 600, 5, true, new ProjectileComportements().new Straight(), false, R.c().weapons_w0_projectile),
 	PLAYER_MINIGUN(5, 2, 20, 2, new Vector2(70, 20), 1000, 5, true, new ProjectileComportements().new Straight(), false, R.c().weapons_w7_projectile),

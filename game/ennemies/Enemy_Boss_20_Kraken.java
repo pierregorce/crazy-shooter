@@ -20,6 +20,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.oasix.crazyshooter.GameStage;
 import com.oasix.crazyshooter.GlobalController;
@@ -87,7 +88,7 @@ public class Enemy_Boss_20_Kraken extends Enemies
 			m_goldQuantity = 10;
 		} else
 		{
-			m_goldValue = 60;
+			m_goldValue = 150;
 			m_goldQuantity = 20;
 		}
 		increaseStats(0);
@@ -256,7 +257,8 @@ public class Enemy_Boss_20_Kraken extends Enemies
 	@Override
 	public void shootEngine()
 	{
-		Projectile p = new Projectile(Projectiles.ENEMY_BOSS_4);
+		Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+		p.construct(Projectiles.ENEMY_BOSS_4);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
 	}

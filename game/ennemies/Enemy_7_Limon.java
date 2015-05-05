@@ -3,17 +3,18 @@ package game.ennemies;
 import game.entitiy.Enemies;
 import game.entitiy.EnemyPopConstants;
 import game.projectiles.Projectile;
-import game.sound.MusicManager;
 import globals.Projectiles;
 
 import java.util.Random;
 
 import ressources.R;
 import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
 
@@ -101,12 +102,13 @@ public class Enemy_7_Limon extends Enemies
 	{
 		for (int i = 0; i < Projectiles.ENEMY_LIMON.quantityPerShoot; i++)
 		{
-			Projectile p = new Projectile(Projectiles.ENEMY_LIMON);
+			Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+			p.construct(Projectiles.ENEMY_LIMON);
 			p.init(this);
 			GlobalController.bulletControllerEnemy.addActor(p);
 		}
 
-		S.c().soundEffect_enemies_laserEnemy[new Random().nextInt(S.c().soundEffect_enemies_laserEnemy.length)].play(MusicManager.sfxVolume);
+		S.c().play(TyrianSound.soundEffect_enemies_laserEnemy);
 
 	}
 

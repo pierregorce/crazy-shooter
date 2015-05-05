@@ -23,6 +23,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.Block;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
@@ -82,7 +83,7 @@ public class Enemy_Boss_22_Scientist extends Enemies
 			m_goldQuantity = 10;
 		} else
 		{
-			m_goldValue = 60;
+			m_goldValue = 250;
 			m_goldQuantity = 20;
 		}
 	}
@@ -263,7 +264,8 @@ public class Enemy_Boss_22_Scientist extends Enemies
 	{
 		if (timerPopSol.doAction(delta))
 		{
-			Projectile p = new Projectile(Projectiles.ENEMY_BOSS_5_TAPIS);
+			Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+			p.construct(Projectiles.ENEMY_BOSS_5_TAPIS);
 			p.init(this);
 			float min = 1.3f;
 			float max = 1.35f;

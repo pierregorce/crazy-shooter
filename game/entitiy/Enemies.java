@@ -170,6 +170,19 @@ public abstract class Enemies extends Character
 		}
 	}
 
+	@Override
+	public boolean checkVerticalDeath()
+	{
+		if (super.checkVerticalDeath())
+		{
+			GlobalController.nombreRestantEnnemies -= 1;
+			return true;
+		} else
+		{
+			return false;
+		}
+	}
+
 	protected void explosionOnLosingLife()
 	{
 		for (int i = 0; i < 3; i++)
@@ -182,12 +195,24 @@ public abstract class Enemies extends Character
 
 	public void popDamageOnLosingLife(int bulletDamage, boolean crit)
 	{
-		PopMessage popMessage = new PopMessage("" + bulletDamage, this, MessageType.ENEMY_LOSE_LIFE);
-		if (crit)
+		if (!protection)
 		{
-			popMessage.setCritical();
+			PopMessage popMessage = new PopMessage("" + bulletDamage, this, MessageType.ENEMY_LOSE_LIFE);
+			if (crit)
+			{
+				popMessage.setCritical();
+			}
+			GlobalController.fxController.addActor(popMessage);
+		} else
+		{
+			PopMessage popMessage = new PopMessage("" + 0, this, MessageType.ENEMY_LOSE_LIFE);
+			if (crit)
+			{
+				popMessage.setCritical();
+			}
+			GlobalController.fxController.addActor(popMessage);
 		}
-		GlobalController.fxController.addActor(popMessage);
+
 	}
 
 	public Player getPlayer()

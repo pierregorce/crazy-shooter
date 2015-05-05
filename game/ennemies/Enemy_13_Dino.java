@@ -39,14 +39,13 @@ public class Enemy_13_Dino extends Enemies
 		direction = Direction.RIGHT_DIRECTION;
 		walk = true;
 		shoot = false;
-
 	}
 
 	@Override
 	protected void enemies_initialisation()
 	{
 		m_goldQuantity = 8;
-		m_goldValue = 3;
+		m_goldValue = 10;
 		increaseStats(enemyCoef);
 	}
 

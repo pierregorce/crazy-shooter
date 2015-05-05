@@ -16,6 +16,7 @@ import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
 import com.oasix.crazyshooter.Timer;
@@ -56,7 +57,7 @@ public class Enemy_19_Robot extends Enemies
 	protected void enemies_initialisation()
 	{
 		m_goldQuantity = 5;
-		m_goldValue = 15;
+		m_goldValue = 20;
 		m_shootPauseTime = 0;
 		shootCooldwon = 0.05f;
 		m_shootRunTime = 1;
@@ -138,7 +139,8 @@ public class Enemy_19_Robot extends Enemies
 	@Override
 	public void shootEngine()
 	{
-		Projectile p = new Projectile(Projectiles.ENEMY_ROBOT);
+		Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+		p.construct(Projectiles.ENEMY_ROBOT);
 		p.init(this);
 		float dist = Math.abs(getRight() - player.getX()) - 20;
 		p.setTarget(this, new Vector2(dist, player.getY()));

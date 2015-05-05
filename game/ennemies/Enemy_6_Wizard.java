@@ -3,7 +3,6 @@ package game.ennemies;
 import game.entitiy.Enemies;
 import game.entitiy.EnemyPopConstants;
 import game.projectiles.Projectile;
-import game.sound.MusicManager;
 import globals.Projectiles;
 
 import java.util.Random;
@@ -12,12 +11,14 @@ import ressources.DrawableAnimation;
 import ressources.R;
 import ressources.Ressource;
 import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.Pools;
 import com.oasix.crazyshooter.Ammos;
 import com.oasix.crazyshooter.GlobalController;
 import com.oasix.crazyshooter.Player;
@@ -111,19 +112,20 @@ public class Enemy_6_Wizard extends Enemies
 		super.act(delta);
 		if (laughingSound.doAction(delta))
 		{
-			S.c().soundEffect_enemies_witchLauging.play(MusicManager.sfxVolume);
+			S.c().play(TyrianSound.soundEffect_enemies_witchLauging);
 		}
 	}
 
 	@Override
 	public void shootEngine()
 	{
-		Projectile p = new Projectile(Projectiles.ENEMY_WIZARD);
+		Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+		p.construct(Projectiles.ENEMY_WIZARD);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
 
 		// SFX
-		S.c().soundEffect_enemies_witchShoot[new Random().nextInt(S.c().soundEffect_enemies_witchShoot.length)].play(MusicManager.sfxVolume);
+		S.c().play(TyrianSound.soundEffect_enemies_witchShoot);
 
 		// ADD HALO EFFECT
 		float haloHeight = 20;
