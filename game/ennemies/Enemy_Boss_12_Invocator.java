@@ -12,6 +12,8 @@ import globals.Worlds;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
+import ressources.S.TyrianSound;
 import screen.MyGdxGame;
 import utilities.enumerations.Direction;
 
@@ -49,15 +51,14 @@ public class Enemy_Boss_12_Invocator extends Enemies
 	// Si en dessous de 20 : teleporter
 
 	Timer						timerMessage			= new Timer(0.4f);
-	Timer						timerCooldownInvoque	= new Timer(0.5f);
+	Timer						timerCooldownInvoque	= new Timer(0.7f);
 	Timer						timerMeteorPoping		= new Timer(0.4f);
 	Timer						timerProjectileSend		= new Timer(0.5f);
-	boolean						projectileSend			= false;
-	float						popPhase2				= MAX_LIFE * 0.3f;
+	boolean						moveOnBlockDone			= false;
 
 	private enum BossPhases
 	{
-		PATROL(1),
+		PATROL(1f),
 		INVOCK(3.5f),
 		METEOR_RAIN(4),
 		FLY_TO_TRHOW_PROJECTILES(6f);
@@ -89,7 +90,9 @@ public class Enemy_Boss_12_Invocator extends Enemies
 			while (currentPhase == m_bossPhase)
 			{
 				m_bossPhase = BossPhases.values()[new Random().nextInt(BossPhases.values().length)];
+				moveOnBlockDone = false;
 			}
+
 			// Repercution sur le timer
 			timer = new Timer(m_bossPhase.phaseDuration);
 			System.out.println("BOSS #3 : Je change de phase !");
@@ -123,6 +126,10 @@ public class Enemy_Boss_12_Invocator extends Enemies
 		BossBar.enemy = this;
 		BossBar.setBossName("BOSS #3 : " + Worlds.WOLRD_3.finalBoss); // WIZARD
 		bumpSensibility = false;
+
+		float off = 0;
+		editCollisionBox(getWidth() - off, getHeight() - 80, off);
+
 	}
 
 	@Override
@@ -143,6 +150,7 @@ public class Enemy_Boss_12_Invocator extends Enemies
 		}
 
 		increaseStats(0);
+
 	}
 
 	@Override
@@ -155,8 +163,10 @@ public class Enemy_Boss_12_Invocator extends Enemies
 	@Override
 	public void act(float delta)
 	{
-
 		super.act(delta);
+
+		EnemyComportements.physicalAttackOnly(this, player);
+
 		swichBetweenBossStates(delta);
 
 		if (flyAnimation && m_animation.isAnimationFinished(animationStateTime))
@@ -164,193 +174,134 @@ public class Enemy_Boss_12_Invocator extends Enemies
 			setFlyFalse();
 		}
 
-		// Action en fonction de l'état
+		// -------------------------------------Action en fonction de l'état
+
 		if (m_bossPhase == BossPhases.INVOCK)
 		{
-			walk = false;
-			shoot = true;
-			colorization = new Color(0.9f, 0.9f, 0.7f, 1);
-			if (timerCooldownInvoque.doAction(delta))
-			{
-				GlobalController.enemyController.addActor(new Enemy_1_Spider_basic(player, 0.9f, new Vector2(getCenterX(), getY())));
-				GlobalController.fxController.addActor(new PopMessage(this, MessageType.BOSS_CRY_3));
-
-				// R.c().soundEffect_boss3_magic[new Random().nextInt(R.c().soundEffect_boss3_magic.length)].play(MusicManager.sfxVolume_BossLow);
-
-			}
-
+			faireFaceTo(player);
+			invock(delta);
 		}
 
 		if (m_bossPhase == BossPhases.PATROL)
 		{
-			walk = true;
-			shoot = false;
-			colorization = new Color(1, 1, 1, 1);
+			EnemyComportements.followPlayerAndPatrol(this, player);
+			colorization = Color.WHITE;
 		}
 
 		if (m_bossPhase == BossPhases.METEOR_RAIN)
 		{
-			walk = false;
-			shoot = false;
-			colorization = new Color(1, 0.9f, 1, 1);
-
-			if (timerMeteorPoping.doAction(delta))
-			{
-				for (int i = 0; i < 3; i++)
-				{
-					Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
-					p.construct(Projectiles.ENEMY_METEORE);
-					p.init(this);
-					p.setPosition(getX() + new Random().nextInt(MyGdxGame.VIRTUAL_WIDTH) - MyGdxGame.VIRTUAL_WIDTH / 2, MyGdxGame.VIRTUAL_WORLD_HEIGHT);
-
-					GlobalController.bulletControllerEnemy.addActor(p);
-				}
-			}
-
+			faireFaceTo(player);
+			meteore_rain(delta);
 		}
+
 		if (m_bossPhase == BossPhases.FLY_TO_TRHOW_PROJECTILES)
 		{
-			setFlyTrue();
-			walk = false;
-			shoot = false;
-			colorization = new Color(0.9f, 1, 1, 1);
-
-			if (timerProjectileSend.doAction(delta))
-			{
-				for (int i = 0; i < 15; i++)
-				{
-					Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
-					p.construct(Projectiles.ENEMY_BOSS_3);
-					p.init(this);
-					GlobalController.bulletControllerEnemy.addActor(p);
-				}
-				// R.c().soundEffect_boss3_tearAttack[new Random().nextInt(R.c().soundEffect_boss3_tearAttack.length)].play(MusicManager.sfxVolume_BossLow);
-			}
-
-			if (getActions().size == 0)
-			{
-
-				RunnableAction action0 = new RunnableAction()
-				{
-					@Override
-					public void run()
-					{
-						disablePhysics();
-					}
-				};
-				// MoveToAction action1 = Actions.moveTo(getX(), BlockController.OFFSET_3_HEIGHT - 150, 1.25f);
-
-				RunnableAction action2 = new RunnableAction()
-				{
-					@Override
-					public void run()
-					{
-						projectileSend = true;
-					}
-				};
-
-				// DelayAction action3 = Actions.delay(3.5f);
-
-				int moveBy;
-
-				if (player.getX() - getX() > 0)
-				{
-					moveBy = 400;
-				} else
-				{
-					moveBy = -400;
-				}
-
-				// MoveToAction action3 = Actions.moveTo(getX() + moveBy, BlockController.OFFSET_3_HEIGHT - 150, 3.5f);
-
-				RunnableAction action4 = new RunnableAction()
-				{
-					@Override
-					public void run()
-					{
-						projectileSend = false;
-					}
-				};
-
-				MoveToAction action5 = Actions.moveTo(getX(), getY(), 1.25f);
-
-				RunnableAction action6 = new RunnableAction()
-				{
-					@Override
-					public void run()
-					{
-						enablePhysics();
-					}
-				};
-
-				SequenceAction sequenceAction = new SequenceAction();
-				sequenceAction.addAction(action0);
-				// sequenceAction.addAction(action1);
-				sequenceAction.addAction(action2);
-				// sequenceAction.addAction(action3);
-				sequenceAction.addAction(action4);
-				sequenceAction.addAction(action5);
-				sequenceAction.addAction(action6);
-
-				addAction(sequenceAction);
-			}
+			fly_to_throw(delta);
 		}
 
 	}
 
-	@Override
-	public void setLife(int life)
+	// ----------------------------------------------------------------------------- Phases Gestion
+
+	public void invock(float delta)
 	{
-		super.setLife(life);
+
+		walk = false;
+		shoot = true;
+
+		colorization = new Color(0.9f, 0.9f, 0.7f, 1);
+
+		if (timerCooldownInvoque.doAction(delta))
+		{
+			GlobalController.enemyController.addActor(new Enemy_1_Spider_basic(player, 0.9f, new Vector2(getCenterX(), getY())));
+			GlobalController.fxController.addActor(new PopMessage(this, MessageType.BOSS_CRY_3));
+			S.c().play(TyrianSound.soundEffect_boss3_tearAttack, player, this);
+		}
 	}
 
-	@Override
-	public void enemyDirectionEngine()
+	public void fly_to_throw(float delta)
 	{
-		super.enemyDirectionEngine();
-		faireFaceTo(player);
-	}
+		// START
 
-	@Override
-	public void physicalAttackEngine()
-	{
-		super.physicalAttackEngine();
+		// WAIT 1s
+		// FLY 4s
+		// WAIT 1s
 
-		// si player en collision avec l'enemy -> physical attack
-		if (player.getBouncingBox().overlaps(getBouncingBox()))
+		// /END
+
+		setFlyTrue();
+		walk = false;
+		shoot = false;
+		colorization = new Color(0.9f, 1, 1, 1);
+
+		// SHOOT TOUT LE TEMPS DURANT CETTE PHASE
+
+		if (timerProjectileSend.doAction(delta))
 		{
-			// setAttackTrue(); // PERMET DE LANCER LACTION
-			// Fait perdre de la vie au player
-			player.setLosingLifeEvent(true);
-			player.setLoosingLiveValueEvent(getAttackPower());
-
-			// Met l'enemy en collision -> arret
-
-			if (player.getRight() > getX())
+			for (int i = 0; i < 15; i++)
 			{
-				// player a droite de enemy
-				// enemy va vers la droite
-				player.setBumpingRightEvent(true);
+				Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+				p.construct(Projectiles.ENEMY_BOSS_3);
+				p.init(this);
+				GlobalController.bulletControllerEnemy.addActor(p);
 			}
-			if (player.getX() < getX())
-			{
-				player.setBumpingLeftEvent(true);
-				// player a gauche de enemy
-				// enemy va a gauche
-			}
-			// Met l'enemy en collision -> arret
-			setWalk(false);
+			S.c().play(TyrianSound.soundEffect_boss3_magic, player, this);
+		}
 
-		} else
+		// MOVE ON A BLOCK
+
+		if (!moveOnBlockDone)
 		{
-			// si plus de collision alors l'enemy repart
-			setWalk(true);
+			RunnableAction a = new RunnableAction()
+			{
+				@Override
+				public void run()
+				{
+					disablePhysics();
+				}
+			};
 
+			Vector2 newPosition = EnemyPopConstants.getInstance().getSmallBlocksPosition();
+			MoveToAction b = Actions.moveTo(newPosition.x, newPosition.y + 90, 3.5f);
+
+			RunnableAction c = new RunnableAction()
+			{
+				@Override
+				public void run()
+				{
+					enablePhysics();
+				}
+			};
+
+			clearActions();
+			SequenceAction sequenceAction = new SequenceAction(a, Actions.delay(1), b, Actions.delay(1), c);
+			addAction(sequenceAction);
+			moveOnBlockDone = true;
 		}
 
 	}
 
-	// --------------------------------------------------------Fly Gestion
+	public void meteore_rain(float delta)
+	{
+		walk = false;
+		shoot = false;
+		colorization = new Color(1, 0.9f, 1, 1);
+
+		if (timerMeteorPoping.doAction(delta))
+		{
+			for (int i = 0; i < 2; i++)
+			{
+				Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
+				p.construct(Projectiles.ENEMY_METEORE);
+				p.init(this);
+				p.setPosition(new Random().nextInt(MyGdxGame.VIRTUAL_WORLD_WIDTH), MyGdxGame.VIRTUAL_WORLD_HEIGHT - 300);
+				GlobalController.bulletControllerEnemy.addActor(p);
+			}
+			S.c().play(TyrianSound.soundEffect_meteorFall, player, this);
+		}
+	}
+
+	// --------------------------------------------------------Fly Animation Gestion
 
 	private Animation	flyLeft;
 	private Animation	flyRight;

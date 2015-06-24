@@ -1,5 +1,6 @@
 package game.object;
 
+import game.entitiy.EnemyPopConstants;
 import game.entitiy.PhysicalEntity;
 import globals.PlayerStats;
 
@@ -7,12 +8,12 @@ import java.util.Random;
 
 import ressources.DrawableSprite;
 import ressources.R;
-import screen.MyGdxGame;
 import utilities.Methods;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Object drop by an enemy. It contain a certain quantity of point. Contient un nombre de point, une sprite et fait un petit saut a son apparition avant de retomber au
@@ -37,8 +38,9 @@ public class LifeBox extends PhysicalEntity
 
 		m_drawableSprite = new DrawableSprite(R.c().iconLifeBox);
 
-		setX(new Random().nextInt(MyGdxGame.VIRTUAL_WORLD_WIDTH));
-		setY(MyGdxGame.VIRTUAL_HEIGHT);
+		Vector2 position = EnemyPopConstants.getInstance().getObjectPosition();
+		setX(position.x);
+		setY(position.y);
 
 		float initialWidth = ((Sprite) m_drawableSprite).getRegionWidth();
 		float initialHeight = ((Sprite) m_drawableSprite).getRegionHeight();

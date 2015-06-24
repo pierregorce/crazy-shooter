@@ -157,7 +157,7 @@ public class Enemy_3_FantomasTeleport extends Enemies
 			p.construct(Projectiles.ENEMY_FANTOMAS);
 			p.init(this);
 			GlobalController.bulletControllerEnemy.addActor(p);
-			S.c().play(TyrianSound.soundEffect_enemies_wizardFireball);
+			S.c().play(TyrianSound.soundEffect_enemies_wizardFireball, player, this);
 		}
 	}
 
@@ -214,7 +214,7 @@ public class Enemy_3_FantomasTeleport extends Enemies
 		teleportApparitionAnimation = true;
 		animationStateTime = 0;
 		// SFX
-		S.c().play(TyrianSound.soundEffect_enemies_wizardSpawn);
+		S.c().play(TyrianSound.soundEffect_enemies_wizardSpawn, player, this);
 	}
 
 	public void setTeleportDisparitionTrue()
@@ -222,7 +222,7 @@ public class Enemy_3_FantomasTeleport extends Enemies
 		teleportVanishAnimation = true;
 		animationStateTime = 0;
 		// SFX
-		S.c().play(TyrianSound.soundEffect_enemies_wizardTeleport);
+		S.c().play(TyrianSound.soundEffect_enemies_wizardTeleport, player, this);
 	}
 
 	public void setAnimationTeleportFalse()

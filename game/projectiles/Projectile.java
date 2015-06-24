@@ -33,7 +33,7 @@ public class Projectile extends PhysicalEntity implements Poolable
 
 	// Variables modifiée a chaque init
 	public boolean			active					= true;
-	private float			m_xStart				= 0;
+	public float			m_xStart				= 0;
 	public float			precision				= 0;
 	public float			rotation				= 0;
 	public int				rebound					= 0;
@@ -149,14 +149,15 @@ public class Projectile extends PhysicalEntity implements Poolable
 	{
 		super.act(delta);
 
+		if (projectilesType == null)
+		{
+			// return;
+		}
+
 		if (Math.abs(m_xStart - getX()) > projectilesType.lenghtAlive)
 		{
 			remove();
-		}
-
-		if (getY() < 0)
-		{
-			remove();
+			return;
 		}
 
 		if (projectilesType.animated)
@@ -165,9 +166,9 @@ public class Projectile extends PhysicalEntity implements Poolable
 			if (drawableAnimation.isAnimationFinished(drawableAnimation.time))
 			{
 				remove();
+				return;
 			}
 		}
-
 		projectilesType.projectileComportement.comportement_act(this);
 	}
 
@@ -235,12 +236,11 @@ public class Projectile extends PhysicalEntity implements Poolable
 	@Override
 	public void reset()
 	{
-		System.out.println("reset");
 		active = true;
 		m_xStart = 0;
 		rotation = 0;
 		rebound = 0;
-		effect = null;
+		projectilesType = Projectiles.NULL;
 		setColor(Color.WHITE);
 		setX(0);
 		setY(0);

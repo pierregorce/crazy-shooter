@@ -2,34 +2,54 @@ package globals;
 
 public class XXX
 {
-
-	// *************CODE
-	// reprendre position des projectiles lors du tirs des enemys (anchor)
-	// boss3 fix comportement (trop simple as alex)
-	// faire le try catch sur les levels pour ne pas niquer les anciens jouers
-	// sound loader nul ...
 	// verifier la puissance des armes...
 	// faire les sons
 	// faire les levels
+	// faire plutot des vagues longue que des vagues avec bcp d'enenmies à la maniere de towerfall archer
+	// laser a controller avec les eyes
+	// boss 3 le faire marcher durant les meteores
 
-	// ************DESSIN
+	// TODO REALEASE
+	// CREDIT SCREEN
 	// BOSS 4 Scientist = boss 4, blizard / mega laser percing / fiole avec tapis au sol ?
-	// pourrait poser des fioles au sol et ?
-	// pour l'instant run un peu partout
-	// mega laser
-	// pop fiole and
-	// bug bomb...
 	// reprendre quelques colision box
+	// reprendre position des projectiles lors du tirs des enemys (anchor)
+	// TODO A VOIR
+	// tjr un bug de fail par moment... voir en fonction des sons
+
+	// CREDIT PAGE
+
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+	// -----------------------------------------------------------------
+
+	// *************CODE
+	// vibrate
+	// ADD TORCH WTF
+	// ADD ENEMIE WITH LIGHT ON HIM
+	// SHADER LIGHT-TORCH/ENEMIES EYES
+	// SHADER TEINTE QUAND ON MONTE SUR LES PLATEFORMS DU HAUT / BOSS CERTAINES PHASES -> idem BROFORCE
 
 	// - ********* PAS TROP GENANT
-	// bullet minigun bof...
 	// api facebook
 	// api google paid
 	// projectile tapis effect de collision moyen...
 	// idée d'un panneau sur un block avec un pop up tutorial
 	// idée armor assez simple a integrer
+	// player pas super dessiné...
 	// base64code - reprendre le file save un peu mal codé...
-	// Pools.free(changeEvent);
 
 	// ----------------------------------------------------------- IDEA PATTERN
 	//

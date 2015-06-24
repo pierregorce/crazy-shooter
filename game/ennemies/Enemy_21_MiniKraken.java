@@ -7,6 +7,8 @@ import game.path.WayPoint;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -137,7 +139,14 @@ public class Enemy_21_MiniKraken extends Enemies
 				}
 			}));
 		}
+
+		if (timer.doAction(delta) && walk)
+		{
+			S.c().playRandomPitch(TyrianSound.soundEffect_enemies_bumpyEnemyJump, player, this);
+		}
 	}
+
+	private Timer	timer	= new Timer(0.4f);
 
 	public Enemy_21_MiniKraken(Player player, float enemyCoef, Vector2 position)
 	{

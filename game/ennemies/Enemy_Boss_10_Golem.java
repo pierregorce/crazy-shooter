@@ -149,17 +149,18 @@ public class Enemy_Boss_10_Golem extends Enemies
 			SequenceAction action = new SequenceAction();
 			m_state = State.PREPARATION;
 
-			S.c().play(TyrianSound.soundEffect_boss1_stomp);
+			S.c().play(TyrianSound.soundEffect_boss1_stomp, player, this);
 
 			action.addAction(Actions.delay(0.7f));
 
+			final Enemy_Boss_10_Golem me = this;
 			action.addAction(new RunnableAction()
 			{
 
 				@Override
 				public void run()
 				{
-					S.c().play(TyrianSound.soundEffect_boss1_dash);
+					S.c().play(TyrianSound.soundEffect_boss1_dash, player, me);
 					m_state = State.TACKLE;
 					walk = false;
 				}
@@ -209,13 +210,13 @@ public class Enemy_Boss_10_Golem extends Enemies
 
 		if (timerSpeak.doAction(delta))
 		{
-			S.c().play(TyrianSound.soundEffect_boss1_laugh);
+			S.c().play(TyrianSound.soundEffect_boss1_laugh, player, this);
 		}
 
 		if (timerSpit.doAction(delta) && shoot)
 		{
 
-			S.c().play(TyrianSound.soundEffect_boss1_burp);
+			S.c().play(TyrianSound.soundEffect_boss1_burp, player, this);
 		}
 
 	}

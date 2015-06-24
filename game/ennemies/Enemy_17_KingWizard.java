@@ -9,6 +9,8 @@ import globals.Projectiles;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -192,6 +194,7 @@ public class Enemy_17_KingWizard extends Enemies
 		p.construct(Projectiles.ENEMY_KING_WIZARD);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
+		S.c().playRandomPitch(TyrianSound.soundEffect_enemies_wizardFireball, player, this);
 	}
 
 	@Override

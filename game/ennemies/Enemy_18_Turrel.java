@@ -10,6 +10,8 @@ import globals.Projectiles;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
+import ressources.S.TyrianSound;
 import screen.MyGdxGame;
 import utilities.enumerations.Direction;
 
@@ -91,6 +93,7 @@ public class Enemy_18_Turrel extends Enemies
 		p.construct(Projectiles.ENEMY_TURREL);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
+		S.c().play(TyrianSound.soundEffect_enemies_towerShoot, player, this);
 	}
 
 	@Override

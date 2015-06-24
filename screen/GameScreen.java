@@ -14,14 +14,13 @@ public class GameScreen implements MovableScreen
 {
 
 	// Ensemble des stages formant le gameScreen
-	private GameStage gameStage;
-	private Hud hud;
-	private GameMenu gameMenu;
+	private GameStage	gameStage;
+	private Hud			hud;
+	private GameMenu	gameMenu;
 
 	@Override
 	public void render(float delta)
 	{
-
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		if (GameStage.gameState == GameStatesEnum.GAME_RUN)
@@ -29,6 +28,7 @@ public class GameScreen implements MovableScreen
 			gameStage.act(delta);
 			hud.act(delta);
 		}
+
 		gameStage.draw();
 		hud.draw();
 		gameMenu.act(delta);

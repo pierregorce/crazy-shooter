@@ -151,7 +151,7 @@ public class Player extends Character
 			GameStage.cameraShake(30);
 			setLife(PlayerStats.getMaxLife());
 
-			S.c().play(TyrianSound.soundEffect_player_levelUp);
+			S.c().play(TyrianSound.soundEffect_player_levelUp, null, null);
 		}
 	}
 
@@ -428,6 +428,62 @@ public class Player extends Character
 			}
 		}
 
+		// Add sound
+
+		switch (weaponsType) {
+		case 0:
+			S.c().play(TyrianSound.soundEffect_weapons_pistol, null, null);
+			break;
+		case 1:
+			S.c().play(TyrianSound.soundEffect_weapons_pistol, null, null);
+			S.c().play(TyrianSound.soundEffect_weapons_pistol, null, null);
+			break;
+		case 2:
+			S.c().play(TyrianSound.soundEffect_weapons_shotGun, null, null);
+			break;
+		case 3:
+			S.c().play(TyrianSound.soundEffect_weapons_bazookaFire, null, null);
+			break;
+		case 4:
+			S.c().play(TyrianSound.soundEffect_weapons_machineGun, null, null);
+			break;
+		case 5:
+			if (!soundPlaying)
+			{
+				S.c().playLoop(TyrianSound.soundEffect_weapons_flameThrower_Loop, null, null);
+				soundPlaying = true;
+			}
+			break;
+		case 6:
+			if (!soundPlaying)
+			{
+				S.c().playLoop(TyrianSound.soundEffect_weapons_laserGun_Loop, null, null);
+				soundPlaying = true;
+			}
+			break;
+		case 7:
+			if (!soundPlaying)
+			{
+				S.c().playLoop(TyrianSound.soundEffect_weapons_minigun_Loop, null, null);
+				soundPlaying = true;
+			}
+			break;
+		case 8:
+			S.c().play(TyrianSound.soundEffect_weapons_grenadeLauncherGunShoot, null, null);
+			break;
+		case 9:
+			S.c().play(TyrianSound.soundEffect_weapons_railGun, null, null);
+			break;
+		case 10:
+			S.c().play(TyrianSound.soundEffect_weapons_rocketLaucherGunShoot, null, null);
+			break;
+		case 11:
+			S.c().play(TyrianSound.soundEffect_weapons_lightingGun, null, null);
+			break;
+		default:
+			break;
+		}
+
 		// S.c().soundEffect_weapons_pistol[new Random().nextInt(S.c().soundEffect_weapons_pistol.length)].play(MusicManager.sfxVolume_Weapons);
 		// S.c().soundEffect_weapons_shotGun[new Random().nextInt(S.c().soundEffect_weapons_shotGun.length)].play(MusicManager.sfxVolume_Weapons);
 		// S.c().soundEffect_weapons_bazookaFire[new Random().nextInt(S.c().soundEffect_weapons_bazookaFire.length)].play(MusicManager.sfxVolume_Weapons);
@@ -451,6 +507,41 @@ public class Player extends Character
 		// weaponSound.loop(MusicManager.sfxVolume_Weapons);
 		// soundPlaying = true;
 		// }
+
+	}
+
+	public static TyrianSound getWeaponSound(int weaponsType)
+	{
+		switch (weaponsType) {
+		case 0:
+			return TyrianSound.soundEffect_weapons_pistol;
+		case 1:
+			return TyrianSound.soundEffect_weapons_pistol;
+		case 2:
+			return TyrianSound.soundEffect_weapons_shotGun;
+		case 3:
+			return TyrianSound.soundEffect_weapons_bazookaFire;
+		case 4:
+			return TyrianSound.soundEffect_weapons_machineGun;
+		case 5:
+			return TyrianSound.soundEffect_weapons_flameThrower_Loop;
+		case 6:
+			return TyrianSound.soundEffect_weapons_laserGun_Loop;
+		case 7:
+			return TyrianSound.soundEffect_weapons_minigun_Loop;
+		case 8:
+			return TyrianSound.soundEffect_weapons_grenadeLauncherGunShoot;
+		case 9:
+			return TyrianSound.soundEffect_weapons_railGun;
+		case 10:
+			return TyrianSound.soundEffect_weapons_rocketLaucherGunShoot;
+		case 11:
+			return TyrianSound.soundEffect_weapons_lightingGun;
+		default:
+			break;
+		}
+
+		return null;
 
 	}
 
@@ -685,6 +776,9 @@ public class Player extends Character
 				weaponSound.stop();
 			}
 			soundPlaying = false;
+			S.c().stop(TyrianSound.soundEffect_weapons_laserGun_Loop);
+			S.c().stop(TyrianSound.soundEffect_weapons_flameThrower_Loop);
+			S.c().stop(TyrianSound.soundEffect_weapons_minigun_Loop);
 		}
 	}
 
@@ -692,14 +786,14 @@ public class Player extends Character
 	public void setJump(boolean jump)
 	{
 		super.setJump(jump);
-		S.c().play(TyrianSound.soundEffect_player_jump);
+		S.c().play(TyrianSound.soundEffect_player_jump, null, null);
 	}
 
 	@Override
 	public void loseLife(int quantity)
 	{
 		super.loseLife(quantity);
-		S.c().play(TyrianSound.soundEffect_player_gettingHit);
+		S.c().play(TyrianSound.soundEffect_player_gettingHit, null, null);
 	}
 
 	/**

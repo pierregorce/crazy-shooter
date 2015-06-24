@@ -3,6 +3,7 @@ package screen;
 import java.util.TreeMap;
 
 import ressources.R;
+import ressources.S;
 import utilities.enumerations.ScreenEnum;
 
 import com.badlogic.gdx.Gdx;
@@ -61,7 +62,7 @@ public class LoadingGameScreen implements MovableScreen
 				@Override
 				public void run()
 				{
-					// S.c().construct();
+					S.c().levelSoundLoad();
 				}
 			};
 			Action c = Actions.delay(1f);

@@ -6,6 +6,7 @@ import globals.PlayerStats;
 import java.util.ArrayList;
 import java.util.Random;
 
+import ressources.S;
 import screen.MyGdxGame;
 import screen.ScreenManager;
 import screen.level.LevelData;
@@ -83,7 +84,7 @@ public class GameStage extends Stage
 	{
 		shake = true;
 		shakeRadius = value;
-		// Gdx.input.vibrate(30);
+		// Gdx.input.vibrate(20);
 	}
 
 	@Override
@@ -142,6 +143,11 @@ public class GameStage extends Stage
 		if (shakeRadius < 5)
 		{
 			shake = false;
+		}
+
+		if (gameState != GameStatesEnum.GAME_RUN)
+		{
+			S.c().stop();
 		}
 	}
 

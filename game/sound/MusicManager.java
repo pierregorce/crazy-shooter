@@ -31,6 +31,8 @@ public class MusicManager
 		musics.put("BG1", Gdx.files.internal("music/crazy spooky theme v1.5.mp3"));
 		musics.put("BG2", Gdx.files.internal("music/Crazy shooter underground.mp3"));
 		musics.put("BG3", Gdx.files.internal("music/Crazy Shooter Nature Theme v1.2.mp3"));
+		musics.put("BG4", Gdx.files.internal("music/World4 - Sin City.mp3"));
+		musics.put("BG5", Gdx.files.internal("music/World5 - The Depths of Putricides.mp3"));
 	}
 
 	public static void play_Menu_Music()
@@ -40,7 +42,7 @@ public class MusicManager
 
 	public static void play_Game_Music()
 	{
-		int level = ScreenManager.getInstance().getLevelSelected().levelIndex; // Recupère le level (commence à 1)
+		int level = ScreenManager.getInstance().getLevelSelected().levelIndex;
 
 		// Charge le monde en fonction des niveau des boss
 		if (Worlds.getWorldNumber(level) == 0)
@@ -52,6 +54,12 @@ public class MusicManager
 		} else if (Worlds.getWorldNumber(level) == 2)
 		{
 			loadAndPlay("BG3");
+		} else if (Worlds.getWorldNumber(level) == 3)
+		{
+			loadAndPlay("BG4");
+		} else if (Worlds.getWorldNumber(level) == 4)
+		{
+			loadAndPlay("BG5");
 		} else
 		{
 			loadAndPlay("BG2");

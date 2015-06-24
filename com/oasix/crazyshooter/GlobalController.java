@@ -59,7 +59,7 @@ public class GlobalController
 	private float						m_time						= 0;
 	public static int					nombreRestantEnnemies		= 0;
 	// ------------------------------ Groups
-	private Player						player;
+	public static Player				player;
 	public static BlockController		blockController;
 	// Groupes static permettant de délocaliser la gestion du tir à la classe character et la gestion des factory enemies
 	public static Group					bulletControllerEnemy		= new Group();
@@ -281,11 +281,18 @@ public class GlobalController
 
 				// Delete Bullet
 				bullet.doEnddingEffect(player);
-				bullet.active = false;
-				if (bullet.projectilesType.removeOnCollision)
+
+				// Delete Bullet
+				if (bullet.projectilesType != null) // Au cas ou si la bullet c'est reset d'elle meme au do ending effect
 				{
-					bullet.remove();
+					bullet.active = false;
+					if (bullet.projectilesType.removeOnCollision)
+					{
+						bullet.remove();
+						System.out.println("Remove cause of bullet collision");
+					}
 				}
+
 				return;
 			}
 		}
@@ -346,12 +353,15 @@ public class GlobalController
 						enemy.remove();
 						// enemyArray.removeValue(enemy, false);
 					}
-					// Delete Bullet
-					bullet.active = false;
 
-					if (bullet.projectilesType.removeOnCollision)
+					// Delete Bullet
+					if (bullet.projectilesType != null) // Au cas ou si la bullet c'est reset d'elle meme au do ending effect
 					{
-						bullet.remove();
+						bullet.active = false;
+						if (bullet.projectilesType.removeOnCollision)
+						{
+							bullet.remove();
+						}
 					}
 				}
 
@@ -377,7 +387,7 @@ public class GlobalController
 				// Suppression de l'objet
 				coin.remove();
 				// Sfx
-				S.c().play(TyrianSound.soundEffect_player_coinPickup);
+				S.c().play(TyrianSound.soundEffect_player_coinPickup, null, null);
 				// Affichage de particle
 
 				Vector2 initialPosition = new Vector2(coin.getX(), coin.getY());
@@ -409,7 +419,7 @@ public class GlobalController
 				// Suppression de l'objet
 				lifeBox.remove();
 				// Sfx
-				S.c().play(TyrianSound.soundEffect_player_healthPackPickup);
+				S.c().play(TyrianSound.soundEffect_player_healthPackPickup, null, null);
 			}
 		}
 

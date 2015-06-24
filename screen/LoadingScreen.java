@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
 import screen.loading.LoadingGroup;
 import utilities.ButtonScreen;
 import utilities.enumerations.ScreenEnum;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -56,32 +58,27 @@ public class LoadingScreen implements MovableScreen
 		m_stage.act(delta);
 		m_stage.draw();
 
-		// Tant que le load n'est pas fait alors alors on ne passe pas au changement de screen
-		// R.c().assetManager.finishLoading();
+		R.c().assetManager.update();
 
-		if (R.c().assetManager.update(0) && !m_loading)
+		if (R.c().assetManager.getProgress() * 100 == 100 && !m_loading)
 		{
 			m_loading = true;
-			R.c().generateTextures();
-			// Generation des fonts
-			R.c().generateFonts();
-			// R.c().generateSound();
-
-			System.out.println("Initialisation des variables globales concernant le joueur...");
-			// Stock les données d'upgrades dans la classe Upgrades - FICHIER player-upgrade
-			Files.playerUpgradeRead();
-			// Stock les données concernant le player level, l'xp du joueur, l'arme du joueur - FICHIER player-globals
-			Files.playerDataRead();
-			Files.playerWeaponsRead();
-			// Stock les données concernannt le game level
-			ScreenManager.getInstance().setLevelSelected(Worlds.getLastLevelUnlock());
-			// Initialisation des screens, ils peuvent utiliser les variables précedement chargées
-			System.out.println("Done.");
 			addButtons();
-			System.out.println("Temps de chargement : " + (System.currentTimeMillis() - time));
+			m_stage.addAction(Actions.delay(0.05f, new RunnableAction()
+			{
+				@Override
+				public void run()
+				{
+					R.c().generateTextures();
+					R.c().generateFonts();
+					Files.playerUpgradeRead();
+					Files.playerDataRead();
+					Files.playerWeaponsRead();
+					ScreenManager.getInstance().setLevelSelected(Worlds.getLastLevelUnlock()); // Worlds.getLastLevelUnlock()
+					// ScreenManager.getInstance().setLevelSelected(Files.levelDataRead().level[42]); // Worlds.getLastLevelUnlock()
+				}
+			}));
 		}
-
-		// System.out.println("Temps de chargement = " + (b));
 
 		float percent = R.c().assetManager.getProgress() * 100;
 
@@ -103,7 +100,6 @@ public class LoadingScreen implements MovableScreen
 
 		versionLabel.setText(version);
 		versionLabel.setPosition(1700, 50);
-
 	}
 
 	private void addButtons()
@@ -147,13 +143,16 @@ public class LoadingScreen implements MovableScreen
 
 		m_stage.setViewport(new ExtendViewport(MyGdxGame.VIRTUAL_WIDTH, MyGdxGame.VIRTUAL_HEIGHT));
 
+		// Load Sound before all
+		S.c().gameSoundLoad();
 		// Generation des textures
 		R.c();
 		tipsTable.add("TIPS : Be aware from bat, they are vicious !");
 		tipsTable.add("TIPS : Lighting gun is AWESOME");
-		tipsTable.add("TIPS : There is more than 20 differents enemy type...");
+		tipsTable.add("TIPS : Each Boss have at least one weakness");
+		tipsTable.add("TIPS : There is more than 20 differents enemy types...");
 		tipsTable.add("TIPS : Improve your skill on switching plateform, it will be usefull !");
-		tipsTable.add("TIPS : You should increase you life as first stats !");
+		tipsTable.add("TIPS : You should increase your life as first stats !");
 		tipsTable.add("TIPS : Choose the flamme thrower depending the ennemies your affronting. It could be monstrous or inefiscient...");
 		tips = tipsTable.get(new Random().nextInt(tipsTable.size()));
 

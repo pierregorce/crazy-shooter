@@ -11,6 +11,8 @@ import globals.Projectiles;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
+import ressources.S.TyrianSound;
 import screen.MyGdxGame;
 import utilities.enumerations.Direction;
 
@@ -134,6 +136,26 @@ public class Enemy_19_Robot extends Enemies
 		}
 
 		updateBeams();
+		soundManage();
+	}
+
+	private boolean	soundLaser	= false;
+
+	private void soundManage()
+	{
+		if (beam != null)
+		{
+			if (beam.isVisible() && !soundLaser)
+			{
+				soundLaser = true;
+				S.c().playRandomPitch(TyrianSound.soundEffect_weapons_laserGun_Loop, player, this);
+			}
+			if (!beam.isVisible())
+			{
+				soundLaser = false;
+				S.c().stop(TyrianSound.soundEffect_weapons_laserGun_Loop);
+			}
+		}
 	}
 
 	@Override

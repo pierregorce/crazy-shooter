@@ -499,7 +499,7 @@ public class UpgradeGroup extends Group
 			{
 				if (selectedWeapon.isBuy)
 				{
-					S.c().play(TyrianSound.soundEffect_menu_selectWeapon);
+					S.c().play(TyrianSound.soundEffect_menu_selectWeapon, null, null);
 					equipedMessage();
 					// weaponsButton.setChecked(true);
 					PlayerStats.weaponsType = selectedWeapon.ordinal();
@@ -571,7 +571,7 @@ public class UpgradeGroup extends Group
 					super.touchUp(event, x, y, pointer, button);
 					System.out.println("click yes");
 
-					S.c().play(TyrianSound.soundEffect_menu_buyWeapon);
+					S.c().play(TyrianSound.soundEffect_menu_buyWeapon, null, null);
 					// weaponsButton.setDisabled(false);
 					// weaponsButton.weapons.setBuy(true);
 					// weaponsButton.setChecked(true);

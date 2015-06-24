@@ -34,6 +34,19 @@ public class EnemyPopConstants
 	}
 
 	/**
+	 * Retourne une position pour les objets tel que caisse de vie, barils
+	 * 
+	 * @return
+	 */
+	public Vector2 getObjectPosition()
+	{
+		Vector2 position = new Vector2();
+		position.x = (new Random().nextInt(MyGdxGame.VIRTUAL_WORLD_WIDTH));
+		position.y = (new Random().nextInt(MyGdxGame.VIRTUAL_HEIGHT) + MyGdxGame.VIRTUAL_HEIGHT / 2);
+		return position;
+	}
+
+	/**
 	 * Renvoie une position soit au sol, soit sur le bigBlock (enemy qui fait uniquement du patrol/follow)
 	 * 
 	 */

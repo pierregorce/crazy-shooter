@@ -111,6 +111,7 @@ public class Enemy_2_Bat_Basic extends Enemies
 		if (getActions().size == 0)
 		{
 			MoveToAction action1 = Actions.moveTo(player.getX(), player.getY(), 0.15f);
+			final Enemy_2_Bat_Basic me = this;
 
 			RunnableAction action2 = new RunnableAction()
 			{
@@ -119,7 +120,7 @@ public class Enemy_2_Bat_Basic extends Enemies
 				public void run()
 				{
 					GameStage.cameraShake(15);
-					S.c().play(TyrianSound.soundEffect_enemies_batAttack);
+					S.c().play(TyrianSound.soundEffect_enemies_batAttack, player, me);
 					// player.setWalk(false);
 
 					// Fait perdre de la vie au player

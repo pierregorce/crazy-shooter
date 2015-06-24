@@ -6,10 +6,13 @@ import game.entitiy.EnemyPopConstants;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.math.Vector2;
 import com.oasix.crazyshooter.Player;
+import com.oasix.crazyshooter.Timer;
 
 public class Enemy_13_Dino extends Enemies
 {
@@ -49,11 +52,19 @@ public class Enemy_13_Dino extends Enemies
 		increaseStats(enemyCoef);
 	}
 
+	private Timer	timer	= new Timer(0.4f);
+
 	@Override
 	public void act(float delta)
 	{
 		super.act(delta);
 		EnemyComportements.followPlayerAndPatrolOnGround(this, player);
 		EnemyComportements.physicalAttack(this, player);
+
+		if (timer.doAction(delta))
+		{
+			S.c().playRandomPitch(TyrianSound.soundEffect_enemies_bumpyEnemyJump, player, this);
+		}
+
 	}
 }

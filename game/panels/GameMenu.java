@@ -45,7 +45,7 @@ public class GameMenu extends Stage
 					shown = true;
 					gameBreakMenu = new GameBreakMenu(gameStage, GameStatesEnum.GAME_WIN);
 					addActor(gameBreakMenu);
-					S.c().play(TyrianSound.soundEffect_player_win);
+					S.c().play(TyrianSound.soundEffect_player_win, null, null);
 				} else
 				{
 					ScreenManager.getInstance().show(ScreenEnum.ENDING);
@@ -56,7 +56,7 @@ public class GameMenu extends Stage
 				shown = true;
 				gameBreakMenu = new GameBreakMenu(gameStage, GameStatesEnum.GAME_LOOSE);
 				addActor(gameBreakMenu);
-				S.c().play(TyrianSound.soundEffect_player_loose);
+				S.c().play(TyrianSound.soundEffect_player_loose, null, null);
 			}
 		}
 		if (getActors().size == 0)

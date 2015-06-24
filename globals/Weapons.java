@@ -10,14 +10,14 @@ public enum Weapons
 	DUAL_GUN("DUAL GUN", 0.22f, false, 200, true, 0, R.c().player_weapons[1], Projectiles.PLAYER_DUAL_GUN),
 	PUMP("PUMP GUN", 0.6f, false, 500, true, 25, R.c().player_weapons[2], Projectiles.PLAYER_PUMP),
 	BAZOOKA("BAZOOKA", 0.45f, false, 1500, true, 10, R.c().player_weapons[3], Projectiles.PLAYER_BAZOOKA),
-	MACHINE("ASSAULT RIFLE", 0.1f, false, 3500, true, 0, R.c().player_weapons[4], Projectiles.PLAYER_MACHINE),
+	MACHINE("ASSAULT RIFLE", 0.16f, false, 3500, true, 0, R.c().player_weapons[4], Projectiles.PLAYER_MACHINE),
 	FLAME_THROWER("FLAME THROWER", 0.1f, false, 6500, false, 0, R.c().player_weapons[5], Projectiles.PLAYER_FLAME_THROWER),
 	LASER("ULTRALASER", 0.08f, false, 9500, false, 0, R.c().player_weapons[6], Projectiles.PLAYER_LASER),
-	PLAYER_MINIGUN("MINIGUN", 0.18f, false, 9999, true, 6, R.c().player_weapons[7], Projectiles.PLAYER_MINIGUN),
-	PLAYER_GRENADE_LUNCHER("GRENADE THROWER", 0.35f, false, 12800, false, 20, R.c().player_weapons[8], Projectiles.PLAYER_GRENADE_LUNCHER),
-	PLAYER_SNIPER("RAIL GUN", 0.3f, false, 15000, true, 10, R.c().player_weapons[9], Projectiles.PLAYER_RAILGUN),
-	PLAYER_ROCKET_LUNCHER("ROCKET LUNCHER", 0.45f, false, 18500, false, 20, R.c().player_weapons[10], Projectiles.PLAYER_ROCKET_LUNCHER),
-	LIGHTING_GUN("LIGHTING GUN", 0.1f, false, 24500, false, 10, R.c().player_weapons[11], Projectiles.PLAYER_LIGHTING_GUN);
+	PLAYER_MINIGUN("MINIGUN", 0.10f, false, 10900, true, 6, R.c().player_weapons[7], Projectiles.PLAYER_MINIGUN),
+	PLAYER_GRENADE_LUNCHER("GRENADE THROWER", 0.29f, false, 12800, false, 20, R.c().player_weapons[8], Projectiles.PLAYER_GRENADE_LUNCHER),
+	PLAYER_SNIPER("RAIL GUN", 0.3f, false, 18900, true, 10, R.c().player_weapons[9], Projectiles.PLAYER_RAILGUN),
+	PLAYER_ROCKET_LUNCHER("ROCKET LUNCHER", 0.45f, false, 26500, false, 20, R.c().player_weapons[10], Projectiles.PLAYER_ROCKET_LUNCHER),
+	LIGHTING_GUN("LIGHTING GUN", 0.1f, false, 34500, false, 10, R.c().player_weapons[11], Projectiles.PLAYER_LIGHTING_GUN);
 
 	// Weapons spécifique
 	public float			fireRate;

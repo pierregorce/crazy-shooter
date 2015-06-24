@@ -43,7 +43,7 @@ public enum Worlds
 		this.endWorld = endWorld;
 	}
 
-	public static int	LAST_LEVEL	= WOLRD_6.endWorld;
+	public static int	LAST_LEVEL	= WOLRD_5.endWorld; // A modifier pour rajouter des worlds
 
 	/**
 	 * Retourne le numéro du monde dans lequel se situe le level demandé

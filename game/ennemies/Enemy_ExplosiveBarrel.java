@@ -1,6 +1,7 @@
 package game.ennemies;
 
 import game.entitiy.Enemies;
+import game.entitiy.EnemyPopConstants;
 import game.pop.PopMessage;
 import game.pop.PopMessage.MessageType;
 import game.projectiles.Projectile;
@@ -11,7 +12,6 @@ import java.util.Random;
 import ressources.R;
 import ressources.S;
 import ressources.S.TyrianSound;
-import screen.MyGdxGame;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.math.Vector2;
@@ -42,8 +42,9 @@ public class Enemy_ExplosiveBarrel extends Enemies
 		jump = true;
 		walk = false;
 
-		setX(new Random().nextInt(MyGdxGame.VIRTUAL_WORLD_WIDTH));
-		setY(MyGdxGame.VIRTUAL_HEIGHT);
+		Vector2 position = EnemyPopConstants.getInstance().getObjectPosition();
+		setX(position.x);
+		setY(position.y);
 
 		maxJumpSpeedY = 0;
 		maxVelocityX = 0;
@@ -117,7 +118,7 @@ public class Enemy_ExplosiveBarrel extends Enemies
 		// super.popDamageOnLosingLife(bulletDamage, crit);
 
 		GlobalController.fxController.addActor(new PopMessage(this, MessageType.EXPLOSION));
-		S.c().play(TyrianSound.soundEffect_player_barrelExplosion);
+		S.c().play(TyrianSound.soundEffect_player_barrelExplosion, player, this);
 
 	}
 

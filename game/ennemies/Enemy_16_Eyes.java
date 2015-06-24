@@ -8,6 +8,8 @@ import globals.Projectiles;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.math.Vector2;
@@ -101,10 +103,10 @@ public class Enemy_16_Eyes extends Enemies
 	private void pickAction(float delta)
 	{
 		Projectile p = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
-
 		p.construct(Projectiles.FALLING_BOMB);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
+		S.c().play(TyrianSound.soundEffect_meteorFall, player, this);
 	}
 
 }

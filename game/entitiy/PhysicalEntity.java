@@ -51,6 +51,9 @@ public abstract class PhysicalEntity extends Entities
 	public void disablePhysics()
 	{
 		disablePhysics = true;
+		setCollisionBlock(null);
+		acceleration = new Vector2();
+		velocity = new Vector2();
 	}
 
 	public void enablePhysics()
@@ -223,6 +226,7 @@ public abstract class PhysicalEntity extends Entities
 	{
 		if (getY() < 0)
 		{
+			System.out.println("Remove cause of Y<0 (Physical entity) : " + getY());
 			remove();
 			return true;
 		} else

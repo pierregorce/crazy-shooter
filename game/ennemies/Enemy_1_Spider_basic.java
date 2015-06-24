@@ -60,7 +60,7 @@ public class Enemy_1_Spider_basic extends Enemies
 		super.act(delta);
 		if (timer.doAction(delta))
 		{
-			S.c().play(TyrianSound.soundEffect_enemies_whiteSlowEnemy);
+			S.c().play(TyrianSound.soundEffect_enemies_whiteSlowEnemy, player, this);
 		}
 
 		EnemyComportements.followPlayerAndPatrolOnGround(this, player);

@@ -142,7 +142,7 @@ public class Enemy_4_Limace extends Enemies
 
 			if (spitSound)
 			{
-				S.c().play(TyrianSound.soundEffect_enemies_greenEnemyBurp);
+				S.c().play(TyrianSound.soundEffect_enemies_greenEnemyBurp, player, this);
 				spitSound = false;
 			}
 			// GameStage.cameraShake(7);

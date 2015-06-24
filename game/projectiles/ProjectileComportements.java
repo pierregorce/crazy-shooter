@@ -12,6 +12,8 @@ import java.util.Random;
 import ressources.DrawableAnimation;
 import ressources.R;
 import ressources.Ressource;
+import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.Gdx;
@@ -65,10 +67,26 @@ public class ProjectileComportements
 	public class Straight_Piercing extends Straight
 	{
 		@Override
-		protected void comportement_act(Projectile projectile)
+		protected void comportement_act(final Projectile projectile)
 		{
 			super.comportement_act(projectile);
-			GenericComportementList.setActivation(projectile);
+
+			Action action = null;
+
+			action = Actions.run(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					if (!projectile.active)
+					{
+						S.c().play(TyrianSound.soundEffect_weapons_railGun, GlobalController.player, projectile);
+					}
+				}
+			});
+
+			GenericComportementList.setActivation(projectile, action);
+
 		}
 	}
 
@@ -85,7 +103,7 @@ public class ProjectileComportements
 			final float TIME_ALIVE = 0.30f;
 			final float MAX_SIZE = projectile.getWidth() * 1.4f;
 			projectile.addAction(Actions.alpha(1));
-			projectile.addAction(Actions.alpha(0.5f, TIME_ALIVE));
+			projectile.addAction(Actions.alpha(0.7f, TIME_ALIVE));
 			projectile.addAction(Actions.sizeBy(MAX_SIZE, MAX_SIZE, TIME_ALIVE));
 			projectile.addAction(Actions.delay(TIME_ALIVE, Actions.removeActor()));
 		}
@@ -102,12 +120,19 @@ public class ProjectileComportements
 	public class Target_Player_Action extends ProjectileComportementFrame
 	{
 		@Override
-		protected void comportement_init(Projectile projectile, Character characterSender)
+		protected void comportement_init(final Projectile projectile, Character characterSender)
 		{
 			projectile.disablePhysics();
 			Player player = ((Enemies) characterSender).getPlayer();
 			Action move = Actions.moveTo(player.getCenterX(), player.getCenterY(), 0.5f);
-			projectile.addAction(new SequenceAction(move, Actions.removeActor()));
+			projectile.addAction(new SequenceAction(move, new RunnableAction()
+			{
+				@Override
+				public void run()
+				{
+					projectile.remove();
+				}
+			}));
 		}
 	}
 
@@ -116,6 +141,7 @@ public class ProjectileComportements
 		@Override
 		protected void comportement_endingEffect(Projectile projectile, Character characterReceiving)
 		{
+			S.c().play(TyrianSound.soundEffect_weapons_bazookaExplosion, characterReceiving, projectile);
 			int quantity = Projectiles.PLAYER_BAZOOKA_EXPLOSION.quantityPerShoot;
 
 			for (int i = 0; i < quantity / 2; i++)
@@ -125,7 +151,6 @@ public class ProjectileComportements
 
 				Projectile projectileExplosion = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
 				projectileExplosion.construct(Projectiles.PLAYER_BAZOOKA_EXPLOSION);
-
 				projectileExplosion.init(projectile.direction, new Vector2(projectile.getX() + xRandomization, projectile.getY() + yRandomization));
 				projectileExplosion.setX(projectileExplosion.getX() + xRandomization);
 				projectileExplosion.setY(projectileExplosion.getY() + yRandomization);
@@ -139,7 +164,6 @@ public class ProjectileComportements
 
 				Projectile projectileExplosion = Pools.get(Projectile.class, Projectile.PROJECTILE_POOL_SIZE).obtain();
 				projectileExplosion.construct(Projectiles.PLAYER_BAZOOKA_EXPLOSION);
-
 				projectileExplosion.init(projectile.direction, new Vector2(projectile.getX() + xRandomization, projectile.getY() + yRandomization));
 				// projectileExplosion.init(characterReceiving);
 				projectileExplosion.setX(projectileExplosion.getX() + xRandomization);
@@ -160,6 +184,7 @@ public class ProjectileComportements
 		@Override
 		protected void comportement_init(Projectile projectile, Character characterSender)
 		{
+			projectile.enablePhysics();
 			projectile.setJump(false); // TODO TEST
 		}
 
@@ -167,6 +192,8 @@ public class ProjectileComportements
 		protected void comportement_endingEffect(Projectile projectile, Character characterReceiving)
 		{
 			GameStage.cameraShake(GameStage.SMALL_SHAKE);
+			S.c().play(TyrianSound.soundEffect_meteorLand, characterReceiving, projectile);
+
 			// Only effect, le degat est déja dans la bomb...
 			for (int i = 0; i < 15; i++)
 			{
@@ -308,7 +335,7 @@ public class ProjectileComportements
 		protected void comportement_act(Projectile projectile)
 		{
 			super.comportement_act(projectile);
-			GenericComportementList.setActivation(projectile);
+			GenericComportementList.setActivation(projectile, null);
 		}
 
 		@Override
@@ -385,6 +412,7 @@ public class ProjectileComportements
 			// super.comportement_endingEffect(projectile, characterReceiving);
 
 			// Add White Explosion On Grenade
+			S.c().play(TyrianSound.soundEffect_weapons_grenadeLauncherGunExplode, GlobalController.player, projectile);
 			int height = 70;
 			Ressource r = new Ressource(new DrawableAnimation(0.14f, R.c().fx_explode_circle), projectile.getCenterX() - height / 2, projectile.getCenterY() - height / 2, height, true);
 			r.setColor(1, 1, 1, 1f);
@@ -490,12 +518,11 @@ public class ProjectileComportements
 		}
 	}
 
-	public class Rocket extends Straight
+	public class Rocket extends ProjectileComportementFrame
 	{
 		@Override
 		protected void comportement_init(Projectile projectile, Character characterSender)
 		{
-			super.comportement_init(projectile, characterSender);
 
 			Player p = (Player) characterSender;
 
@@ -532,21 +559,23 @@ public class ProjectileComportements
 				projectile_ter.rotation = 17;
 
 			}
-			projectile.active = false;
+
 		}
 
 		@Override
 		protected void comportement_act(Projectile projectile)
 		{
 			super.comportement_act(projectile);
+			// Dans le act car il n'y a pas encore de group parent dans le init
+			projectile.active = false;
 			projectile.remove();
+			projectile.reset();
 		}
 
 	}
 
 	public class SimpleRocket extends Straight
 	{
-
 		@Override
 		protected void comportement_init(Projectile projectile, Character characterSender)
 		{
@@ -567,6 +596,16 @@ public class ProjectileComportements
 				GlobalController.fxController.addActor(r);
 			}
 
+		}
+
+		@Override
+		protected void comportement_endingEffect(Projectile projectile, Character characterReceiving)
+		{
+			super.comportement_endingEffect(projectile, characterReceiving);
+			S.c().play(TyrianSound.soundEffect_weapons_rocketLaucherGunExplode, GlobalController.player, projectile);
+			projectile.active = false;
+			projectile.reset();
+			projectile.remove();
 		}
 	}
 
@@ -611,18 +650,27 @@ public class ProjectileComportements
 			projectile.setY(projectile.getY() + projectile.precision);
 		}
 
-		public static void setActivation(final Projectile projectile)
+		public static void setActivation(final Projectile projectile, Action action)
 		{
 			if (projectile.getActions().size == 0)
 			{
-				projectile.addAction(Actions.delay(0.2f, Actions.run(new Runnable()
+				Action action1 = Actions.delay(0.15f);
+				Action action2 = Actions.run(new Runnable()
 				{
 					@Override
 					public void run()
 					{
 						projectile.active = true;
 					}
-				})));
+				});
+
+				if (action == null)
+				{
+					projectile.addAction(Actions.sequence(action1, action2));
+				} else
+				{
+					projectile.addAction(Actions.sequence(action1, action, action2));
+				}
 			}
 		}
 	}
@@ -644,8 +692,8 @@ public class ProjectileComportements
 		@Override
 		protected void comportement_endingEffect(Projectile projectile, Character characterReceiving)
 		{
-			super.comportement_endingEffect(projectile, characterReceiving);
 			GameStage.cameraShake(GameStage.SMALL_SHAKE);
+			S.c().play(TyrianSound.soundEffect_meteorLand, characterReceiving, projectile);
 			// Only effect, le degat est déja dans la bomb...
 
 			for (int i = 0; i < 4; i++)
@@ -665,6 +713,7 @@ public class ProjectileComportements
 				explosionParticle.init(projectile.getCenterX(), projectile.getCenterY(), ParticleColors.getInstance().getGreenWaste());
 				GlobalController.particleController.addActor(explosionParticle);
 			}
+			super.comportement_endingEffect(projectile, characterReceiving);
 		}
 	}
 }

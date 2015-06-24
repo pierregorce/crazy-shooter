@@ -6,6 +6,8 @@ import game.entitiy.EnemyPopConstants;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -101,7 +103,7 @@ public class Enemy_8_Golem extends Enemies
 
 			if (!soundPlaying)
 			{
-				// soundSlash.loop(MusicManager.sfxVolume);
+				S.c().playLoop(TyrianSound.soundEffect_enemies_umbrellaSlash, player, this);
 				soundPlaying = true;
 			}
 
@@ -128,7 +130,7 @@ public class Enemy_8_Golem extends Enemies
 			if (!attackAnimation)
 			{
 				setWalk(true);
-				// soundSlash.stop();
+				S.c().stop(TyrianSound.soundEffect_enemies_umbrellaSlash);
 				soundPlaying = false;
 			}
 

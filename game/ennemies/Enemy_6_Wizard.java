@@ -112,7 +112,7 @@ public class Enemy_6_Wizard extends Enemies
 		super.act(delta);
 		if (laughingSound.doAction(delta))
 		{
-			S.c().play(TyrianSound.soundEffect_enemies_witchLauging);
+			S.c().play(TyrianSound.soundEffect_enemies_witchLauging, player, this);
 		}
 	}
 
@@ -125,8 +125,7 @@ public class Enemy_6_Wizard extends Enemies
 		GlobalController.bulletControllerEnemy.addActor(p);
 
 		// SFX
-		S.c().play(TyrianSound.soundEffect_enemies_witchShoot);
-
+		S.c().play(TyrianSound.soundEffect_enemies_witchShoot, player, this);
 		// ADD HALO EFFECT
 		float haloHeight = 20;
 		DrawableAnimation drawableAnimation = new DrawableAnimation(0.05f, R.c().fx_pop);

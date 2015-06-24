@@ -127,7 +127,7 @@ public class Enemy_Boss_11_SuperFly extends Enemies
 			timer = new Timer(m_bossPhase.phaseDuration);
 			System.out.println("BOSS #2 : Je change de phase ! " + m_bossPhase.name());
 			GlobalController.fxController.addActor(new PopMessage(this, MessageType.BOSS_CRY_2));
-			S.c().play(TyrianSound.soundEffect_boss2_pulse);
+			S.c().play(TyrianSound.soundEffect_boss2_pulse, player, this);
 		}
 
 	}
@@ -178,7 +178,7 @@ public class Enemy_Boss_11_SuperFly extends Enemies
 		p.construct(Projectiles.ENEMY_BOSS_2);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
-		S.c().play(TyrianSound.soundEffect_boss2_shoot);
+		S.c().play(TyrianSound.soundEffect_boss2_shoot, player, this);
 	}
 
 	@Override

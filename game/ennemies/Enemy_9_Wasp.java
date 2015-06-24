@@ -163,7 +163,7 @@ public class Enemy_9_Wasp extends Enemies
 		p.construct(Projectiles.ENEMY_WASP);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
-		S.c().play(TyrianSound.soundEffect_enemies_beeShoot);
+		S.c().play(TyrianSound.soundEffect_enemies_beeShoot, player, this);
 	}
 
 	@Override

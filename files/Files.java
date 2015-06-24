@@ -11,15 +11,15 @@ import com.badlogic.gdx.utils.Json;
 
 public class Files
 {
-	private final static String	SALT_KEY			= "PGE";
-	private final static String	version				= "";
-	public final static String	levelConfigName		= "levels-config" + version + ".json";
-	public final static String	playerUpgradeName	= "player-upgrades" + version + ".json";
-	public final static String	playerGlobalName	= "player-globals" + version + ".json";
-	public final static String	playerWeaponsName	= "player-weapons" + version + ".json";
+	private final static String	SALT_KEY				= "PGE";
+	private final static String	version					= "";
+	public final static String	levelConfigName			= "levels-config" + version + ".json";
+	public final static String	levelConfigNameFrame	= "levels-config-v2" + version + ".json";
+	public final static String	playerUpgradeName		= "player-upgrades" + version + ".json";
+	public final static String	playerGlobalName		= "player-globals" + version + ".json";
+	public final static String	playerWeaponsName		= "player-weapons" + version + ".json";
 
 	// ------------Gestion des fichiers pour la sauvergarde des LEVELS
-	// Stock les données ? SCREEN MANAGER ?
 
 	public static Levels levelDataRead()
 	{
@@ -29,15 +29,63 @@ public class Files
 		if (!localFile.exists())
 		{
 			// Ecriture si le fichier n'existe pas
-			FileHandle internalfile = Gdx.files.internal(levelConfigName);
+			FileHandle internalfile = Gdx.files.internal(levelConfigNameFrame);
 			String levelsConfig = internalfile.readString();
 			localFile.writeString(levelsConfig, false);
 		}
-		// Lecture des données
-		FileHandle file = Gdx.files.local(levelConfigName);
-		String levelsConfig = file.readString();
-		Json json = new Json();
-		return json.fromJson(Levels.class, levelsConfig);
+
+		// Retrieve du fichier écrit
+		String levelsConfig = localFile.readString();
+		Levels levels = new Json().fromJson(Levels.class, levelsConfig);
+
+		// Vérification si le fichier récupéré n'est pas d'une vielle version.
+		try
+		{
+			if (levels.level[0].levelIndex != 0)
+			{
+				// On est sur l'ancien mode
+				// Récupération du dernier niveau
+				int lastUnlock = getLastLevelUnlock(levels);
+				// System.out.println("Le dernier niveau était le " + lastUnlock);
+
+				// Récupération d'un nouveau fichier de niveau
+				Levels newLevels = new Json().fromJson(Levels.class, Gdx.files.internal(levelConfigNameFrame));
+				// System.out.println("qzdzdqzd      " + newLevels.level[0].levelIndex + "   " + newLevels.level[0].levelName);
+
+				// Affectation des niveau complété.
+				for (int i = 0; i < newLevels.level.length; i++)
+				{
+					if (i <= lastUnlock)
+					{
+						newLevels.level[i].levelComplete = "true";
+						// System.out.println("affection du niveau a complété");
+					}
+				}
+				levels = newLevels;
+
+				// Ecriture du fichier en remplacement
+				localFile.writeString(new Json().toJson(levels), false);
+				// System.out.println("PAF ECRIT !");
+			}
+
+		} catch (Exception e)
+		{
+			// On ne fait rien car on est sur la bonne structure
+		}
+
+		return levels;
+	}
+
+	public static int getLastLevelUnlock(Levels level)
+	{
+		for (int i = 0; i < level.level.length; i++)
+		{
+			if (i > 0 && level.level[i - 1].levelComplete.equals("true") && level.level[i].levelComplete.equals("false"))
+			{
+				return i;
+			}
+		}
+		return 0;
 	}
 
 	public static void levelDataWrite(Levels level)

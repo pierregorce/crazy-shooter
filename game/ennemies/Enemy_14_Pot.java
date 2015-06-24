@@ -8,6 +8,8 @@ import globals.Projectiles;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -92,6 +94,7 @@ public class Enemy_14_Pot extends Enemies
 		// add do endng effect
 		p.addAction(Actions.delay(time, Actions.removeActor(p)));
 		GlobalController.bulletControllerEnemy.addActor(p);
+		S.c().play(TyrianSound.soundEffect_enemies_sittingShoot, player, this);
 	}
 
 	@Override

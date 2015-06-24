@@ -92,10 +92,10 @@ public class Enemy_5_FantomeRunner extends Enemies
 			}
 			if (maxVelocityX == m_initialVelocity)
 			{
-				S.c().play(TyrianSound.soundEffect_enemies_bumpyEnemyJump);
+				S.c().play(TyrianSound.soundEffect_enemies_bumpyEnemyJump, player, this);
 			} else
 			{
-				S.c().play(TyrianSound.soundEffect_enemies_bumpyEnemyCharge);
+				S.c().play(TyrianSound.soundEffect_enemies_bumpyEnemyCharge, player, this);
 			}
 		}
 	}

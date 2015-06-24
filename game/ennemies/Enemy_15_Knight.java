@@ -10,6 +10,8 @@ import globals.Projectiles;
 import java.util.Random;
 
 import ressources.R;
+import ressources.S;
+import ressources.S.TyrianSound;
 import utilities.enumerations.Direction;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -153,6 +155,7 @@ public class Enemy_15_Knight extends Enemies
 			EnemyComportements.followPlayerAndPatrol(this, player);
 			break;
 		case BLOCK:
+
 			knightBlockAction(delta);
 			faireFaceTo(player);
 			break;
@@ -202,6 +205,7 @@ public class Enemy_15_Knight extends Enemies
 		p.construct(Projectiles.ENEMY_KNIGHT);
 		p.init(this);
 		GlobalController.bulletControllerEnemy.addActor(p);
+		S.c().playRandomPitch(TyrianSound.soundEffect_weapons_pistol, player, this);
 	}
 
 	@Override

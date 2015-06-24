@@ -10,6 +10,8 @@ import utilities.enumerations.ScreenEnum;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -31,6 +33,9 @@ public class ButtonWorld extends ButtonRessource
 
 	private Image	starsImage;
 	private Image	worldImage;
+
+	private Sprite	comingSoonImage;
+	public boolean	comingSoon	= false;
 
 	public ButtonWorld(Group group, Worlds world)
 	{
@@ -71,6 +76,9 @@ public class ButtonWorld extends ButtonRessource
 		putUpDrawable(R.c().world_frame_completed);
 
 		addListener(new ButtonScreenAction());
+
+		comingSoonImage = new Sprite(R.c().world_world_completed);
+		comingSoonImage.setSize(R.c().world_world_completed.getRegionWidth() * 2.66f, R.c().world_world_completed.getRegionHeight() * 2.66f);
 	}
 
 	private void positionning()
@@ -87,6 +95,22 @@ public class ButtonWorld extends ButtonRessource
 		starsLabel.setPosition(490, 26);
 		starsImage.setPosition(510, 13);
 		worldImage.setPosition(22, 40);
+
+		if (comingSoon)
+		{
+			comingSoonImage.setPosition(getX() + 15, getY() + 30);
+		}
+	}
+
+	@Override
+	public void draw(Batch batch, float parentAlpha)
+	{
+		super.draw(batch, parentAlpha);
+
+		if (comingSoon)
+		{
+			comingSoonImage.draw(batch, parentAlpha);
+		}
 	}
 
 	@Override
@@ -105,6 +129,7 @@ public class ButtonWorld extends ButtonRessource
 			starsLabel.setText("" + world.onComplete);
 			starsImage.setVisible(true);
 		}
+
 	}
 
 	class ButtonScreenAction extends ClickListener

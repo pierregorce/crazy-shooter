@@ -124,6 +124,13 @@ public class WorldsGroup extends Group
 				b.putSize(factor);
 				k++;
 				b.setPosition(30 + j * 630, 580 - i * 380);
+
+				if (k == 6)
+				{
+					b.comingSoon = true;
+					b.clearListeners();
+				}
+
 			}
 		}
 	}

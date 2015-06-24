@@ -112,7 +112,7 @@ public class LevelParser
 		int nombreDeLevel = Worlds.LAST_LEVEL;
 		int weaponsBuy = 1; // ON COMMENCE PAR VOULOIR ACHETER L'ARME 1
 
-		for (int i = 0; i < nombreDeLevel - 5; i++)
+		for (int i = 0; i < nombreDeLevel; i++)
 		{
 			int nombreDeVague = getWaveCount(i);
 

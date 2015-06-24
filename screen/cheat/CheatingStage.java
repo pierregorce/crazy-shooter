@@ -106,9 +106,16 @@ public class CheatingStage extends Stage
 		{
 			super.clicked(event, x, y);
 			labelResult.setText(error);
-			if (textField.getText().equals(Cheat.ADD_5000_GOLD))
+			if (textField.getText().equals(Cheat.ADD_10000_GOLD))
 			{
-				PlayerStats.ressource += 5000;
+				PlayerStats.ressource += 2000;
+				Files.playerDataWrite();
+				textField.setText("");
+				labelResult.setText(success);
+			}
+			if (textField.getText().equals(Cheat.ADD_10000_GOLD))
+			{
+				PlayerStats.ressource += 10000;
 				Files.playerDataWrite();
 				textField.setText("");
 				labelResult.setText(success);

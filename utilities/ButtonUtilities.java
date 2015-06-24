@@ -32,7 +32,7 @@ public class ButtonUtilities extends Button
 		{
 			if (!playSound)
 			{
-				S.c().play(TyrianSound.soundEffect_menu_clickOnLevel);
+				S.c().play(TyrianSound.soundEffect_menu_clickOnLevel, null, null);
 				playSound = true;
 			}
 			setY(currentY + offset);

@@ -108,7 +108,7 @@ public class Enemy_7_Limon extends Enemies
 			GlobalController.bulletControllerEnemy.addActor(p);
 		}
 
-		S.c().play(TyrianSound.soundEffect_enemies_laserEnemy);
+		S.c().play(TyrianSound.soundEffect_enemies_laserEnemy, player, this);
 
 	}
 
